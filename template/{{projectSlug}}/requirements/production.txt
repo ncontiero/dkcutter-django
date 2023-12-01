@@ -1,0 +1,37 @@
+-r base.txt
+
+gunicorn==21.2.0
+psycopg[c]==3.1.13
+{%- if not useWhitenoise %}
+Collectfast==2.2.0
+{%- endif %}
+{%- if useSentry %}
+sentry-sdk==1.38.0
+{%- endif %}
+
+# Django
+# ------------------------------------------------------------------------------
+{%- if cloudProvider == 'AWS' %}
+django-storages[s3]==1.14.2
+{%- elif cloudProvider == 'GCP' %}
+django-storages[google]==1.14.2
+{%- endif %}
+{%- if mailService == 'Mailgun' %}
+django-anymail[mailgun]==10.2
+{%- elif mailService == 'Amazon SES' %}
+django-anymail[amazon-ses]==10.2
+{%- elif mailService == 'Mailjet' %}
+django-anymail[mailjet]==10.2
+{%- elif mailService == 'Mandrill' %}
+django-anymail[mandrill]==10.2
+{%- elif mailService == 'Postmark' %}
+django-anymail[postmark]==10.2
+{%- elif mailService == 'Sendgrid' %}
+django-anymail[sendgrid]==10.2
+{%- elif mailService == 'SendinBlue' %}
+django-anymail[sendinblue]==10.2
+{%- elif mailService == 'SparkPost' %}
+django-anymail[sparkpost]==10.2
+{%- elif mailService == 'Other SMTP' %}
+django-anymail==10.2
+{%- endif %}

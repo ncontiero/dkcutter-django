@@ -1,0 +1,37 @@
+{
+  "name": "dkcutter-django",
+  "description": "A simple Django template with dkcutter.",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "generate": "dkcutter",
+    "lint": "eslint . && prettier . -c",
+    "lint:fix": "eslint --fix . && prettier . -w",
+    "check": "bun lint && bun typecheck",
+    "test": "tsx tests/index.ts"
+  },
+  "author": "DKSHS",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@dkshs/eslint-config": "1.4.0",
+    "@types/fs-extra": "^11",
+    "@types/prompts": "^2",
+    "bun": "^1.0.14",
+    "bun-types": "latest",
+    "colorette": "^2.0.20",
+    "eslint": "^8",
+    "execa": "^8.0.1",
+    "fs-extra": "^11.2.0",
+    "ora": "^7.0.1",
+    "prompts": "^2.4.2",
+    "tsx": "^4.6.1",
+    "type-fest": "^4.8.2",
+    "zod": "^3.22.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "dkcutter": "3.3.2"
+  }
+}

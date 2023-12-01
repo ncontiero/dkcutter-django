@@ -1,0 +1,33 @@
+python-slugify==8.0.1
+Pillow==10.1.0
+python-decouple==3.8
+argon2-cffi==23.1.0
+{%- if useWhitenoise %}
+whitenoise==6.6.0
+{%- endif %}
+redis==5.0.1
+hiredis==2.2.3
+{%- if useCelery %}
+celery==5.3.6
+django-celery-beat==2.5.0
+flower==2.0.1
+{%- endif %}
+
+# Django
+# ------------------------------------------------------------------------------
+django==4.2.7
+django-cleanup==8.0.0
+dj-database-url==2.1.0
+django-redis==5.4.0
+{%- if restFramework == 'DRF' %}
+# Django REST Framework
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+# DRF-spectacular for api documentation
+drf-spectacular==0.26.5
+{%- elif restFramework == 'DNRF' %}
+# Django Ninja REST framework
+django-ninja==1.0.1
+orjson==3.9.10
+django-cors-headers==4.3.1
+{%- endif %}

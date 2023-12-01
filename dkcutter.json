@@ -1,0 +1,95 @@
+{
+  "projectName": {
+    "value": "My Awesome Project",
+    "promptMessage": "What is the project name?"
+  },
+  "projectSlug": {
+    "value": "{{ projectName|lower|replace(' ', '_')|trim }}",
+    "promptMessage": "What is the project slug?",
+    "validateRegex": {
+      "regex": "^[A-Za-z_][A-Za-z0-9_]*$",
+      "message": "Invalid project slug. Please enter a valid value."
+    }
+  },
+  "description": {
+    "value": "Behold My Awesome Project!",
+    "promptMessage": "What is the project description?"
+  },
+  "authorName": {
+    "value": "DKSHS",
+    "promptMessage": "What is the author name?",
+    "validateRegex": {
+      "regex": "^(?!.*/).*$",
+      "message": "Don't include backslashes in author name."
+    }
+  },
+  "domainName": {
+    "value": "example.com",
+    "promptMessage": "What is the domain name?"
+  },
+  "email": {
+    "value": "{{ authorName|lower|trim|replace(' ', '-') }}@{{ domainName|lower|trim }}",
+    "promptMessage": "What is the email address?"
+  },
+  "postgresqlVersion": {
+    "value": ["15", "14", "13", "12", "11", "10"],
+    "promptMessage": "What {{ colors.blue('PostgreSQL') }} version would you like to use?"
+  },
+  "cloudProvider": {
+    "value": ["AWS", "GCP", "None"],
+    "promptMessage": "What {{ colors.blue('Cloud Provider') }} would you like to use?"
+  },
+  "restFramework": {
+    "value": "None",
+    "choices": [
+      { "value": "None" },
+      { "title": "Django Rest Framework", "value": "DRF" },
+      { "title": "Django Ninja Rest Framework", "value": "DNRF" }
+    ],
+    "promptMessage": "What {{ colors.blue('Rest Framework') }} would you like to use?"
+  },
+  "mailService": {
+    "value": "Mailgun",
+    "choices": [
+      { "value": "Mailgun" },
+      {
+        "value": "Amazon SES",
+        "disabled": "{% if cloudProvider != 'AWS' %}true{% else %}false{% endif %}"
+      },
+      { "value": "Mailjet" },
+      { "value": "Mandrill" },
+      { "value": "Postmark" },
+      { "value": "Sendgrid" },
+      { "value": "SendinBlue" },
+      { "value": "SparkPost" },
+      { "value": "Other SMTP" },
+      { "value": "None" }
+    ],
+    "promptMessage": "What {{ colors.blue('Mail Service') }} would you like to use?"
+  },
+  "useMailpit": {
+    "value": false,
+    "promptMessage": "Would you like to use {{ colors.blue('Mailpit') }}?",
+    "disabled": "{% if mailService == 'None' %}true{% else %}false{% endif %}"
+  },
+  "useCelery": {
+    "value": false,
+    "promptMessage": "Would you like to use {{ colors.blue('Celery') }}?"
+  },
+  "useSentry": {
+    "value": false,
+    "promptMessage": "Would you like to use {{ colors.blue('Sentry') }}?"
+  },
+  "useWhitenoise": {
+    "value": false,
+    "promptMessage": "Would you like to use {{ colors.blue('Whitenoise') }}?"
+  },
+  "usePgadmin": {
+    "value": false,
+    "promptMessage": "Would you like to use {{ colors.blue('PGAdmin') }}?"
+  },
+  "useTailwindcss": {
+    "value": false,
+    "promptMessage": "Would you like to use {{ colors.blue('Tailwindcss') }}?"
+  }
+}

@@ -1,0 +1,40 @@
+{% raw %}{% load static %}{% endraw %}
+
+{% raw %}<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>
+      {% block title %}
+      {% endblock title %}
+      • {% endraw %}{{ projectName }}{% raw %}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{% endraw %}{{ description }}{% raw %}" />
+    <meta name="author" content="{% endraw %}{{ authorName }}{% raw %}" />
+    <link href="{% static 'images/favicons/favicon.ico' %}" rel="icon" />
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    {% block css %}
+      <!-- Your stuff: Third-party CSS libraries go here -->
+      <!-- This file stores project-specific CSS -->
+    {% endblock css %}
+    {% block javascript %}
+      <!-- Your stuff: Third-party javascript libraries go here -->
+      <!-- place project specific Javascript in this file -->
+    {% endblock javascript %}
+  </head>
+  <body>
+    {% block content %}
+    {% endblock content %}
+    {% block inline_javascript %}
+      <!-- Script tags with only code, no src (defer by default). -->
+      <!-- To run with a "defer" so that you run inline code: -->
+      <script>
+        window.addEventListener("DOMContentLoaded", () => {
+          /* Run whatever you want */
+        });
+      </script>
+    {% endblock inline_javascript %}
+  </body>
+</html>{% endraw %}
