@@ -119,7 +119,7 @@ async function generateProject(args: string[] = [], output: string = ".test") {
   logger.info(
     `Generating project ${args[1]} with args: ${args.slice(2).join(" ")}`,
   );
-  await execa("bun", ["generate", ".", "-o", output, ...args, "-y"]);
+  await execa("pnpm", ["generate", ".", "-o", output, ...args, "-y"]);
   const paths = buildFilesList(path.join(output, args[1]));
   checkPaths(paths);
   logger.success(`✓ Project ${args[1]} generated`);

@@ -11,7 +11,7 @@ mkdir -p .cache/docker
 cd .cache/docker
 
 # create the project using the default settings in dkcutter.json
-bun run generate ../../ -y -f "$@"
+pnpm generate ../../ -y -f "$@"
 cd my_awesome_project
 
 # make sure all images build
