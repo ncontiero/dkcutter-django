@@ -3,7 +3,7 @@
   "description": "A simple Django template with dkcutter.",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "generate": "dkcutter",
+    "generate": "dkcutter .",
     "lint": "eslint . && prettier . -c",
     "lint:fix": "eslint --fix . && prettier . -w",
     "check": "pnpm lint && pnpm typecheck",
