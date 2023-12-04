@@ -1,7 +1,7 @@
 -r base.txt
 
 Werkzeug[watchdog]==3.0.1
-psycopg[binary]==3.1.13
+psycopg[binary]==3.1.14
 {%- if useCelery %}
 watchfiles==0.21.0
 {%- endif %}
