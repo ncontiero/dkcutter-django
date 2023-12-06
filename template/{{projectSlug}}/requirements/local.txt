@@ -8,12 +8,12 @@ watchfiles==0.21.0
 
 # Testing
 # ------------------------------------------------------------------------------
-mypy==1.6.1
-django-stubs[compatible-mypy]==4.2.6
+mypy==1.7.1
+django-stubs[compatible-mypy]==4.2.7
 pytest==7.4.3
 pytest-sugar==0.9.7
 {%- if restFramework == 'DRF' %}
-djangorestframework-stubs[compatible-mypy]==3.14.4
+djangorestframework-stubs[compatible-mypy]==3.14.5
 {%- endif %}
 
 # Code quality
