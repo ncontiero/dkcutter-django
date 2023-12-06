@@ -32,7 +32,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV BUILD_ENV ${BUILD_ENVIRONMENT}
 
 # devcontainer dependencies and utils
-RUN apt update && apt install --no-install-recommends -y \
+RUN apt-get update && apt-get install --no-install-recommends -y \
   sudo git gpg gnupg gpg-agent socat ssh \
   zsh \
   curl \
