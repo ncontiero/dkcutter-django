@@ -28,6 +28,6 @@
     "zod": "^3.22.4"
   },
   "dependencies": {
-    "dkcutter": "3.3.3"
+    "dkcutter": "3.3.4"
   }
 }
