@@ -27,7 +27,7 @@ django-cors-headers==4.3.1
 drf-spectacular==0.26.5
 {%- elif restFramework == 'DNRF' %}
 # Django Ninja REST framework
-django-ninja==1.0.1
+django-ninja==1.1.0
 orjson==3.9.10
 django-cors-headers==4.3.1
 {%- endif %}
