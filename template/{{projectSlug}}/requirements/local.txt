@@ -27,7 +27,7 @@ pylint-django==2.5.5
 {%- if useCelery %}
 pylint-celery==0.3
 {%- endif %}
-pre-commit==3.5.0
+pre-commit==3.6.0
 
 # Django
 # ------------------------------------------------------------------------------
