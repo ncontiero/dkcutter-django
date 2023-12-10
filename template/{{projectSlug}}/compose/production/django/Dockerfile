@@ -93,7 +93,7 @@ RUN chmod +x /start-flower
 {%- if useTailwindcss %}
 COPY --from=client-builder --chown=django:django ${APP_HOME} ${APP_HOME}
 {% else %}
-RUN chown django:django ${APP_HOME}
+COPY --chown=django:django . ${APP_HOME}
 {%- endif %}
 
 # make django owner of the WORKDIR directory as well.
