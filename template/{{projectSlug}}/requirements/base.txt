@@ -24,7 +24,7 @@ django-redis==5.4.0
 djangorestframework==3.14.0
 django-cors-headers==4.3.1
 # DRF-spectacular for api documentation
-drf-spectacular==0.26.5
+drf-spectacular==0.27.0
 {%- elif restFramework == 'DNRF' %}
 # Django Ninja REST framework
 django-ninja==1.1.0
