@@ -6,7 +6,7 @@ psycopg[c]==3.1.14
 Collectfast==2.2.0
 {%- endif %}
 {%- if useSentry %}
-sentry-sdk==1.39.0
+sentry-sdk==1.39.1
 {%- endif %}
 
 # Django
