@@ -6,7 +6,7 @@ argon2-cffi==23.1.0
 whitenoise==6.6.0
 {%- endif %}
 redis==5.0.1
-hiredis==2.2.3
+hiredis==2.3.2
 {%- if useCelery %}
 celery==5.3.6
 django-celery-beat==2.5.0
