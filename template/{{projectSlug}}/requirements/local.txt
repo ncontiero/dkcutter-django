@@ -10,7 +10,7 @@ watchfiles==0.21.0
 # ------------------------------------------------------------------------------
 mypy==1.7.1
 django-stubs[compatible-mypy]==4.2.7
-pytest==7.4.3
+pytest==7.4.4
 pytest-sugar==0.9.7
 {%- if restFramework == 'DRF' %}
 djangorestframework-stubs[compatible-mypy]==3.14.5
