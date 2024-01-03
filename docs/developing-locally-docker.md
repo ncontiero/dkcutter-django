@@ -4,7 +4,7 @@
 
 - Docker; if you don't have it yet, follow the [installation instructions](https://docs.docker.com/get-docker/#supported-platforms).
 - Docker Compose; refer to the official documentation for the [installation guide](https://docs.docker.com/compose/install/).
-- Cookiecutter; refer to the official GitHub repository of [Cookiecutter](https://github.com/cookiecutter/cookiecutter).
+- DKCutter; refer to the official GitHub repository of [DKCutter](https://github.com/dkshs/dkcutter).
 
 ## Before Getting Started
 
