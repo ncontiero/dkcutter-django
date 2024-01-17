@@ -16,8 +16,8 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "isolatedModules": false
+    "isolatedModules": false,
   },
   "include": ["hooks/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
