@@ -104,32 +104,43 @@ GS_DEFAULT_ACL = "publicRead"
 {% endif -%}
 
 {% if cloudProvider != 'None' or useWhitenoise %}
-# STATIC
-# ------------------------
-{% endif -%}
-{% if useWhitenoise -%}
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-{% elif cloudProvider == 'AWS' -%}
-STATICFILES_STORAGE = "{{projectSlug}}.utils.storages.StaticS3Storage"
+# STATIC & MEDIA
+# ------------------------------------------------------------------------------
+STORAGES = {
+{%- if useWhitenoise %}
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+{%- elif cloudProvider == 'AWS' %}
+    "default": {
+        "BACKEND": "{{projectSlug}}.utils.storages.MediaS3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "{{projectSlug}}.utils.storages.StaticS3Storage",
+    },
+{%- elif cloudProvider == 'GCP' %}
+    "default": {
+        "BACKEND": "{{projectSlug}}.utils.storages.MediaGoogleCloudStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "{{projectSlug}}.utils.storages.StaticGoogleCloudStorage",
+    },
+{%- endif %}
+}
+{% endif %}
+{% if cloudProvider == 'AWS' -%}
+MEDIA_URL = f"https://{aws_s3_domain}/media/"
 COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
 STATIC_URL = f"https://{aws_s3_domain}/static/"
 {% elif cloudProvider == 'GCP' -%}
-STATICFILES_STORAGE = "{{projectSlug}}.utils.storages.StaticGoogleCloudStorage"
+MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/media/"
 COLLECTFAST_STRATEGY = "collectfast.strategies.gcloud.GoogleCloudStrategy"
 STATIC_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/static/"
 {% endif -%}
 
-{% if cloudProvider != 'None' %}
-# MEDIA
-# ------------------------------------------------------------------------------
-{%- endif %}
-{%- if cloudProvider == 'AWS' %}
-DEFAULT_FILE_STORAGE = "{{projectSlug}}.utils.storages.MediaS3Storage"
-MEDIA_URL = f"https://{aws_s3_domain}/media/"
-{%- elif cloudProvider == 'GCP' %}
-DEFAULT_FILE_STORAGE = "{{projectSlug}}.utils.storages.MediaGoogleCloudStorage"
-MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/media/"
-{%- endif %}
 {% if mailService != 'None' %}
 # EMAIL
 # ------------------------------------------------------------------------------
