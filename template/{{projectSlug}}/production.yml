@@ -54,7 +54,7 @@ services:
       {%- endif %}
 
   redis:
-    image: redis:6
+    image: docker.io/redis:6
   {%- if useCelery %}
 
   celeryworker:

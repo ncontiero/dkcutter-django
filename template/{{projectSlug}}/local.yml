@@ -42,7 +42,7 @@ services:
   {%- if useMailpit %}
 
   mailpit:
-    image: axllent/mailpit:latest
+    image: docker.io/axllent/mailpit:latest
     container_name: {{ projectSlug }}_local_mailpit
     ports:
       - "8025:8025"
@@ -51,7 +51,7 @@ services:
   {%- if useCelery %}
 
   redis:
-    image: redis:6
+    image: docker.io/redis:6
     container_name: {{ projectSlug }}_local_redis
 
   celeryworker:
@@ -109,7 +109,7 @@ services:
   {%- if usePgadmin %}
 
   pg_admin:
-    image: dpage/pgadmin4
+    image: docker.io/dpage/pgadmin4
     container_name: {{ projectSlug }}_local_pgadmin
     environment:
       - PGADMIN_DEFAULT_EMAIL=postgres@email.com
