@@ -152,10 +152,6 @@ function removeApiStarterFiles() {
   ];
   removeFiles(apiStarterFiles);
 }
-function removeStorageModule(projectDir: string) {
-  const storageFiles = [path.join(projectDir, "utils", "storages.py")];
-  removeFiles(storageFiles);
-}
 
 function main() {
   const projectDir = path.resolve(context.projectSlug);
@@ -180,7 +176,6 @@ function main() {
     logger.warn(
       "You chose to not use any cloud providers, media files won't be served in production.",
     );
-    removeStorageModule(projectDir);
   }
 
   if (!context.useCelery) {

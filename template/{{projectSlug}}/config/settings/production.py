@@ -116,17 +116,33 @@ STORAGES = {
     },
 {%- elif cloudProvider == 'AWS' %}
     "default": {
-        "BACKEND": "{{projectSlug}}.utils.storages.MediaS3Storage",
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "location": "media",
+            "file_overwrite": False,
+        },
     },
     "staticfiles": {
-        "BACKEND": "{{projectSlug}}.utils.storages.StaticS3Storage",
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "location": "static",
+            "default_acl": "public-read",
+        },
     },
 {%- elif cloudProvider == 'GCP' %}
     "default": {
-        "BACKEND": "{{projectSlug}}.utils.storages.MediaGoogleCloudStorage",
+        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+        "OPTIONS": {
+            "location": "media",
+            "file_overwrite": False,
+        },
     },
     "staticfiles": {
-        "BACKEND": "{{projectSlug}}.utils.storages.StaticGoogleCloudStorage",
+        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+        "OPTIONS": {
+            "location": "static",
+            "default_acl": "publicRead",
+        },
     },
 {%- endif %}
 }
