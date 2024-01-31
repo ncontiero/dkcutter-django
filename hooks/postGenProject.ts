@@ -5,11 +5,11 @@ import { logger } from "./utils/logger";
 import { toBoolean } from "./utils/coerce";
 
 const context = {
-  projectSlug: "{{ projectSlug }}",
-  cloudProvider: "{{ cloudProvider }}",
-  restFramework: "{{ restFramework }}",
-  useTailwindcss: toBoolean("{{ useTailwindcss }}"),
-  useCelery: toBoolean("{{ useCelery }}"),
+  projectSlug: "{{ dkcutter.projectSlug }}",
+  cloudProvider: "{{ dkcutter.cloudProvider }}",
+  restFramework: "{{ dkcutter.restFramework }}",
+  useTailwindcss: toBoolean("{{ dkcutter.useTailwindcss }}"),
+  useCelery: toBoolean("{{ dkcutter.useCelery }}"),
 };
 
 function appendToGitignore(gitignorePath: string, lines: string) {
