@@ -3,11 +3,17 @@ import { z } from "zod";
 import { logger } from "./utils/logger";
 import { toBoolean } from "./utils/coerce";
 
+// The content of this string is evaluated by Jinja, and plays an important role.
+// It updates the cookiecutter context to trim leading and trailing spaces
+// from domain/email values
+// {{ dkcutter.update('domainName', dkcutter.domainName|trim) }}
+// {{ dkcutter.update('email', dkcutter.email|trim) }}
+
 const ctx = {
-  useWhitenoise: toBoolean("{{ useWhitenoise }}"),
-  cloudProvider: "{{ cloudProvider }}",
-  mailService: "{{ mailService }}",
-  useMailpit: toBoolean("{{ useMailpit }}"),
+  useWhitenoise: toBoolean("{{ dkcutter.useWhitenoise }}"),
+  cloudProvider: "{{ dkcutter.cloudProvider }}",
+  mailService: "{{ dkcutter.mailService }}",
+  useMailpit: toBoolean("{{ dkcutter.useMailpit }}"),
 };
 
 export function validateProject() {
