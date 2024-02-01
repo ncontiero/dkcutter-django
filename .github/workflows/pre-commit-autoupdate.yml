@@ -30,7 +30,7 @@ jobs:
         run: pip install pre-commit
 
       - name: Autoupdate generated projects
-        working-directory: "template/{{projectSlug}}"
+        working-directory: "template/{{dkcutter.projectSlug}}"
         run: pre-commit autoupdate
 
       - name: Create Pull Request
