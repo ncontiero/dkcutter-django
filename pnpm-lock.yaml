@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   dkcutter:
-    specifier: 4.0.0
-    version: 4.0.0(typescript@5.3.3)
+    specifier: 4.0.1
+    version: 4.0.1(typescript@5.3.3)
 
 devDependencies:
   '@dkshs/eslint-config':
@@ -825,9 +825,9 @@ packages:
   /colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
 
-  /commander@11.1.0:
-    resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
-    engines: {node: '>=16'}
+  /commander@12.0.0:
+    resolution: {integrity: sha512-MwVNWlYjDTtOjX5PiD7o5pK0UrFU/OYgcJfjjK4RaHZETNtjJqrZa9Y9ds88+A+f+d5lv+561eZ+yCKoS3gbAA==}
+    engines: {node: '>=18'}
     dev: false
 
   /commander@5.1.0:
@@ -924,12 +924,12 @@ packages:
       path-type: 4.0.0
     dev: true
 
-  /dkcutter@4.0.0(typescript@5.3.3):
-    resolution: {integrity: sha512-aq2dAHhIv/xMvXr9p3O9Bvpa3TOQwQSP6xj/TX7wB/MpOvY2X3HqcE/U7zBam3oE1FafGsofXNpuA/tOxnbkCA==}
+  /dkcutter@4.0.1(typescript@5.3.3):
+    resolution: {integrity: sha512-ldAtpqv+OYC14Tjv/nqNFkhK8U5NMUdYNkEVeC4zf19bcjy0S9+/7qOTVCrTubm2qX8uljcIjN+D9UMe85NuDw==}
     hasBin: true
     dependencies:
       colorette: 2.0.20
-      commander: 11.1.0
+      commander: 12.0.0
       cosmiconfig: 9.0.0(typescript@5.3.3)
       execa: 8.0.1
       fs-extra: 11.2.0
