@@ -18,6 +18,7 @@ COPY ./requirements .
 
 # Create Python Dependency and Sub-Dependency Wheels.
 RUN pip wheel --wheel-dir /usr/src/app/wheels  \
+  -r production.txt  \
   -r ${BUILD_ENVIRONMENT}.txt
 
 
@@ -37,10 +38,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   zsh \
   curl \
   wget \
-  fonts-powerline
-
-# Install required system dependencies
-RUN apt-get update && apt-get install --no-install-recommends -y \
+  fonts-powerline \
   # psycopg2 dependencies
   libpq-dev \
   # Translations dependencies
