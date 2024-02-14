@@ -186,7 +186,6 @@ async function main() {
       const projectDir = path.join(test, args[1]);
       await testCMDPasses("ruff", projectDir, args[1], ["check"]);
       await testCMDPasses("ruff", projectDir, args[1], ["format"]);
-      await testCMDPasses("isort", projectDir, args[1]);
       await testDjLintPasses(projectDir, args[1]);
       await testCMDPasses("djlint", projectDir, args[1], ["--check", "."]);
       logger.success(`✓ All checks passed for project ${args[1]}`);
