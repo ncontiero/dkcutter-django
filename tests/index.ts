@@ -132,7 +132,7 @@ function generateRandomString(n: number) {
     const index = Math.floor(Math.random() * characters.length);
     result += characters.charAt(index);
   }
-  return result;
+  return `test_${result}`;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -153,21 +153,11 @@ async function testCMDPasses(
 ) {
   const cmdCapitalized = cmd.charAt(0).toUpperCase() + cmd.slice(1);
   const dirArg = insertDirectory ? projectDir : "";
-  const result = await execa(cmd, [dirArg, ...args], { cwd: projectDir });
+  const result = await execa(cmd, [...args, dirArg], { cwd: projectDir });
   if (result.failed) {
     throw new Error(`${cmdCapitalized} failed for ${projectName}`);
   }
   logger.success(`✓ ${cmdCapitalized} passed for ${projectName}`);
-}
-
-async function testBlackPasses(projectDir: string, projectName: string) {
-  await testCMDPasses("black", projectDir, projectName, [
-    "--check",
-    "--diff",
-    "--exclude",
-    "migrations",
-    ".",
-  ]);
 }
 
 async function testDjLintPasses(projectDir: string, projectName: string) {
@@ -194,8 +184,8 @@ async function main() {
     try {
       await generateProject(args, test);
       const projectDir = path.join(test, args[1]);
-      await testCMDPasses("flake8", path.join(test, args[1]), args[1]);
-      await testBlackPasses(projectDir, args[1]);
+      await testCMDPasses("ruff", projectDir, args[1], ["check"]);
+      await testCMDPasses("ruff", projectDir, args[1], ["format"]);
       await testCMDPasses("isort", projectDir, args[1]);
       await testDjLintPasses(projectDir, args[1]);
       await testCMDPasses("djlint", projectDir, args[1], ["--check", "."]);

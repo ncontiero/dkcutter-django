@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# ruff: noqa
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
@@ -12,7 +13,7 @@ def main():
         from django.core.management import execute_from_command_line
     except ImportError:
         try:
-            import django  # noqa
+            import django
         except ImportError as e:
             raise ImportError(
                 "Couldn't import Django. Are you sure it's installed and "

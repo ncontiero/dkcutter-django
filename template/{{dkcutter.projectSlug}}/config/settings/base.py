@@ -1,3 +1,4 @@
+# ruff: noqa: ERA001, E501
 """
 Base settings to build other settings files upon.
 """
@@ -148,7 +149,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
             ],
         },
-    }
+    },
 ]
 
 # SECURITY
@@ -198,7 +199,7 @@ LOGGING = {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
             "formatter": "verbose",
-        }
+        },
     },
     "root": {"level": "INFO", "handlers": ["console"]},
 }

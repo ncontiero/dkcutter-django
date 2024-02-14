@@ -1,13 +1,13 @@
 {% if dkcutter.restFramework == 'DRF' -%}
 from django.conf import settings
-from rest_framework.routers import DefaultRouter, SimpleRouter
+from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 {% elif dkcutter.restFramework == 'DNRF' -%}
-from django.contrib.admin.views.decorators import staff_member_required
-from ninja import NinjaAPI
-
 import orjson
-from ninja.parser import Parser
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpRequest
+from ninja import NinjaAPI
+from ninja.parser import Parser
 
 {% endif %}
 

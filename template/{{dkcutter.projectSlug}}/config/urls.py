@@ -1,3 +1,4 @@
+# ruff: noqa
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -19,8 +20,10 @@ urlpatterns = [
     # API base url
     path("api/", api.urls),
 {%- endif %}
+    # Media files
+    *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
     # Your stuff: custom urls includes go here
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 {% if dkcutter.restFramework == 'DRF' %}
 # API URLS
 urlpatterns += [
