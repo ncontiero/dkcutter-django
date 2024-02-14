@@ -9,10 +9,10 @@ updates:
     schedule:
       interval: "daily"
     labels:
-      - "update"
+      - "dependency update"
     commit-message:
       include: scope
-      prefix: update
+      prefix: chore
 
   # Update npm packages
   - package-ecosystem: "npm"
@@ -20,28 +20,28 @@ updates:
     schedule:
       interval: "daily"
     labels:
-      - "update"
+      - "dependency update"
     commit-message:
       include: scope
-      prefix: update
+      prefix: chore
 
   # Update template npm packages
   - package-ecosystem: "npm"
-    directory: "template/{{projectSlug}}/"
+    directory: "template/{{dkcutter.projectSlug}}/"
     schedule:
       interval: "daily"
     labels:
-      - "update"
+      - "dependency update"
     commit-message:
       include: scope
-      prefix: update
+      prefix: chore
 
   # Enable version updates for Docker
   # We need to specify each Dockerfile in a separate entry because Dependabot doesn't
   # support wildcards or recursively checking subdirectories. Check this issue for updates:
   # https://github.com/dependabot/dependabot-core/issues/2178
   - package-ecosystem: "docker"
-    directory: "template/{{projectSlug}}/compose/local/django/"
+    directory: "template/{{dkcutter.projectSlug}}/compose/local/django/"
     schedule:
       interval: "daily"
     ignore:
@@ -50,33 +50,33 @@ updates:
           - "version-update:semver-major"
           - "version-update:semver-minor"
     labels:
-      - "update"
+      - "dependency update"
     commit-message:
       include: scope
-      prefix: update
+      prefix: chore
 
   - package-ecosystem: "docker"
-    directory: "template/{{projectSlug}}/compose/local/node/"
+    directory: "template/{{dkcutter.projectSlug}}/compose/local/node/"
     schedule:
       interval: "daily"
     labels:
-      - "update"
+      - "dependency update"
     commit-message:
       include: scope
-      prefix: update
+      prefix: chore
 
   - package-ecosystem: "docker"
-    directory: "template/{{projectSlug}}/compose/production/aws/"
+    directory: "template/{{dkcutter.projectSlug}}/compose/production/aws/"
     schedule:
       interval: "daily"
     labels:
-      - "update"
+      - "dependency update"
     commit-message:
       include: scope
-      prefix: update
+      prefix: chore
 
   - package-ecosystem: "docker"
-    directory: "template/{{projectSlug}}/compose/production/django/"
+    directory: "template/{{dkcutter.projectSlug}}/compose/production/django/"
     schedule:
       interval: "daily"
     ignore:
@@ -85,27 +85,27 @@ updates:
           - "version-update:semver-major"
           - "version-update:semver-minor"
     labels:
-      - "update"
+      - "dependency update"
     commit-message:
       include: scope
-      prefix: update
+      prefix: chore
 
   - package-ecosystem: "docker"
-    directory: "template/{{projectSlug}}/compose/production/postgres/"
+    directory: "template/{{dkcutter.projectSlug}}/compose/production/postgres/"
     schedule:
       interval: "daily"
     labels:
-      - "update"
+      - "dependency update"
     commit-message:
       include: scope
-      prefix: update
+      prefix: chore
 
   - package-ecosystem: "docker"
-    directory: "template/{{projectSlug}}/compose/production/traefik/"
+    directory: "template/{{dkcutter.projectSlug}}/compose/production/traefik/"
     schedule:
       interval: "daily"
     labels:
-      - "update"
+      - "dependency update"
     commit-message:
       include: scope
-      prefix: update
+      prefix: chore

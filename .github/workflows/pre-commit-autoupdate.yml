@@ -38,7 +38,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: update/pre-commit-autoupdate
-          title: "update: pre-commit hooks"
-          commit-message: "update: pre-commit hooks"
+          title: "chore(deps): update pre-commit hooks"
+          commit-message: "chore(deps): update pre-commit hooks"
           body: Update versions of tools in pre-commit configs to latest version
-          labels: update
+          labels: dependency update
