@@ -55,10 +55,8 @@
         // python
         "ms-python.python",
         "ms-python.vscode-pylance",
-        "ms-python.isort",
         "sourcery.sourcery",
         "KevinRose.vsc-python-indent",
-        "ms-python.black-formatter",
         "charliermarsh.ruff",
         // django
         "batisteo.vscode-django",
