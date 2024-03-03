@@ -1,6 +1,6 @@
 {
   "name": "dkcutter-django",
-  "description": "A simple Django template with dkcutter.",
+  "description": "DKCutter Django is a framework for jumpstarting production-ready Django projects quickly.",
   "scripts": {
     "typecheck": "tsc --noEmit",
     "generate": "dkcutter .",

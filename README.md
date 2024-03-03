@@ -1,9 +1,11 @@
-# dkcutter-django
+# DKCutter Django
 
 [![license mit](https://img.shields.io/badge/licence-MIT-56BEB8)](LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-A simple Django template with dkcutter.
+Powered by [DKCutter](https://github.com/dkshs/dkcutter), DKCutter Django is a framework for jumpstarting production-ready Django projects quickly.
+
+- If you have problems with DKCutter NextJs, please open [issues](https://github.com/dkshs/dkcutter-django/issues/new).
 
 ## Usage
 
