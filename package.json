@@ -14,17 +14,17 @@
   "type": "module",
   "devDependencies": {
     "@dkshs/eslint-config": "1.4.0",
-    "@types/fs-extra": "^11",
-    "@types/prompts": "^2",
+    "@types/fs-extra": "^11.0.4",
+    "@types/prompts": "^2.4.9",
     "colorette": "^2.0.20",
-    "eslint": "^8",
+    "eslint": "^8.57.0",
     "execa": "^8.0.1",
     "fs-extra": "^11.2.0",
     "ora": "^8.0.1",
     "prompts": "^2.4.2",
     "tsx": "^4.7.1",
     "type-fest": "^4.11.1",
-    "typescript": "^5",
+    "typescript": "^5.4.2",
     "zod": "^3.22.4"
   },
   "dependencies": {
