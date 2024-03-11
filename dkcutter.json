@@ -91,5 +91,14 @@
   "useTailwindcss": {
     "value": false,
     "promptMessage": "Would you like to use {{ colors.blue('Tailwindcss') }}?"
+  },
+  "automatedDepsUpdater": {
+    "value": "none",
+    "choices": [
+      { "title": "None", "value": "none" },
+      { "title": "Mend Renovate", "value": "renovate" },
+      { "title": "Github Dependabot", "value": "dependabot" }
+    ],
+    "promptMessage": "What {{ colors.blue('Automated Dependency Updater')}} do you want to use?"
   }
 }

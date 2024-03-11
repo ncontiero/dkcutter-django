@@ -4,12 +4,16 @@ import path from "path";
 import { logger } from "./utils/logger";
 import { toBoolean } from "./utils/coerce";
 
+type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
+
 const context = {
   projectSlug: "{{ dkcutter.projectSlug }}",
   cloudProvider: "{{ dkcutter.cloudProvider }}",
   restFramework: "{{ dkcutter.restFramework }}",
   useTailwindcss: toBoolean("{{ dkcutter.useTailwindcss }}"),
   useCelery: toBoolean("{{ dkcutter.useCelery }}"),
+  automatedDepsUpdater:
+    "{{ dkcutter.automatedDepsUpdater }}" as AutomatedDepsUpdater,
 };
 
 function appendToGitignore(gitignorePath: string, lines: string) {
@@ -36,6 +40,26 @@ function handleUseTailwind(projectDir: string) {
 function removeCeleryFiles() {
   const celeryFiles = [path.join("config", "celery_app.py")];
   removeFiles(celeryFiles);
+}
+
+function handleAutomatedDepsUpdater(option: AutomatedDepsUpdater) {
+  const githubFolder = path.resolve(".github");
+  const filesToRemove = [];
+  switch (option) {
+    case "none":
+      filesToRemove.push(
+        path.join(githubFolder, "renovate.json"),
+        path.join(githubFolder, "dependabot.yml"),
+      );
+      break;
+    case "renovate":
+      filesToRemove.push(path.join(githubFolder, "dependabot.yml"));
+      break;
+    case "dependabot":
+      filesToRemove.push(path.join(githubFolder, "renovate.json"));
+      break;
+  }
+  removeFiles(filesToRemove);
 }
 
 function generateRandomString(n: number) {
@@ -186,6 +210,8 @@ function main() {
   if (context.restFramework === "None") {
     removeApiStarterFiles();
   }
+
+  handleAutomatedDepsUpdater(context.automatedDepsUpdater);
 
   logger.success("Project initialized, keep up the good work!");
 }

@@ -61,6 +61,8 @@ const SUPPORTED_COMBINATIONS = [
   { useCelery: false },
   { useTailwindcss: true },
   { useTailwindcss: false },
+  { automatedDepsUpdater: "renovate" },
+  { automatedDepsUpdater: "dependabot" },
 ];
 const UNSUPPORTED_COMBINATIONS = [
   { postgresqlVersion: 5 },
@@ -71,6 +73,7 @@ const UNSUPPORTED_COMBINATIONS = [
   { cloudProvider: "Non" },
   { mailService: "Non" },
   { mailService: "Other" },
+  { automatedDepsUpdater: "xpto" },
 ];
 const INVALID_SLUGS = [
   "",
