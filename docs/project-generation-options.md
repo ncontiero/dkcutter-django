@@ -61,3 +61,9 @@ This page describes all the template options that will be prompted by the [dkcut
 - **Use pgadmin**: Indicates whether the project should be configured to use [pgAdmin](https://www.pgadmin.org/).
 
 - **Use tailwindcss**: Indicates whether the project should be configured to use [TailwindCSS](https://tailwindcss.com/).
+
+- **Automated Deps Updater**: Indicates whether the project should be configured using the following automated deps updater:
+
+  - None
+  - [Mend Renovate](https://docs.renovatebot.com/)
+  - [Github Dependabot](https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file)
