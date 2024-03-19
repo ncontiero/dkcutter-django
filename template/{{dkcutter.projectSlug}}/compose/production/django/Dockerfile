@@ -12,7 +12,7 @@ COPY . ${APP_HOME}
 RUN npm run tailwind:build
 {%- endif %}
 # define an alias for the specific python version used in this file.
-FROM docker.io/python:3.11.8-slim-bookworm as python
+FROM docker.io/python:3.12.2-slim-bookworm as python
 
 # Python build stage
 FROM python as python-build-stage
