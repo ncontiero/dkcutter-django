@@ -7,12 +7,11 @@ import { logger } from "./logger";
 const PATTERN = /{{(\s?dkcutter)[.](.*?)}}/;
 
 const SUPPORTED_COMBINATIONS = [
+  { postgresqlVersion: "16" },
   { postgresqlVersion: "15" },
   { postgresqlVersion: "14" },
   { postgresqlVersion: "13" },
   { postgresqlVersion: "12" },
-  { postgresqlVersion: "11" },
-  { postgresqlVersion: "10" },
   { cloudProvider: "AWS", useWhitenoise: true },
   { cloudProvider: "AWS", useWhitenoise: false },
   { cloudProvider: "GCP", useWhitenoise: true },

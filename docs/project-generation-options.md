@@ -16,12 +16,11 @@ This page describes all the template options that will be prompted by the [dkcut
 
 - **PostgreSQL version**: Select a [PostgreSQL](https://www.postgresql.org/docs/) version to use. The choices are:
 
+  - 16
   - 15
   - 14
   - 13
   - 12
-  - 11
-  - 10
 
 - **Cloud Provider**: Select a cloud provider for static & media files. The choices are:
 
