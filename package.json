@@ -13,7 +13,7 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
-    "@dkshs/eslint-config": "1.4.0",
+    "@dkshs/eslint-config": "1.5.0",
     "@types/fs-extra": "^11.0.4",
     "@types/prompts": "^2.4.9",
     "colorette": "^2.0.20",
