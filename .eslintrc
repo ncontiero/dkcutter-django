@@ -1,4 +1,0 @@
-{
-  "extends": ["@dkshs/eslint-config/node"],
-  "ignorePatterns": ["node_modules", "template", ".venv", ".cache"]
-}

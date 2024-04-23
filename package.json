@@ -1,19 +1,22 @@
 {
   "name": "dkcutter-django",
+  "type": "module",
   "description": "DKCutter Django is a framework for jumpstarting production-ready Django projects quickly.",
+  "author": "DKSHS",
+  "license": "MIT",
   "scripts": {
     "typecheck": "tsc --noEmit",
     "generate": "dkcutter .",
-    "lint": "eslint . && prettier . -c",
-    "lint:fix": "eslint --fix . && prettier . -w",
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix",
     "check": "pnpm lint && pnpm typecheck",
     "test": "tsx tests/index.ts"
   },
-  "author": "DKSHS",
-  "license": "MIT",
-  "type": "module",
+  "dependencies": {
+    "dkcutter": "4.0.3"
+  },
   "devDependencies": {
-    "@dkshs/eslint-config": "1.5.0",
+    "@dkshs/eslint-config": "2.3.0",
     "@types/fs-extra": "^11.0.4",
     "@types/prompts": "^2.4.9",
     "colorette": "^2.0.20",
@@ -26,8 +29,5 @@
     "type-fest": "^4.15.0",
     "typescript": "^5.4.5",
     "zod": "^3.22.5"
-  },
-  "dependencies": {
-    "dkcutter": "4.0.3"
   }
 }

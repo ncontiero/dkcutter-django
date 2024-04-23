@@ -38,12 +38,12 @@ export function validateProject() {
         "You must choose a mail service if you use Mailpit.",
       )
       .parse(ctx);
-  } catch (err) {
+  } catch (error) {
     logger.break();
-    if (err instanceof z.ZodError) {
-      logger.error(err.format()._errors.join(",").replaceAll(",", "\n"));
+    if (error instanceof z.ZodError) {
+      logger.error(error.format()._errors.join(",").replaceAll(",", "\n"));
     } else {
-      logger.error(err);
+      logger.error(error);
     }
     process.exit(1);
   }

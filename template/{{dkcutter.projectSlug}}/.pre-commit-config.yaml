@@ -21,10 +21,10 @@ repos:
       - id: detect-private-key
 
   - repo: https://github.com/adamchainz/django-upgrade
-    rev: "1.16.0"
+    rev: 1.16.0
     hooks:
       - id: django-upgrade
-        args: ["--target-version", "4.2"]
+        args: [--target-version, "4.2"]
 
   # Run the Ruff linter.
   - repo: https://github.com/astral-sh/ruff-pre-commit

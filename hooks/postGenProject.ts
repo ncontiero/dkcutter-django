@@ -1,5 +1,5 @@
+import path from "node:path";
 import fs from "fs-extra";
-import path from "path";
 
 import { logger } from "./utils/logger";
 import { toBoolean } from "./utils/coerce";

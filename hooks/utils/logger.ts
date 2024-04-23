@@ -1,10 +1,10 @@
+/* eslint-disable no-console */
 import util from "node:util";
-import { parentPort, isMainThread } from "node:worker_threads";
-import { blue, yellow, green, red } from "colorette";
+import { isMainThread, parentPort } from "node:worker_threads";
+import { blue, green, red, yellow } from "colorette";
 
 type LOG_TYPE = "info" | "success" | "error" | "warn";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const colorize = (type: LOG_TYPE, data: any) => {
   switch (type) {
     case "info":

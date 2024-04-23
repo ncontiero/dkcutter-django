@@ -4,7 +4,7 @@ import fs from "fs-extra";
 
 import { logger } from "./logger";
 
-const PATTERN = /{{(\s?dkcutter)[.](.*?)}}/;
+const PATTERN = /{{(\s?dkcutter)\.(.*?)}}/;
 
 const SUPPORTED_COMBINATIONS = [
   { postgresqlVersion: "16" },
@@ -137,7 +137,6 @@ function generateRandomString(n: number) {
   return `test_${result}`;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function constructArgs(combination: { [key: string]: any }) {
   const args = ["--projectName", generateRandomString(8)];
   for (const [item, value] of Object.entries(combination)) {
@@ -193,12 +192,12 @@ async function main() {
       logger.success(`✓ All checks passed for project ${args[1]}`);
       logger.break();
       testsPassed += 6;
-    } catch (e) {
+    } catch (error) {
       let msg = `Failed to generate project ${args[1]} with args: ${args
         .slice(2)
         .join(" ")}`;
-      if (e instanceof Error) {
-        msg = `${msg}\n${e.message}`;
+      if (error instanceof Error) {
+        msg = `${msg}\n${error.message}`;
       }
       logger.error(msg);
       process.exit(1);
@@ -210,7 +209,7 @@ async function main() {
     const args = constructArgs(combination);
     try {
       await generateProject(args, test);
-    } catch (e) {
+    } catch {
       logger.success(
         `✓ Expected error when creating project ${args[1]} with args: ${args
           .slice(2)
@@ -234,7 +233,7 @@ async function main() {
     const args = constructArgs({ projectSlug: slug });
     try {
       await generateProject(args, test);
-    } catch (e) {
+    } catch {
       logger.success(
         `✓ Expected error when creating project ${args[1]} with slug "${slug}"`,
       );
@@ -256,4 +255,4 @@ async function main() {
   await fs.remove(test);
 }
 
-main();
+await main();

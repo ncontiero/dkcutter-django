@@ -1,8 +1,8 @@
 {
   "name": "{{dkcutter.projectSlug}}",
   "version": "1.0.0",
-  "author": "{{dkcutter.authorName}}",
   "description": "{{dkcutter.description}}",
+  "author": "{{dkcutter.authorName}}",
   "license": "MIT",
   "nodemonConfig": {
     "watch": [
