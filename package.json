@@ -1,6 +1,7 @@
 {
   "name": "dkcutter-django",
   "type": "module",
+  "packageManager": "pnpm@9.0.5",
   "description": "DKCutter Django is a framework for jumpstarting production-ready Django projects quickly.",
   "author": "DKSHS",
   "license": "MIT",
