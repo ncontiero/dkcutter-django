@@ -17,7 +17,7 @@
     "dkcutter": "4.0.3"
   },
   "devDependencies": {
-    "@dkshs/eslint-config": "2.3.0",
+    "@dkshs/eslint-config": "2.3.2",
     "@types/fs-extra": "^11.0.4",
     "@types/prompts": "^2.4.9",
     "colorette": "^2.0.20",

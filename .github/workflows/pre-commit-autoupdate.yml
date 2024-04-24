@@ -6,7 +6,6 @@ name: Pre-commit auto-update
 on:
   schedule:
     - cron: "0 0 * * *"
-  # eslint-disable-next-line yml/no-empty-mapping-value
   workflow_dispatch: # to trigger manually
 
 permissions:

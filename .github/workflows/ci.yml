@@ -3,7 +3,6 @@ name: CI
 on:
   push:
     branches: [master, main]
-  # eslint-disable-next-line yml/no-empty-mapping-value
   pull_request:
 
 concurrency:
