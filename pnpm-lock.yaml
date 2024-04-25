@@ -13,8 +13,8 @@ importers:
         version: 4.0.3(chokidar@3.6.0)(typescript@5.4.5)
     devDependencies:
       '@dkshs/eslint-config':
-        specifier: 2.3.2
-        version: 2.3.2(@typescript-eslint/eslint-plugin@7.7.1(@typescript-eslint/parser@7.7.1(eslint@9.1.1)(typescript@5.4.5))(eslint@9.1.1)(typescript@5.4.5))(eslint-config-prettier@9.1.0(eslint@9.1.1))(eslint@9.1.1)(tailwindcss@3.4.3)(typescript@5.4.5)
+        specifier: 2.3.3
+        version: 2.3.3(@typescript-eslint/eslint-plugin@7.7.1(@typescript-eslint/parser@7.7.1(eslint@9.1.1)(typescript@5.4.5))(eslint@9.1.1)(typescript@5.4.5))(eslint-config-prettier@9.1.0(eslint@9.1.1))(eslint@9.1.1)(tailwindcss@3.4.3)(typescript@5.4.5)
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
@@ -78,8 +78,8 @@ packages:
     resolution: {integrity: sha512-Y7KbAP984rn1VGMbGqKmBLio9V7y5Je9GvU4rQPCPinCyNfUcToxIXl06d59URp/F3LwinvODxab5N/G6qggkw==}
     engines: {node: '>=6.9.0'}
 
-  '@dkshs/eslint-config@2.3.2':
-    resolution: {integrity: sha512-8cM42cglBJdNANOdOP/YMZhtfBbZzLlCbMyofz07kfZeWrQ+BHGTa3cS0xx++VKZvcLw5YDRm1MNNDq5WyUWtw==}
+  '@dkshs/eslint-config@2.3.3':
+    resolution: {integrity: sha512-14ZZS6tC30ZHTGi8e2sfNR0btNU60gCifQUmGmJExT6vwM/A4hwxXWD3o8UN7O8/RZpk9YT8dRnr28D4NfRT0A==}
     peerDependencies:
       eslint: '>=8.40.0'
 
@@ -1183,10 +1183,6 @@ packages:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
 
-  ignore@5.3.0:
-    resolution: {integrity: sha512-g7dmpshy+gD7mh88OC9NwSGTKoc3kyLAZQRU1mt53Aw/vnvfXnbC+F/7F7QoYVKbV+KNvJx8wArewKy1vXMtlg==}
-    engines: {node: '>= 4'}
-
   ignore@5.3.1:
     resolution: {integrity: sha512-5Fytz/IraMjqpwfd34ke28PTVMjZjJG2MPn5t7OE4eUCUNf8BAa7b5WUS9/Qvr6mwOQS7Mk6vdsMno5he+T8Xw==}
     engines: {node: '>= 4'}
@@ -2172,7 +2168,7 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
-  '@dkshs/eslint-config@2.3.2(@typescript-eslint/eslint-plugin@7.7.1(@typescript-eslint/parser@7.7.1(eslint@9.1.1)(typescript@5.4.5))(eslint@9.1.1)(typescript@5.4.5))(eslint-config-prettier@9.1.0(eslint@9.1.1))(eslint@9.1.1)(tailwindcss@3.4.3)(typescript@5.4.5)':
+  '@dkshs/eslint-config@2.3.3(@typescript-eslint/eslint-plugin@7.7.1(@typescript-eslint/parser@7.7.1(eslint@9.1.1)(typescript@5.4.5))(eslint@9.1.1)(typescript@5.4.5))(eslint-config-prettier@9.1.0(eslint@9.1.1))(eslint@9.1.1)(tailwindcss@3.4.3)(typescript@5.4.5)':
     dependencies:
       '@next/eslint-plugin-next': 14.2.2
       eslint: 9.1.1
@@ -2296,7 +2292,7 @@ snapshots:
       debug: 4.3.4
       espree: 9.6.1
       globals: 13.24.0
-      ignore: 5.3.0
+      ignore: 5.3.1
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       minimatch: 3.1.2
@@ -3491,8 +3487,6 @@ snapshots:
   hosted-git-info@2.8.9: {}
 
   human-signals@5.0.0: {}
-
-  ignore@5.3.0: {}
 
   ignore@5.3.1: {}
 
