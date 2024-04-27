@@ -1,3 +1,4 @@
+# ruff: noqa
 """
 WSGI config for {{ dkcutter.projectName }} project.
 
