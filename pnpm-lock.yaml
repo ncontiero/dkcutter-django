@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       dkcutter:
-        specifier: 4.1.0-beta.1
-        version: 4.1.0-beta.1(chokidar@3.6.0)(typescript@5.4.5)
+        specifier: 4.1.0
+        version: 4.1.0(chokidar@3.6.0)(typescript@5.4.5)
     devDependencies:
       '@dkshs/eslint-config':
         specifier: 2.3.3
@@ -847,8 +847,8 @@ packages:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
 
-  dkcutter@4.1.0-beta.1:
-    resolution: {integrity: sha512-kFjy+0x57CD4RsApxvX8z1Lecgo1pouMPQNR7ILy7B1u3gHdcE7nARMLYM7GACaxCdMCKP0vBtpnhqy/0/mGFQ==}
+  dkcutter@4.1.0:
+    resolution: {integrity: sha512-dHlGDs1lKAbCarKqiu+XLTEvV30ZmlI/4EKy5M9fIUCEjV6+SPp4nmG5L9Nl+paKVPTz2LyCg7EnBIc0I7giOQ==}
     hasBin: true
 
   dlv@1.1.3:
@@ -2204,6 +2204,11 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
+  tsx@4.8.2:
+    resolution: {integrity: sha512-hmmzS4U4mdy1Cnzpl/NQiPUC2k34EcNSTZYVJThYKhdqTwuBeF+4cG9KUK/PFQ7KHaAaYwqlb7QfmsE2nuj+WA==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -3210,7 +3215,7 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
-  dkcutter@4.1.0-beta.1(chokidar@3.6.0)(typescript@5.4.5):
+  dkcutter@4.1.0(chokidar@3.6.0)(typescript@5.4.5):
     dependencies:
       colorette: 2.0.20
       commander: 12.0.0
@@ -3220,7 +3225,7 @@ snapshots:
       nunjucks: 3.2.4(chokidar@3.6.0)
       ora: 8.0.1
       prompts: 2.4.2
-      tsx: 4.8.0
+      tsx: 4.8.2
       which: 4.0.0
       zod: 3.23.5
     transitivePeerDependencies:
@@ -4775,6 +4780,13 @@ snapshots:
   tslib@2.6.2: {}
 
   tsx@4.8.0:
+    dependencies:
+      esbuild: 0.20.2
+      get-tsconfig: 4.7.3
+    optionalDependencies:
+      fsevents: 2.3.3
+
+  tsx@4.8.2:
     dependencies:
       esbuild: 0.20.2
       get-tsconfig: 4.7.3
