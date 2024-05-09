@@ -14,7 +14,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "dkcutter": "4.1.0"
+    "dkcutter": "4.1.1"
   },
   "devDependencies": {
     "@dkshs/eslint-config": "2.4.0",
