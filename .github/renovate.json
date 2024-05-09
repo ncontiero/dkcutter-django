@@ -1,18 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":disableRateLimiting",
-    ":semanticCommitType(chore)"
-  ],
-  "schedule": ["before 5am every weekday"],
-  "dependencyDashboard": false,
-  "labels": ["dependency update"],
-  "commitMessageTopic": "{{depName}}",
-  "semanticCommits": "enabled",
-  "rebaseWhen": "conflicted",
-  "rangeStrategy": "bump",
-  "configMigration": true,
+  "extends": ["github>dkshs/renovate-config"],
   "packageRules": [
     {
       "enabled": false,
