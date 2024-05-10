@@ -22,7 +22,7 @@
     "@types/prompts": "^2.4.9",
     "colorette": "^2.0.20",
     "eslint": "^9.2.0",
-    "execa": "^9.0.1",
+    "execa": "^9.0.2",
     "fs-extra": "^11.2.0",
     "ora": "^8.0.1",
     "prompts": "^2.4.2",
