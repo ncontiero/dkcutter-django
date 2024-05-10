@@ -14,11 +14,5 @@
       "matchDepNames": ["django"],
       "matchUpdateTypes": ["major", "minor"]
     }
-  ],
-  "pip_requirements": {
-    "fileMatch": [
-      "(^|/)[\\w-]*requirements(-\\w+)?\\.(txt|pip)$",
-      "^.*/requirements/.*.txt$"
-    ]
-  }
+  ]
 }
