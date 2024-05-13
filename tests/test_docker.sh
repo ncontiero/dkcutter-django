@@ -15,22 +15,22 @@ pnpm generate -o .cache/docker -y -f "$@"
 cd my_awesome_project
 
 # make sure all images build
-docker compose -f local.yml build
+docker compose -f docker-compose.local.yml build
 
 # run the project's type checks
-docker compose -f local.yml run django mypy my_awesome_project
+docker compose -f docker-compose.local.yml run django mypy my_awesome_project
 
 # run the project's tests
-docker compose -f local.yml run django pytest -p no:cacheprovider
+docker compose -f docker-compose.local.yml run django pytest -p no:cacheprovider
 
 # return non-zero status code if there are migrations that have not been created
-docker compose -f local.yml run django python manage.py makemigrations --dry-run --check || {
+docker compose -f docker-compose.local.yml run django python manage.py makemigrations --dry-run --check || {
   echo "ERROR: there were changes in the models, but migration listed above have not been created and are not saved in version control"
   exit 1
 }
 
 # Make sure the check doesn't raise any warnings
-docker compose -f local.yml run \
+docker compose -f docker-compose.local.yml run \
   -e DJANGO_SECRET_KEY="$(openssl rand -base64 64)" \
   -e REDIS_URL=redis://redis:6379/0 \
   -e CELERY_BROKER_URL=redis://redis:6379/0 \
@@ -44,5 +44,5 @@ docker compose -f local.yml run \
 
 # Run npm tailwind:build script if package.json is present
 if [ -f "package.json" ]; then
-  docker compose -f local.yml run node npm run tailwind:build
+  docker compose -f docker-compose.local.yml run node npm run tailwind:build
 fi

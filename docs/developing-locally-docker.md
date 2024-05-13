@@ -21,10 +21,10 @@ For more information refer to [Project Generation Options](./project-generation-
 This can take a while, especially the first time you run this particular command on your development system:
 
 ```bash
-docker-compose -f local.yml build
+docker-compose -f docker-compose.local.yml build
 ```
 
-Generally, if you want to emulate production environment use `production.yml` instead. And this is true for any other actions you might need to perform: whenever a switch is required, just do it!
+Generally, if you want to emulate production environment use `docker-compose.production.yml` instead. And this is true for any other actions you might need to perform: whenever a switch is required, just do it!
 
 ## Run the Stack
 
@@ -33,13 +33,13 @@ This brings up both Django, PostgreSQL and PGAdmin. The first time it is run it 
 Open a terminal at the project root and run the following for local development:
 
 ```bash
-docker-compose -f local.yml up
+docker-compose -f docker-compose.local.yml up
 ```
 
-You can also set the environment variable `COMPOSE_FILE` pointing to `local.yml` like this:
+You can also set the environment variable `COMPOSE_FILE` pointing to `docker-compose.local.yml` like this:
 
 ```bash
-export COMPOSE_FILE=local.yml
+export COMPOSE_FILE=docker-compose.local.yml
 ```
 
 And then run:
@@ -58,18 +58,18 @@ The site should start and be accessible at <http://localhost:8000>.
 
 ## Execute Management Commands
 
-As with any shell command that we wish to run in our container, this is done using the `docker-compose -f local.yml run --rm` command:
+As with any shell command that we wish to run in our container, this is done using the `docker-compose -f docker-compose.local.yml run --rm` command:
 
 ```bash
-docker-compose -f local.yml run --rm django python manage.py migrate
-docker-compose -f local.yml run --rm django python manage.py createsuperuser
+docker-compose -f docker-compose.local.yml run --rm django python manage.py migrate
+docker-compose -f docker-compose.local.yml run --rm django python manage.py createsuperuser
 ```
 
 Here, `django` is the target service we are executing the commands against. Also, please note that the `docker exec` does not work for running management commands.
 
 ## Configuring the Environment
 
-This is the excerpt from your project’s `local.yml`:
+This is the excerpt from your project’s `docker-compose.local.yml`:
 
 ```yml
 # ...
@@ -125,8 +125,8 @@ To install a new 3rd party python package, you cannot use `pip install <package_
 To get this change picked up, you’ll need to rebuild the image(s) and restart the running container:
 
 ```bash
-docker compose -f local.yml build
-docker compose -f local.yml up
+docker compose -f docker-compose.local.yml build
+docker compose -f docker-compose.local.yml up
 ```
 
 ### Debugging
@@ -167,4 +167,4 @@ Prerequisites:
 
 - `use_celery` was set to `y` on project initialization.
 
-By default, it’s enabled both in local and production environments (`local.yml` and `production.yml` Docker Compose configs, respectively) through a `flower` service. For added security, `flower` requires its clients to provide authentication credentials specified as the corresponding environments’ `.envs/.local/.django` and `.envs/.production/.django` `CELERY_FLOWER_USER` and `CELERY_FLOWER_PASSWORD` environment variables. Check out <http://localhost:5555> and see for yourself.
+By default, it’s enabled both in local and production environments (`docker-compose.local.yml` and `docker-compose.production.yml` Docker Compose configs, respectively) through a `flower` service. For added security, `flower` requires its clients to provide authentication credentials specified as the corresponding environments’ `.envs/.local/.django` and `.envs/.production/.django` `CELERY_FLOWER_USER` and `CELERY_FLOWER_PASSWORD` environment variables. Check out <http://localhost:5555> and see for yourself.

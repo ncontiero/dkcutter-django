@@ -7,7 +7,7 @@
 
 ## Understanding the Docker Compose Setup
 
-Before you begin, check out the production.yml file in the root of this project. Keep note of how it provides configuration for the following services:
+Before you begin, check out the docker-compose.production.yml file in the root of this project. Keep note of how it provides configuration for the following services:
 
 - `django`: your application running behind `Gunicorn`;
 - `postgres`: PostgreSQL database with the application's relational data;
@@ -41,44 +41,44 @@ You will probably also need to setup the Mail backend, for example by adding a [
 You will need to build the stack first. To do that, run:
 
 ```bash
-docker-compose -f production.yml build
+docker-compose -f docker-compose.production.yml build
 ```
 
 Once this is ready, you can run it with:
 
 ```bash
-docker-compose -f production.yml up
+docker-compose -f docker-compose.production.yml up
 ```
 
 To run the stack and detach the containers, run:
 
 ```bash
-docker-compose -f production.yml up -d
+docker-compose -f docker-compose.production.yml up -d
 ```
 
 To run a migration, open up a second terminal and run:
 
 ```bash
-docker-compose -f production.yml run --rm django python manage.py migrate
+docker-compose -f docker-compose.production.yml run --rm django python manage.py migrate
 ```
 
 To create a superuser, run:
 
 ```bash
-docker-compose -f production.yml run --rm django python manage.py createsuperuser
+docker-compose -f docker-compose.production.yml run --rm django python manage.py createsuperuser
 ```
 
 To check the logs out, run:
 
 ```bash
-docker compose -f production.yml logs
+docker compose -f docker-compose.production.yml logs
 ```
 
 If you want to scale your application, run:
 
 ```bash
-docker compose -f production.yml up --scale django=4
-docker compose -f production.yml up --scale celeryworker=2
+docker compose -f docker-compose.production.yml up --scale django=4
+docker compose -f docker-compose.production.yml up --scale celeryworker=2
 ```
 
 **⚠ Warning** : don't try to scale `postgres`, `celerybeat`, or `traefik`.
@@ -86,7 +86,7 @@ docker compose -f production.yml up --scale celeryworker=2
 To see how your containers are doing run:
 
 ```bash
-docker compose -f production.yml ps
+docker compose -f docker-compose.production.yml ps
 ```
 
 ## Media files without cloud provider
