@@ -113,11 +113,11 @@ GS_BUCKET_NAME = config("DJANGO_GCP_STORAGE_BUCKET_NAME")
 GS_DEFAULT_ACL = "publicRead"
 {% endif -%}
 
-{% if dkcutter.cloudProvider != 'None' or dkcutter.useWhitenoise %}
+{% if dkcutter.useWhitenoise or dkcutter.cloudProvider != 'None' %}
 # STATIC & MEDIA
 # ------------------------------------------------------------------------------
 STORAGES = {
-{%- if dkcutter.useWhitenoise %}
+{%- if dkcutter.useWhitenoise and dkcutter.cloudProvider == 'None' %}
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
@@ -132,6 +132,11 @@ STORAGES = {
             "file_overwrite": False,
         },
     },
+    {%- if dkcutter.useWhitenoise %}
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+    {%- else %}
     "staticfiles": {
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
@@ -139,6 +144,7 @@ STORAGES = {
             "default_acl": "public-read",
         },
     },
+    {%- endif %}
 {%- elif dkcutter.cloudProvider == 'GCP' %}
     "default": {
         "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
@@ -147,6 +153,11 @@ STORAGES = {
             "file_overwrite": False,
         },
     },
+    {%- if dkcutter.useWhitenoise %}
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+    {%- else %}
     "staticfiles": {
         "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
         "OPTIONS": {
@@ -154,17 +165,22 @@ STORAGES = {
             "default_acl": "publicRead",
         },
     },
+    {%- endif %}
 {%- endif %}
 }
 {% endif %}
 {% if dkcutter.cloudProvider == 'AWS' -%}
 MEDIA_URL = f"https://{aws_s3_domain}/media/"
+{%- if not dkcutter.useWhitenoise %}
 COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
 STATIC_URL = f"https://{aws_s3_domain}/static/"
+{%- endif %}
 {% elif dkcutter.cloudProvider == 'GCP' -%}
 MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/media/"
+{%- if not dkcutter.useWhitenoise %}
 COLLECTFAST_STRATEGY = "collectfast.strategies.gcloud.GoogleCloudStrategy"
 STATIC_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/static/"
+{%- endif %}
 {% endif -%}
 
 {% if dkcutter.mailService != 'None' %}
