@@ -6,8 +6,8 @@ const FILES_TO_IGNORE = [
   "dependabot.yml",
   "ci.yml",
   "traefik.yml",
-  "local.yml",
-  "production.yml",
+  "docker-compose.local.yml",
+  "docker-compose.production.yml",
   "pyproject.toml",
 ];
 
