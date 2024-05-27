@@ -60,7 +60,7 @@
       { "value": "Mandrill" },
       { "value": "Postmark" },
       { "value": "Sendgrid" },
-      { "value": "SendinBlue" },
+      { "value": "Brevo" },
       { "value": "SparkPost" },
       { "value": "Other SMTP" },
       { "value": "None" }

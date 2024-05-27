@@ -30,8 +30,8 @@ django-anymail[mandrill]==10.3  # https://github.com/anymail/django-anymail
 django-anymail[postmark]==10.3  # https://github.com/anymail/django-anymail
 {%- elif dkcutter.mailService == 'Sendgrid' %}
 django-anymail[sendgrid]==10.3  # https://github.com/anymail/django-anymail
-{%- elif dkcutter.mailService == 'SendinBlue' %}
-django-anymail[sendinblue]==10.3  # https://github.com/anymail/django-anymail
+{%- elif dkcutter.mailService == 'Brevo' %}
+django-anymail[brevo]==10.3  # https://github.com/anymail/django-anymail
 {%- elif dkcutter.mailService == 'SparkPost' %}
 django-anymail[sparkpost]==10.3  # https://github.com/anymail/django-anymail
 {%- elif dkcutter.mailService == 'Other SMTP' %}

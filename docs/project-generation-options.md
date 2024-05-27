@@ -44,7 +44,7 @@ This page describes all the template options that will be prompted by the [dkcut
   - [Mandrill](http://mandrill.com/)
   - [Postmark](https://postmarkapp.com/)
   - [SendGrid](https://sendgrid.com/)
-  - [SendinBlue](https://www.sendinblue.com/)
+  - [Brevo (formerly SendinBlue)](https://www.brevo.com/)
   - [SparkPost](https://www.sparkpost.com/)
   - [Other SMTP](https://anymail.readthedocs.io/en/stable/)
   - None
