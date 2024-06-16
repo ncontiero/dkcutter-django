@@ -40,8 +40,8 @@ importers:
         specifier: ^2.4.2
         version: 2.4.2
       tsx:
-        specifier: ^4.15.4
-        version: 4.15.4
+        specifier: ^4.15.5
+        version: 4.15.5
       type-fest:
         specifier: ^4.20.1
         version: 4.20.1
@@ -2359,8 +2359,8 @@ packages:
   tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
 
-  tsx@4.15.4:
-    resolution: {integrity: sha512-d++FLCwJLrXaBFtRcqdPBzu6FiVOJ2j+UsvUZPtoTrnYtCGU5CEW7iHXtNZfA2fcRTvJFWPqA6SWBuB0GSva9w==}
+  tsx@4.15.5:
+    resolution: {integrity: sha512-iKi8jQ2VBmZ2kU/FkGkL2OSHBHsazsUzsdC/W/RwhKIEsIoZ1alCclZHP5jGfNHEaEWUJFM1GquzCf+4db3b0w==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -3412,7 +3412,7 @@ snapshots:
       nunjucks: 3.2.4(chokidar@3.6.0)
       ora: 8.0.1
       prompts: 2.4.2
-      tsx: 4.15.4
+      tsx: 4.15.5
       which: 4.0.0
       zod: 3.23.8
     transitivePeerDependencies:
@@ -5029,7 +5029,7 @@ snapshots:
 
   tslib@2.6.3: {}
 
-  tsx@4.15.4:
+  tsx@4.15.5:
     dependencies:
       esbuild: 0.21.4
       get-tsconfig: 4.7.5
