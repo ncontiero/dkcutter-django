@@ -176,13 +176,13 @@ STORAGES = {
 {% if dkcutter.cloudProvider == 'AWS' -%}
 MEDIA_URL = f"https://{aws_s3_domain}/media/"
 {%- if not dkcutter.useWhitenoise %}
-COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
+COLLECTFASTA_STRATEGY = "collectfasta.strategies.boto3.Boto3Strategy"
 STATIC_URL = f"https://{aws_s3_domain}/static/"
 {%- endif %}
 {% elif dkcutter.cloudProvider == 'GCP' -%}
 MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/media/"
 {%- if not dkcutter.useWhitenoise %}
-COLLECTFAST_STRATEGY = "collectfast.strategies.gcloud.GoogleCloudStrategy"
+COLLECTFASTA_STRATEGY = "collectfasta.strategies.gcloud.GoogleCloudStrategy"
 STATIC_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/static/"
 {%- endif %}
 {% endif -%}
@@ -277,10 +277,10 @@ ANYMAIL = {}
 {% endif %}
 
 {%- if not dkcutter.useWhitenoise %}
-# Collectfast
+# Collectfasta
 # ------------------------------------------------------------------------------
-# https://github.com/antonagestam/collectfast#installation
-INSTALLED_APPS = ["collectfast", *INSTALLED_APPS]
+# https://github.com/jasongi/collectfasta#installation
+INSTALLED_APPS = ["collectfasta", *INSTALLED_APPS]
 {% endif %}
 {%- if dkcutter.cloudProvider == "None" and dkcutter.useWhitenoise and dkcutter.mailService == "None" %}
 INSTALLED_APPS = [*INSTALLED_APPS]
