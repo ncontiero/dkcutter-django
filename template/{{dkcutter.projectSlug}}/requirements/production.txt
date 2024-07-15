@@ -8,7 +8,7 @@ psycopg[c]==3.2.1  # https://github.com/psycopg/psycopg
 Collectfasta==3.2.0 # https://github.com/jasongi/collectfasta
 {%- endif %}
 {%- if dkcutter.useSentry %}
-sentry-sdk==2.9.0  # https://github.com/getsentry/sentry-python
+sentry-sdk==2.10.0  # https://github.com/getsentry/sentry-python
 {%- endif %}
 
 # Django
