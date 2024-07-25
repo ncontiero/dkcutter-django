@@ -15,7 +15,7 @@ flower==2.0.1  # https://github.com/mher/flower
 
 # Django
 # ------------------------------------------------------------------------------
-django==4.2.14  # https://www.djangoproject.com/
+django==5.0.7  # https://www.djangoproject.com/
 django-cleanup==8.1.0  # https://github.com/un1t/django-cleanup
 dj-database-url==2.2.0  # https://github.com/jazzband/dj-database-url
 django-redis==5.4.0  # https://github.com/jazzband/django-redis
