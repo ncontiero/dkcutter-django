@@ -2,6 +2,7 @@ import { resolve } from "node:path";
 import { afterAll, beforeAll, it as vitestIt } from "vitest";
 import { execa } from "execa";
 import fs from "fs-extra";
+import fg from "fast-glob";
 
 import { buildFilesList, checkPaths, constructArgs } from "./utils";
 import {
@@ -49,6 +50,12 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       // Check that the project is linted
       await execa("ruff", ["check"], { cwd: target });
       await execa("ruff", ["format"], { cwd: target });
+
+      // django-upgrade
+      const files = await fg.glob(resolve(target, "**", "*.py"));
+      await execa("django-upgrade", ["--target-version", "5.0", ...files], {
+        cwd: target,
+      });
 
       // djLint
       const autofixableRules = "H014,T001";
