@@ -1,5 +1,4 @@
-// eslint-disable-next-line regexp/strict
-export const PATTERN = /{{(\s?dkcutter)\.(.*?)}}/;
+export const PATTERN = /\{\{(\s?dkcutter)\.(.*?)\}\}/;
 
 export const SUPPORTED_COMBINATIONS = [
   { postgresqlVersion: "16" },
