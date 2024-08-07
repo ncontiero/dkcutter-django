@@ -1,17 +1,15 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", ":disableRateLimiting"],
-  "schedule": ["before 5am every weekday"],
   "dependencyDashboard": false,
   "semanticCommits": "enabled",
-  "rebaseWhen": "conflicted",
   "rangeStrategy": "bump",
   "configMigration": true,
   "packageRules": [
     {
       "enabled": false,
       "matchDatasources": ["docker"],
-      "matchDepPatterns": ["docker.io/python"],
+      "matchDepNames": ["docker.io/python"],
       "matchUpdateTypes": ["major", "minor"]
     },
     {
