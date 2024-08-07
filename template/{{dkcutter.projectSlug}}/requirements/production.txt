@@ -19,21 +19,21 @@ django-storages[s3]==1.14.4  # https://github.com/jschneier/django-storages
 django-storages[google]==1.14.4  # https://github.com/jschneier/django-storages
 {%- endif %}
 {%- if dkcutter.mailService == 'Mailgun' %}
-django-anymail[mailgun]==11.0.1  # https://github.com/anymail/django-anymail
+django-anymail[mailgun]==11.1  # https://github.com/anymail/django-anymail
 {%- elif dkcutter.mailService == 'Amazon SES' %}
-django-anymail[amazon-ses]==11.0.1  # https://github.com/anymail/django-anymail
+django-anymail[amazon-ses]==11.1  # https://github.com/anymail/django-anymail
 {%- elif dkcutter.mailService == 'Mailjet' %}
-django-anymail[mailjet]==11.0.1  # https://github.com/anymail/django-anymail
+django-anymail[mailjet]==11.1  # https://github.com/anymail/django-anymail
 {%- elif dkcutter.mailService == 'Mandrill' %}
-django-anymail[mandrill]==11.0.1  # https://github.com/anymail/django-anymail
+django-anymail[mandrill]==11.1  # https://github.com/anymail/django-anymail
 {%- elif dkcutter.mailService == 'Postmark' %}
-django-anymail[postmark]==11.0.1  # https://github.com/anymail/django-anymail
+django-anymail[postmark]==11.1  # https://github.com/anymail/django-anymail
 {%- elif dkcutter.mailService == 'Sendgrid' %}
-django-anymail[sendgrid]==11.0.1  # https://github.com/anymail/django-anymail
+django-anymail[sendgrid]==11.1  # https://github.com/anymail/django-anymail
 {%- elif dkcutter.mailService == 'Brevo' %}
-django-anymail[brevo]==11.0.1  # https://github.com/anymail/django-anymail
+django-anymail[brevo]==11.1  # https://github.com/anymail/django-anymail
 {%- elif dkcutter.mailService == 'SparkPost' %}
-django-anymail[sparkpost]==11.0.1  # https://github.com/anymail/django-anymail
+django-anymail[sparkpost]==11.1  # https://github.com/anymail/django-anymail
 {%- elif dkcutter.mailService == 'Other SMTP' %}
-django-anymail==11.0.1  # https://github.com/anymail/django-anymail
+django-anymail==11.1  # https://github.com/anymail/django-anymail
 {%- endif %}
