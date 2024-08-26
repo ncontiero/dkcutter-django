@@ -24,7 +24,7 @@ docker compose -f docker-compose.local.yml run django mypy my_awesome_project
 docker compose -f docker-compose.local.yml run django pytest -p no:cacheprovider
 
 # return non-zero status code if there are migrations that have not been created
-docker compose -f docker-compose.local.yml run django python manage.py makemigrations --dry-run --check || {
+docker compose -f docker-compose.local.yml run django python manage.py makemigrations --check || {
   echo "ERROR: there were changes in the models, but migration listed above have not been created and are not saved in version control"
   exit 1
 }
