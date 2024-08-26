@@ -42,6 +42,9 @@ jobs:
       - name: Build the Stack
         run: docker compose -f docker-compose.local.yml build django
 
+      - name: Check DB Migrations
+        run: docker compose -f docker-compose.local.yml run --rm django python manage.py makemigrations --check
+
       - name: Run DB Migrations
         run: docker compose -f docker-compose.local.yml run --rm django python manage.py migrate
 
