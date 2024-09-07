@@ -1,15 +1,15 @@
 import { resolve } from "node:path";
-import { afterAll, beforeAll, it as vitestIt } from "vitest";
 import { execa } from "execa";
-import fs from "fs-extra";
 import fg from "fast-glob";
+import fs from "fs-extra";
+import { afterAll, beforeAll, it as vitestIt } from "vitest";
 
-import { buildFilesList, checkPaths, constructArgs } from "./utils";
 import {
   INVALID_SLUGS,
   SUPPORTED_COMBINATIONS,
   UNSUPPORTED_COMBINATIONS,
 } from "./constants";
+import { buildFilesList, checkPaths, constructArgs } from "./utils";
 
 const TEST_OUTPUT = resolve(".test");
 
