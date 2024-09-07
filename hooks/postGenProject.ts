@@ -1,8 +1,8 @@
 import path from "node:path";
 import fs from "fs-extra";
 
-import { logger } from "./utils/logger";
 import { toBoolean } from "./utils/coerce";
+import { logger } from "./utils/logger";
 
 type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
 

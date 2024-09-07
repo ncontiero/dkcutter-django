@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-import { logger } from "./utils/logger";
 import { toBoolean } from "./utils/coerce";
+import { logger } from "./utils/logger";
 
 // The content of this string is evaluated by Jinja, and plays an important role.
-// It updates the cookiecutter context to trim leading and trailing spaces
+// It updates the dkcutter context to trim leading and trailing spaces
 // from domain/email values
 // {{ dkcutter.update('domainName', dkcutter.domainName|trim) }}
 // {{ dkcutter.update('email', dkcutter.email|trim) }}
