@@ -80,12 +80,6 @@ SECURE_CONTENT_TYPE_NOSNIFF = config(
     "DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", cast=bool, default=True,
 )
 
-{% if dkcutter.cloudProvider != 'None' -%}
-# STORAGES
-# ------------------------------------------------------------------------------
-# https://django-storages.readthedocs.io/en/latest/#installation
-INSTALLED_APPS += ["storages"]
-{%- endif -%}
 {% if dkcutter.cloudProvider == 'AWS' %}
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_ACCESS_KEY_ID = config("DJANGO_AWS_ACCESS_KEY_ID")
