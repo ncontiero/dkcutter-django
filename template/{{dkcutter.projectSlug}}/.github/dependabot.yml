@@ -74,6 +74,16 @@ updates:
     schedule:
       interval: daily
 
+{%- if dkcutter.cloudProvider == "None" %}
+
+  - package-ecosystem: "docker"
+    # Look for a `Dockerfile` in the `compose/production/nginx` directory
+    directory: "compose/production/nginx/"
+    # Every weekday
+    schedule:
+      interval: "daily"
+{%- endif %}
+
 {%- if dkcutter.useTailwindcss %}
 
   # Enable version updates for javascript/npm
