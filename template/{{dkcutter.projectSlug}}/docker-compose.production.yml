@@ -52,7 +52,7 @@ services:
       {%- endif %}
 
   redis:
-    image: docker.io/redis:6
+    image: docker.io/redis:7
   {%- if dkcutter.useCelery %}
 
   celeryworker:
