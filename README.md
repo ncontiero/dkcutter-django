@@ -6,7 +6,7 @@
 
 Powered by [DKCutter](https://github.com/dkshs/dkcutter), DKCutter Django is a framework for jumpstarting production-ready Django projects quickly.
 
-- If you have problems with DKCutter NextJs, please open [issues](https://github.com/dkshs/dkcutter-django/issues/new).
+- If you have problems with DKCutter Django, please open [issues](https://github.com/dkshs/dkcutter-django/issues/new).
 
 ## Usage
 
