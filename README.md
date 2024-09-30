@@ -102,3 +102,11 @@ This will use the default values, with the exception of the `--useCelery` and `-
 - [Developing locally using docker](./docs/developing-locally-docker.md)
 
 [options-url]: ./docs/project-generation-options.md
+
+## References and inspirations
+
+- [Cookiecutter Django](https://github.com/cookiecutter/cookiecutter-django) - A framework for jumpstarting production-ready Django projects quickly.
+
+## License
+
+This project is licensed under the **MIT** License - see the [LICENSE](./LICENSE) file for details
