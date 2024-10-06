@@ -41,6 +41,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   fonts-powerline \
   # psycopg dependencies
   libpq-dev \
+  wait-for-it \
   # Translations dependencies
   gettext \
   # cleaning up unused files
