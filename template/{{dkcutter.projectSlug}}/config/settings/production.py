@@ -16,6 +16,7 @@ from sentry_sdk.integrations.redis import RedisIntegration
 from .base import *  # noqa: F403
 from .base import DATABASES
 from .base import INSTALLED_APPS
+from .base import REDIS_URL
 {%- if dkcutter.restFramework == "DRF" %}
 from .base import SPECTACULAR_SETTINGS
 {%- endif %}
@@ -41,7 +42,7 @@ DATABASES["default"]["CONN_MAX_AGE"] = config("CONN_MAX_AGE", default=60)
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": config("REDIS_URL"),
+        "LOCATION": REDIS_URL,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             # Mimicing memcache behavior.

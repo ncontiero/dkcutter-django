@@ -106,9 +106,6 @@ RUN chown -R django:django ${APP_HOME}
 USER django
 
 RUN DATABASE_URL="" \
-  {%- if dkcutter.useCelery %}
-CELERY_BROKER_URL="" \
-  {%- endif %}
-DJANGO_SETTINGS_MODULE="config.settings.test"
+  DJANGO_SETTINGS_MODULE="config.settings.test"
 
 ENTRYPOINT ["/entrypoint"]
