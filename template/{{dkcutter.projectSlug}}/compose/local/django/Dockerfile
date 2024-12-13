@@ -104,11 +104,10 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   -p https://github.com/zdharma-continuum/fast-syntax-highlighting \
   -p https://github.com/zsh-users/zsh-autosuggestions \
   -p https://github.com/zsh-users/zsh-completions \
-  -a "export TERM=xterm-256color"
+  -a "export TERM=xterm-256color" -x
 
 RUN echo "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> ~/.zshrc && \
   echo "HISTFILE=~/.zsh_history" >> ~/.zshrc && \
-  echo "source /entrypoint" >> ~/.zshrc && \
   echo "eval '$(ssh-agent -s)'" >> ~/.zshrc
 
 
