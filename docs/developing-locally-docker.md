@@ -168,3 +168,26 @@ Prerequisites:
 - `use_celery` was set to `y` on project initialization.
 
 By default, it’s enabled both in local and production environments (`docker-compose.local.yml` and `docker-compose.production.yml` Docker Compose configs, respectively) through a `flower` service. For added security, `flower` requires its clients to provide authentication credentials specified as the corresponding environments’ `.envs/.local/.django` and `.envs/.production/.django` `CELERY_FLOWER_USER` and `CELERY_FLOWER_PASSWORD` environment variables. Check out <http://localhost:5555> and see for yourself.
+
+### Using Just for Docker Commands
+
+We have included a `justfile` to simplify the use of frequent Docker commands for local development.
+
+> [!WARNING]
+> Currently, "Just" does not reliably handle signals or forward them to its subprocesses. As a result, pressing CTRL+C (or sending other signals like SIGTERM, SIGINT, or SIGHUP) may only interrupt "Just" itself rather than its subprocesses. For more information, see [this GitHub issue](https://github.com/casey/just/issues/2473).
+
+First, install Just using one of the methods described in the [official documentation](https://just.systems/man/en/packages.html).
+
+Here are the available commands:
+
+- `just build` - Builds the Python image using the local Docker Compose file.
+
+- `just up` - Starts the containers in detached mode and removes orphaned containers.
+
+- `just down` - Stops the running containers.
+
+- `just prune` - Stops and removes containers along with their volumes. You can optionally pass an argument with the service name to prune a single container.
+
+- `just logs` - Shows container logs. You can optionally pass an argument with the service name to view logs for a specific service.
+
+- `just manage <command>` - Runs Django management commands within the container. Replace `<command>` with any valid Django management command, such as `migrate`, `createsuperuser`, or `shell`.
