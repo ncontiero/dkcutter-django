@@ -5,6 +5,9 @@ volumes:
   {%- if dkcutter.cloudProvider == 'None' %}
   production_django_media: {}
   {%- endif %}
+  {%- if dkcutter.useCelery %}
+  production_redis_data: {}
+  {%- endif %}
 
 services:
   django:{% if dkcutter.useCelery %} &django{% endif %}
@@ -53,6 +56,10 @@ services:
 
   redis:
     image: docker.io/redis:7
+    {%- if dkcutter.useCelery %}
+    volumes:
+      - production_redis_data:/data
+    {%- endif %}
   {%- if dkcutter.useCelery %}
 
   celeryworker:

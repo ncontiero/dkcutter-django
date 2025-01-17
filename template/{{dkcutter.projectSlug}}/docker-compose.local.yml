@@ -1,6 +1,7 @@
 volumes:
   {{ dkcutter.projectSlug }}_local_postgres_data: {}
   {{ dkcutter.projectSlug }}_local_postgres_data_backups: {}
+  {% if dkcutter.useCelery %}{{ dkcutter.projectSlug }}_local_redis_data: {}{% endif %}
 
 services:
   django:{% if dkcutter.useCelery %} &django{% endif %}
@@ -51,6 +52,8 @@ services:
   redis:
     image: docker.io/redis:7
     container_name: {{ dkcutter.projectSlug }}_local_redis
+    volumes:
+      - {{ dkcutter.projectSlug }}_local_redis_data:/data
 
   celeryworker:
     <<: *django
