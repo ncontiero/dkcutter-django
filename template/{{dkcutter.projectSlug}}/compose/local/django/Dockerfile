@@ -92,7 +92,7 @@ RUN wget https://gist.github.com/dkshs/ab9fdbb2cc4b6af40ef3627d4ba968a4/raw/df2c
 # copy application code to WORKDIR
 COPY --chown=dev-user:dev-user . ${APP_HOME}
 
-RUN chown dev-user:dev-user ${APP_HOME}
+RUN chown -R dev-user:dev-user ${APP_HOME}
 
 USER dev-user
 
