@@ -81,7 +81,7 @@ celery -A config.celery_app worker -B -l info
 In development, it is often nice to be able to see emails that are being sent from your application. For that reason local SMTP server [Mailpit](https://github.com/axllent/mailpit/) with a web interface is available as docker container.
 
 Container mailpit will start automatically when you will run all docker containers.
-Please check [cookiecutter-django Docker documentation](https://github.com/dkshs/dkcutter-django/blob/main/docs/deployment-with-docker.md) for more details how to start all containers.
+Please check [dkcutter-django Docker documentation](https://github.com/dkshs/dkcutter-django/blob/main/docs/deployment-with-docker.md) for more details how to start all containers.
 
 With Mailpit running, to view messages that are sent by your application, open your browser and go to `http://127.0.0.1:8025`
 
