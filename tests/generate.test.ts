@@ -68,6 +68,17 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       );
       await execa("djlint", ["--check", "."], { cwd: target });
 
+      const hasEslint = await fs.pathExists(
+        resolve(target, "eslint.config.mjs"),
+      );
+      if (hasEslint) {
+        const getWarnings = process.env.GET_WARNINGS === "true";
+        const args = getWarnings ? ["--max-warnings", "0"] : [];
+        await execa("npx", ["eslint", ".", ...args], {
+          cwd: target,
+        });
+      }
+
       supportedOptions.push(name);
     },
     30_000,

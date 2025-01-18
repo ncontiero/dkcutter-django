@@ -46,6 +46,6 @@ export function constructArgs(combination: { [key: string]: any }) {
     args.push(`--${item}`, value);
   }
   name = name.slice(0, -1);
-  args.unshift("--projectName", name.toLowerCase());
+  args.unshift("--projectName", name.toLowerCase().replaceAll(",", "_"));
   return args;
 }

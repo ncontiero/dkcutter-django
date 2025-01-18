@@ -273,3 +273,9 @@ mailpit
 .pytest_cache/
 
 .ipython/
+
+{%- if dkcutter.frontendPipeline == 'Rspack' %}
+{{ dkcutter.projectSlug }}/static/rspack_bundles/
+webpack-stats.json
+
+{%- endif %}

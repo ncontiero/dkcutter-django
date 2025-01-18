@@ -61,20 +61,21 @@ If you want to start faster, you can use the following options:
 | --------------------------------- | ----------------------------------------------------------------------------------------- |
 | `--projectName <string>`          | Your project's human-readable name.                                                       |
 | `--projectSlug <string>`          | Your project's slug without dashes or spaces.                                             |
-| `--description <string>`          | Describes your project                                                                    |
+| `--description <string>`          | Describes your project.                                                                   |
 | `--authorName <string>`           | The author name.                                                                          |
 | `--domainName <string>`           | The domain name you plan to use for your project once it goes live.                       |
 | `--email <string>`                | The email address you want to identify yourself in the project.                           |
 | `--postgresqlVersion <string>`    | Select a PostgreSQL version to use.                                                       |
 | `--cloudProvider <string>`        | Select a cloud provider for static & media files.                                         |
 | `--restFramework <string>`        | Select a REST API framework.                                                              |
-| `--mailService <string>`          | Select an email service that Django-Anymail provides                                      |
+| `--mailService <string>`          | Select an email service that Django-Anymail provides.                                     |
+| `--frontendPipeline <string>`     | Select a pipeline to compile and optimize frontend assets (JS, CSS, …).                   |
+| `--additionalTools <string>`      | Select additional tools to use with `frontendPipeline`.                                   |
 | `--useMailpit [boolean]`          | Include [Mailpit][mailpit-url] in the project. If `mailService` is different from `None`. |
 | `--useCelery [boolean]`           | Include [Celery](https://github.com/celery/celery) in the project.                        |
 | `--useSentry [boolean]`           | Include [Sentry](https://github.com/getsentry/sentry) in the project.                     |
 | `--useWhitenoise [boolean]`       | Include [Whitenoise](https://github.com/evansd/whitenoise) in the project.                |
 | `--usePgadmin [boolean]`          | Include [pgAdmin](https://www.pgadmin.org/) in the project.                               |
-| `--useTailwindcss [boolean]`      | Include [TailwindCSS](https://tailwindcss.com/) in the project.                           |
 | `--automatedDepsUpdater <string>` | Choose Automated Dependency Updater. [See for more info][options-url].                    |
 
 [mailpit-url]: https://github.com/axllent/mailpit/

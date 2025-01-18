@@ -21,7 +21,7 @@ For more information refer to [Project Generation Options](./project-generation-
 This can take a while, especially the first time you run this particular command on your development system:
 
 ```bash
-docker-compose -f docker-compose.local.yml build
+docker compose -f docker-compose.local.yml build
 ```
 
 Generally, if you want to emulate production environment use `docker-compose.production.yml` instead. And this is true for any other actions you might need to perform: whenever a switch is required, just do it!
@@ -33,7 +33,7 @@ This brings up both Django, PostgreSQL and PGAdmin. The first time it is run it 
 Open a terminal at the project root and run the following for local development:
 
 ```bash
-docker-compose -f docker-compose.local.yml up
+docker compose -f docker-compose.local.yml up
 ```
 
 You can also set the environment variable `COMPOSE_FILE` pointing to `docker-compose.local.yml` like this:
@@ -45,24 +45,24 @@ export COMPOSE_FILE=docker-compose.local.yml
 And then run:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 To run in a detached (background) mode, just:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
-The site should start and be accessible at <http://localhost:8000>.
+The site should start and be accessible at <http://localhost:3000> if you selected Rspack as frontend pipeline and <http://localhost:8000> otherwise.
 
 ## Execute Management Commands
 
 As with any shell command that we wish to run in our container, this is done using the `docker-compose -f docker-compose.local.yml run --rm` command:
 
 ```bash
-docker-compose -f docker-compose.local.yml run --rm django python manage.py migrate
-docker-compose -f docker-compose.local.yml run --rm django python manage.py createsuperuser
+docker compose -f docker-compose.local.yml run --rm django python manage.py migrate
+docker compose -f docker-compose.local.yml run --rm django python manage.py createsuperuser
 ```
 
 Here, `django` is the target service we are executing the commands against. Also, please note that the `docker exec` does not work for running management commands.
@@ -165,9 +165,15 @@ Possible uses could be for testing, or ease of profiling with DJDT.
 
 Prerequisites:
 
-- `use_celery` was set to `y` on project initialization.
+- `useCelery` was set on project initialization.
 
 By default, it’s enabled both in local and production environments (`docker-compose.local.yml` and `docker-compose.production.yml` Docker Compose configs, respectively) through a `flower` service. For added security, `flower` requires its clients to provide authentication credentials specified as the corresponding environments’ `.envs/.local/.django` and `.envs/.production/.django` `CELERY_FLOWER_USER` and `CELERY_FLOWER_PASSWORD` environment variables. Check out <http://localhost:5555> and see for yourself.
+
+### Using Rspack
+
+If you’ve opted for Rspack as front-end pipeline, the project comes configured with live reloading. As you change your CSS/JS source files, the task runner will automatically rebuild the corresponding CSS and JS assets and reload them in your browser without refreshing the page.
+
+The stack comes with a dedicated node service to build the static assets, watch for changes and proxy requests to the Django app with live reloading scripts injected in the response. For everything to work smoothly, you need to access the application at the port served by the node service, which is <http://localhost:3000> by default.
 
 ### Using Just for Docker Commands
 

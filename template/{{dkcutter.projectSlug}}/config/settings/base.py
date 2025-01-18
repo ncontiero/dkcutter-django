@@ -3,7 +3,8 @@
 Base settings to build other settings files upon.
 """
 
-{% if dkcutter.useCelery -%}
+{%- if dkcutter.useCelery %}
+
 import ssl
 {%- endif %}
 from pathlib import Path
@@ -33,7 +34,10 @@ USE_TZ = True
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    "default": dj_database_url.config(default=config("DATABASE_URL"), conn_max_age=1800),
+    "default": dj_database_url.config(
+        default=config("DATABASE_URL"),
+        conn_max_age=1800,
+    ),
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
@@ -67,6 +71,9 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "drf_spectacular",
+{%- endif %}
+{%- if dkcutter.frontendPipeline in ["Rspack"] %}
+    "webpack_loader",
 {%- endif %}
     "django_cleanup.apps.CleanupConfig",
 ]
@@ -210,7 +217,7 @@ LOGGING = {
 REDIS_URL = config("REDIS_URL", default="redis://redis:6379/0")
 REDIS_SSL = REDIS_URL.startswith("rediss://")
 
-{% if dkcutter.useCelery %}
+{%- if dkcutter.useCelery %}
 # Celery
 # ------------------------------------------------------------------------------
 if USE_TZ:
@@ -279,5 +286,17 @@ SPECTACULAR_SETTINGS = {
     "SCHEMA_PATH_PREFIX": "/api/",
 }
 {% endif -%}
+{%- if dkcutter.frontendPipeline in ["Rspack"] %}
+# django-webpack-loader
+# ------------------------------------------------------------------------------
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "CACHE": not DEBUG,
+        "STATS_FILE": BASE_DIR / "webpack-stats.json",
+        "POLL_INTERVAL": 0.1,
+        "IGNORE": [r".+\.hot-update.js", r".+\.map"],
+    },
+}
+{% endif %}
 # Your stuff...
 # ------------------------------------------------------------------------------

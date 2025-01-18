@@ -41,7 +41,7 @@ docker compose -f docker-compose.local.yml run --rm \
   -e MAILGUN_DOMAIN=x \
   django python manage.py check --settings=config.settings.production --deploy --database default --fail-level WARNING
 
-# Run npm tailwind:build script if package.json is present
+# Run npm build script if package.json is present
 if [ -f "package.json" ]; then
-  docker compose -f docker-compose.local.yml run --rm node npm run tailwind:build
+  docker compose -f docker-compose.local.yml run --rm node npm run build
 fi

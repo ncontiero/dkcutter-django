@@ -12,6 +12,7 @@ Before you begin, check out the docker-compose.production.yml file in the root o
 - `django`: your application running behind `Gunicorn`;
 - `postgres`: PostgreSQL database with the application's relational data;
 - `redis`: Redis instance for caching;
+- `traefik`: Traefik reverse proxy with HTTPS on by default.
 
 Provided you have opted for Celery (via setting `use_celery` to `y`) there are three more services:
 
@@ -19,7 +20,7 @@ Provided you have opted for Celery (via setting `use_celery` to `y`) there are t
 - `celerybeat` running a Celery beat process;
 - `flower` running [Flower](https://github.com/mher/flower).
 
-For more information about Flower and its login credentials, check out [CeleryFlower](./developing-locally-docker.md#celery-flower) instructions for local environment.
+The flower service is served by Traefik over HTTPS, through the port `5555`. For more information about Flower and its login credentials, check out [CeleryFlower](./developing-locally-docker.md#celery-flower) instructions for local environment.
 
 ## Configuring the Stack
 
@@ -41,31 +42,31 @@ You will probably also need to setup the Mail backend, for example by adding a [
 You will need to build the stack first. To do that, run:
 
 ```bash
-docker-compose -f docker-compose.production.yml build
+docker compose -f docker-compose.production.yml build
 ```
 
 Once this is ready, you can run it with:
 
 ```bash
-docker-compose -f docker-compose.production.yml up
+docker compose -f docker-compose.production.yml up
 ```
 
 To run the stack and detach the containers, run:
 
 ```bash
-docker-compose -f docker-compose.production.yml up -d
+docker compose -f docker-compose.production.yml up -d
 ```
 
 To run a migration, open up a second terminal and run:
 
 ```bash
-docker-compose -f docker-compose.production.yml run --rm django python manage.py migrate
+docker compose -f docker-compose.production.yml run --rm django python manage.py migrate
 ```
 
 To create a superuser, run:
 
 ```bash
-docker-compose -f docker-compose.production.yml run --rm django python manage.py createsuperuser
+docker compose -f docker-compose.production.yml run --rm django python manage.py createsuperuser
 ```
 
 To check the logs out, run:
@@ -81,7 +82,8 @@ docker compose -f docker-compose.production.yml up --scale django=4
 docker compose -f docker-compose.production.yml up --scale celeryworker=2
 ```
 
-**⚠ Warning** : don't try to scale `postgres`, `celerybeat`, or `traefik`.
+> [!WARNING]
+> don't try to scale `postgres`, `celerybeat`, or `traefik`.
 
 To see how your containers are doing run:
 

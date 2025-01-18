@@ -1,4 +1,7 @@
 {% raw %}{% load static %}{% endraw %}
+{%- if dkcutter.frontendPipeline in ["Rspack"] %}
+{% raw %}{% load render_bundle from webpack_loader %}{% endraw %}
+{%- endif %}
 
 {% raw %}<!DOCTYPE html>
 <html lang="en">
@@ -14,14 +17,27 @@
     <meta name="description" content="{% endraw %}{{ dkcutter.description }}{% raw %}" />
     <meta name="author" content="{% endraw %}{{ dkcutter.authorName }}{% raw %}" />
     <link href="{% static 'images/favicons/favicon.ico' %}" rel="icon" />
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    {% endraw %}<!-- This file stores project-specific CSS -->
+    {%- if dkcutter.frontendPipeline == "Rspack" %}
+    {% raw %}{% render_bundle "main" "css" %}{% endraw %}
+    {%- else %}
+    {% raw %}<link href="{% static 'css/styles.css' %}" rel="stylesheet" />{% endraw %}
+    {%- endif %}
+    {%- if dkcutter.frontendPipeline == "Rspack" %}{% raw %}
+    <!-- Vendor dependencies bundled as one file -->
+    {% render_bundle "vendors" "js" attrs="defer" %}{% endraw %}
+    {%- endif %}
+    <!-- place project specific Javascript in this file -->
+    {%- if dkcutter.frontendPipeline == "Rspack" %}
+    {% raw %}{% render_bundle "main" "js" attrs="defer" %}{% endraw %}
+    {%- else %}
+    {% raw %}<script defer src="{% static 'js/project.js' %}"></script>{% endraw %}
+    {%- endif %}{% raw %}
     {% block css %}
       <!-- Your stuff: Third-party CSS libraries go here -->
-      <!-- This file stores project-specific CSS -->
     {% endblock css %}
     {% block javascript %}
       <!-- Your stuff: Third-party javascript libraries go here -->
-      <!-- place project specific Javascript in this file -->
     {% endblock javascript %}
   </head>
   <body>

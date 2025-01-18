@@ -38,7 +38,7 @@ updates:
 
 {%- endif %}
 
-{%- if dkcutter.useTailwindcss %}
+{%- if dkcutter.frontendPipeline != "None" %}
   - package-ecosystem: docker
     # Look for a `Dockerfile` in the `compose/local/node` directory
     directory: compose/local/node/
@@ -84,7 +84,7 @@ updates:
       interval: "daily"
 {%- endif %}
 
-{%- if dkcutter.useTailwindcss %}
+{%- if dkcutter.frontendPipeline != "None" %}
 
   # Enable version updates for javascript/npm
   - package-ecosystem: npm

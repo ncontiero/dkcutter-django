@@ -1,3 +1,23 @@
+{% if 'tailwindcss' in dkcutter.additionalTools -%}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply flex justify-center items-center flex-col mt-4;
+}
+
+.title {
+  @apply text-4xl underline font-bold my-4;
+}
+.sub-title {
+  @apply text-2xl;
+}
+.description {
+  @apply text-lg;
+}
+
+{% else -%}
 *,
 *::after,
 *::before {
@@ -32,3 +52,7 @@ body {
   font-size: 1.125rem; /* 18px */
   line-height: 1.75rem; /* 28px */
 }
+
+{% endif -%}
+
+/* project specific CSS goes here */

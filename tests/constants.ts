@@ -42,6 +42,14 @@ export const SUPPORTED_COMBINATIONS = [
   { cloudProvider: "GCP", mailService: "None" },
   // Note: cloudProviders GCP and None
   // with mailService Amazon SES is not supported
+  { frontendPipeline: "None" },
+  { frontendPipeline: "Rspack" },
+  { additionalTools: "tailwindcss" },
+  { additionalTools: "eslint" },
+  { additionalTools: "tailwindcss,eslint" },
+  { frontendPipeline: "Rspack", additionalTools: "tailwindcss" },
+  { frontendPipeline: "Rspack", additionalTools: "eslint" },
+  { frontendPipeline: "Rspack", additionalTools: "tailwindcss,eslint" },
   { useWhitenoise: true },
   { useWhitenoise: false },
   { useMailpit: true },
@@ -60,6 +68,8 @@ export const SUPPORTED_COMBINATIONS = [
 ];
 export const UNSUPPORTED_COMBINATIONS = [
   { postgresqlVersion: 5 },
+  { frontendPipeline: "Non" },
+  { frontendPipeline: "Rspack", additionalTools: "tailwi" },
   { restFramework: "NOn" },
   { restFramework: "Rest" },
   { cloudProvider: "None", useWhitenoise: false },

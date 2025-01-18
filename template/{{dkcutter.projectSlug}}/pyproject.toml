@@ -9,9 +9,9 @@ python_files = [
 
 # ==== Coverage ====
 [tool.coverage.run]
-include = ["{{dkcutter.projectSlug}}/**"]
-omit = ["*/migrations/*", "*/tests/*"]
-plugins = ["django_coverage_plugin"]
+include = [ "{{dkcutter.projectSlug}}/**" ]
+omit = [ "*/migrations/*", "*/tests/*" ]
+plugins = [ "django_coverage_plugin" ]
 
 
 # ==== mypy ====
@@ -22,12 +22,7 @@ ignore_missing_imports = true
 warn_unused_ignores = true
 warn_redundant_casts = true
 warn_unused_configs = true
-plugins = [
-    "mypy_django_plugin.main",
-{%- if dkcutter.restFramework == 'DRF' %}
-    "mypy_drf_plugin.main",
-{%- endif %}
-]
+plugins = [ "mypy_django_plugin.main"{%- if dkcutter.restFramework == 'DRF' %}, "mypy_drf_plugin.main"{%- endif %} ]
 
 [[tool.mypy.overrides]]
 # Django migrations should not produce any errors:
@@ -128,15 +123,13 @@ ignore = [
     "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
     "SIM102", # sometimes it's better to nest
     "UP038" # Checks for uses of isinstance/issubclass that take a tuple
-            # of types for comparison.
-            # Deactivated because it can make the code slow:
-            # https://github.com/astral-sh/ruff/issues/7871
+    # of types for comparison.
+    # Deactivated because it can make the code slow:
+    # https://github.com/astral-sh/ruff/issues/7871
 ]
 # The fixes in extend-unsafe-fixes will require
 # provide the `--unsafe-fixes` flag when fixing.
-extend-unsafe-fixes = [
-    "UP038"
-]
+extend-unsafe-fixes = [ "UP038" ]
 
 [tool.ruff.lint.isort]
 force-single-line = true

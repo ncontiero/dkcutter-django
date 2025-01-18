@@ -67,6 +67,20 @@
     ],
     "promptMessage": "What {{ colors.blue('Mail Service') }} would you like to use?"
   },
+  "frontendPipeline": {
+    "value": ["None", "Rspack"],
+    "promptMessage": "What {{ colors.blue('Frontend Pipeline') }} would you like to use?"
+  },
+  "additionalTools": {
+    "promptMessage": "Select additional tools: ",
+    "value": "none",
+    "choices": [
+      { "title": "Add TailwindCSS", "value": "tailwindcss" },
+      { "title": "Add ESLint", "value": "eslint" }
+    ],
+    "choicesType": "multiselect",
+    "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}"
+  },
   "useMailpit": {
     "value": false,
     "promptMessage": "Would you like to use {{ colors.blue('Mailpit') }}?",
@@ -87,10 +101,6 @@
   "usePgadmin": {
     "value": false,
     "promptMessage": "Would you like to use {{ colors.blue('PGAdmin') }}?"
-  },
-  "useTailwindcss": {
-    "value": false,
-    "promptMessage": "Would you like to use {{ colors.blue('Tailwindcss') }}?"
   },
   "automatedDepsUpdater": {
     "value": "none",

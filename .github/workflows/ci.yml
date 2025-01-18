@@ -72,8 +72,10 @@ jobs:
             args: --useCelery --restFramework DRF
           - name: Celery & DNRF
             args: --useCelery --restFramework DNRF
-          - name: TailwindCSS
-            args: --useTailwindcss
+          - name: Rspack
+            args: --frontendPipeline Rspack
+          - name: Rspack with TailwindCSS and Eslint
+            args: --frontendPipeline Rspack --additionalTools tailwindcss,eslint
 
     name: "Docker ${{ matrix.script.name }}"
     runs-on: ubuntu-latest

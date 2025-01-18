@@ -3,18 +3,28 @@ import fs from "fs-extra";
 
 import { toBoolean } from "./utils/coerce";
 import { logger } from "./utils/logger";
+import { updatePackageJson } from "./utils/updatePackageJson";
 
 type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
+type FrontendPipeline = "None" | "Rspack";
+type AdditionalTool = "tailwindcss" | "eslint";
+type AdditionalTools = AdditionalTool[];
 
 const context = {
   projectSlug: "{{ dkcutter.projectSlug }}",
   cloudProvider: "{{ dkcutter.cloudProvider }}",
   restFramework: "{{ dkcutter.restFramework }}",
-  useTailwindcss: toBoolean("{{ dkcutter.useTailwindcss }}"),
+  frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,
+  additionalTools:
+    "{{ dkcutter.additionalTools }}" as unknown as AdditionalTools,
   useCelery: toBoolean("{{ dkcutter.useCelery }}"),
   automatedDepsUpdater:
     "{{ dkcutter.automatedDepsUpdater }}" as AutomatedDepsUpdater,
 };
+
+const projectRootDir = path.resolve(".");
+const projectDir = path.resolve(context.projectSlug);
+const srcFolder = path.join(projectDir, "src");
 
 function appendToGitignore(gitignorePath: string, lines: string) {
   fs.appendFileSync(gitignorePath, lines);
@@ -24,17 +34,72 @@ function removeFiles(files: string[]) {
   files.forEach((file) => fs.removeSync(file));
 }
 
-function removeTailwindFiles(projectDir: string) {
-  const tailwindFiles = [
-    path.join("tailwind.config.js"),
-    path.join(projectDir, "tailwind.css"),
-  ];
+function removeSrcFolder() {
+  fs.removeSync(srcFolder);
+}
+
+function removeRspackFiles() {
+  fs.removeSync("rspack");
+  removeSrcFolder();
+}
+
+function removeTailwindFiles() {
+  const tailwindFiles = [path.join("tailwind.config.js")];
   removeFiles(tailwindFiles);
 }
 
-function handleUseTailwind(projectDir: string) {
-  removeTailwindFiles(projectDir);
-  fs.removeSync("package.json");
+function removeEslintFiles() {
+  fs.removeSync("eslint.config.mjs");
+}
+
+function handleFrontendPipelineAndTools(
+  choice: FrontendPipeline,
+  tools: AdditionalTools,
+) {
+  let scripts: Record<string, string> = {};
+  const removeDevDeps = [];
+
+  if (choice === "Rspack") {
+    scripts = {
+      build: "rspack build -c rspack/prod.config.mjs",
+      dev: "rspack serve -c rspack/dev.config.mjs",
+    };
+    removeFiles([
+      path.join(projectDir, "static", "css"),
+      path.join(projectDir, "static", "js"),
+    ]);
+  } else {
+    removeDevDeps.push(
+      "@rspack/cli",
+      "@rspack/core",
+      "autoprefixer",
+      "postcss",
+      "postcss-loader",
+      "postcss-preset-env",
+      "webpack-bundle-tracker",
+      "webpack-merge",
+    );
+    removeRspackFiles();
+  }
+
+  if (!tools.includes("tailwindcss")) {
+    removeTailwindFiles();
+    removeDevDeps.push("tailwindcss");
+  }
+
+  if (tools.includes("eslint")) {
+    scripts.lint = "eslint .";
+    scripts["lint:fix"] = "eslint . --fix";
+  } else {
+    removeEslintFiles();
+    removeDevDeps.push("@dkshs/eslint-config", "eslint");
+  }
+
+  updatePackageJson({ projectDir: projectRootDir, scripts, removeDevDeps });
+}
+
+function removePackageJsonFile() {
+  fs.removeSync(path.join(projectRootDir, "package.json"));
 }
 
 function removeCeleryFiles() {
@@ -178,22 +243,28 @@ function removeApiStarterFiles() {
 }
 
 function main() {
-  const projectDir = path.resolve(context.projectSlug);
   const gitignorePath = path.resolve(".gitignore");
 
   setFlagsInEnvs(generateRandomUser(), generateRandomUser());
   setFlagsInSettings();
 
-  appendToGitignore(gitignorePath, ".env");
-  appendToGitignore(gitignorePath, ".envs/*");
+  appendToGitignore(gitignorePath, "\n.env\n.envs/*\n");
 
   if (context.cloudProvider !== "AWS") {
     removeAwsDockerfile();
   }
 
-  if (!context.useTailwindcss) {
-    handleUseTailwind(projectDir);
+  if (context.frontendPipeline === "None") {
+    removeRspackFiles();
+    removeTailwindFiles();
+    removeEslintFiles();
     removeNodeDockerfile();
+    removePackageJsonFile();
+  } else {
+    handleFrontendPipelineAndTools(
+      context.frontendPipeline,
+      context.additionalTools,
+    );
   }
 
   if (context.cloudProvider === "None") {

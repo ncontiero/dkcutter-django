@@ -1,7 +1,9 @@
 volumes:
   {{ dkcutter.projectSlug }}_local_postgres_data: {}
   {{ dkcutter.projectSlug }}_local_postgres_data_backups: {}
-  {% if dkcutter.useCelery %}{{ dkcutter.projectSlug }}_local_redis_data: {}{% endif %}
+  {%- if dkcutter.useCelery %}
+  {{ dkcutter.projectSlug }}_local_redis_data: {}
+  {%- endif %}
 
 services:
   django:{% if dkcutter.useCelery %} &django{% endif %}
@@ -90,7 +92,7 @@ services:
     command: /start-flower
 
   {%- endif %}
-  {%- if dkcutter.useTailwindcss %}
+  {%- if dkcutter.frontendPipeline in ["Rspack"] %}
 
   node:
     build:
@@ -105,6 +107,8 @@ services:
       # http://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html
       - /app/node_modules
     command: npm run dev
+    ports:
+      - "3000:3000"
 
   {%- endif %}
   {%- if dkcutter.usePgadmin %}

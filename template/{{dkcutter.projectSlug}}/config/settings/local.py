@@ -2,6 +2,9 @@
 from .base import *  # noqa: F403
 from .base import INSTALLED_APPS
 from .base import MIDDLEWARE
+{%- if dkcutter.frontendPipeline in ["Rspack"] %}
+from .base import WEBPACK_LOADER
+{%- endif %}
 from .base import config
 
 # GENERAL
@@ -79,5 +82,10 @@ INSTALLED_APPS += ["django_extensions"]
 CELERY_TASK_EAGER_PROPAGATES = True
 
 {%- endif %}
+{%- if dkcutter.frontendPipeline in ["Rspack"] %}
+# django-webpack-loader
+# ------------------------------------------------------------------------------
+WEBPACK_LOADER["DEFAULT"]["CACHE"] = not DEBUG
+{% endif %}
 # Your stuff...
 # ------------------------------------------------------------------------------

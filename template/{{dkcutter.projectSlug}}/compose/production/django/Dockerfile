@@ -1,4 +1,4 @@
-{% if dkcutter.useTailwindcss -%}
+{% if dkcutter.frontendPipeline in ["Rspack"] -%}
 FROM docker.io/node:22-bookworm-slim AS client-builder
 
 ARG APP_HOME=/app
@@ -8,9 +8,23 @@ COPY ./package.json ${APP_HOME}
 RUN npm install && npm cache clean --force
 
 COPY . ${APP_HOME}
+{%- if dkcutter.frontendPipeline in ["Rspack"] and not dkcutter.useWhitenoise %}
+{%- if dkcutter.cloudProvider == "AWS" %}
 
-RUN npm run tailwind:build
+ARG DJANGO_AWS_STORAGE_BUCKET_NAME
+ENV DJANGO_AWS_STORAGE_BUCKET_NAME=${DJANGO_AWS_STORAGE_BUCKET_NAME}
+ARG DJANGO_AWS_S3_CUSTOM_DOMAIN
+ENV DJANGO_AWS_S3_CUSTOM_DOMAIN=${DJANGO_AWS_S3_CUSTOM_DOMAIN}
+{%- elif dkcutter.cloudProvider == "GCP" %}
+
+ARG DJANGO_GCP_STORAGE_BUCKET_NAME
+ENV DJANGO_GCP_STORAGE_BUCKET_NAME=${DJANGO_GCP_STORAGE_BUCKET_NAME}
 {%- endif %}
+{%- endif %}
+
+RUN npm run build
+
+{% endif -%}
 # define an alias for the specific python version used in this file.
 FROM docker.io/python:3.12.8-slim-bookworm AS python
 

@@ -16,6 +16,7 @@ This page describes all the template options that will be prompted by the [dkcut
 
 - **PostgreSQL version**: Select a [PostgreSQL](https://www.postgresql.org/docs/) version to use. The choices are:
 
+  - 17
   - 16
   - 15
   - 14
@@ -28,7 +29,7 @@ This page describes all the template options that will be prompted by the [dkcut
   - [GCP](https://cloud.google.com/storage)
   - None
 
-  If you choose no cloud provider, the production stack will serve the media files via an nginx Docker service. Without Docker, the media files won't work.
+  If you choose no cloud provider, the production stack will serve the media files via an Nginx Docker service. Without Docker, the media files won't work.
 
 - **Rest Framework**: Select a REST API framework. The choices are:
 
@@ -49,6 +50,16 @@ This page describes all the template options that will be prompted by the [dkcut
   - [Other SMTP](https://anymail.readthedocs.io/en/stable/)
   - None
 
+- **Frontend Pipeline**: Select a pipeline to compile and optimize frontend assets (JS, CSS, …):
+
+  - None
+  - [Rspack](https://rspack.dev/)
+
+- **Additional Tools**: Select additional tools to use with Frontend Pipeline:
+
+  - [TailwindCSS](https://tailwindcss.com/)
+  - [ESLint](https://eslint.org/)
+
 - **Use mailpit**: Indicates whether the project should be configured to use [Mailpit](https://github.com/axllent/mailpit/).
 
 - **Use celery**: Indicates whether the project should be configured to use [Celery](https://github.com/celery/celery).
@@ -58,8 +69,6 @@ This page describes all the template options that will be prompted by the [dkcut
 - **Use whitenoise**: Indicates whether the project should be configured to use [WhiteNoise](https://github.com/evansd/whitenoise).
 
 - **Use pgadmin**: Indicates whether the project should be configured to use [pgAdmin](https://www.pgadmin.org/).
-
-- **Use tailwindcss**: Indicates whether the project should be configured to use [TailwindCSS](https://tailwindcss.com/).
 
 - **Automated Deps Updater**: Indicates whether the project should be configured using the following automated deps updater:
 
