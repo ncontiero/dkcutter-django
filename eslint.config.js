@@ -9,6 +9,7 @@ const FILES_TO_IGNORE = [
   "docker-compose.local.yml",
   "docker-compose.production.yml",
   "pyproject.toml",
+  "rspack",
 ];
 
 function ignoreFiles(files) {
