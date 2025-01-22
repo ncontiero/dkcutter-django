@@ -1,5 +1,5 @@
 {% if dkcutter.frontendPipeline in ["Rspack"] -%}
-FROM docker.io/node:22-bookworm-slim AS client-builder
+FROM docker.io/node:22.13.1-bookworm-slim AS client-builder
 
 ARG APP_HOME=/app
 WORKDIR ${APP_HOME}
