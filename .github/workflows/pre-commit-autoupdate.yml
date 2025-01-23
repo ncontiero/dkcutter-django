@@ -22,16 +22,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: "3.12"
-
-      - name: Install pre-commit
-        run: pip install pre-commit
+          enable-cache: true
 
       - name: Autoupdate generated projects
         working-directory: "template/{{dkcutter.projectSlug}}"
-        run: pre-commit autoupdate
+        run: uv tool run pre-commit autoupdate
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
