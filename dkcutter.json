@@ -1,4 +1,5 @@
 {
+  "$schema": "https://github.com/dkshs/dkcutter/raw/refs/heads/main/dkcutter-schema.json",
   "projectName": {
     "value": "My Awesome Project",
     "promptMessage": "What is the project name?"
@@ -75,11 +76,20 @@
     "promptMessage": "Select additional tools: ",
     "value": "none",
     "choices": [
-      { "title": "Add TailwindCSS", "value": "tailwindcss" },
-      { "title": "Add ESLint", "value": "eslint" }
+      {
+        "title": "Add TailwindCSS",
+        "value": "tailwindcss",
+        "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}",
+        "helpTextForDisabled": "Disabled because {{ colors.blue('Frontend Pipeline') }} is None"
+      },
+      {
+        "title": "Add ESLint",
+        "value": "eslint",
+        "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}",
+        "helpTextForDisabled": "Disabled because {{ colors.blue('Frontend Pipeline') }} is None"
+      }
     ],
-    "choicesType": "multiselect",
-    "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}"
+    "choicesType": "multiselect"
   },
   "useMailpit": {
     "value": false,
