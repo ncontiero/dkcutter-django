@@ -4,8 +4,7 @@
   "packageRules": [
     {
       "enabled": false,
-      "matchDatasources": ["docker"],
-      "matchDepNames": ["docker.io/python"],
+      "matchDepNames": ["docker.io/python", "python"],
       "matchUpdateTypes": ["major", "minor"]
     },
     {
