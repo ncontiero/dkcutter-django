@@ -58,7 +58,7 @@ jobs:
       - name: Install Python dependencies
         run: uv sync
       - name: Run tests
-        run: pnpm test
+        run: uv run pnpm test
 
   docker:
     strategy:
