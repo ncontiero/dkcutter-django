@@ -1,4 +1,5 @@
 {
+  "$schema": "https://github.com/dkshs/dkcutter/raw/refs/heads/main/dkcutter-schema.json",
   "projectName": {
     "value": "My Awesome Project",
     "promptMessage": "What is the project name?"
@@ -75,11 +76,35 @@
     "promptMessage": "Select additional tools: ",
     "value": "none",
     "choices": [
-      { "title": "Add TailwindCSS", "value": "tailwindcss" },
-      { "title": "Add ESLint", "value": "eslint" }
+      {
+        "title": "{{ colors.blue('TailwindCSS') }}",
+        "value": "tailwindcss",
+        "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}",
+        "helpTextForDisabled": "Disabled because {{ colors.blue('Frontend Pipeline') }} is None"
+      },
+      { 
+        "title": "{{ colors.blue('ESLint') }}",
+        "value": "eslint",
+        "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}",
+        "helpTextForDisabled": "Disabled because {{ colors.blue('Frontend Pipeline') }} is None"
+      },
+      {
+        "title": "{{ colors.blue('Mailpit') }}",
+        "value": "mailpit",
+        "disabled": "{% if mailService == 'None' %}true{% else %}false{% endif %}",
+        "helpTextForDisabled": "Disabled because {{ colors.blue('Mail Service') }} is None"
+      },
+      { "title": "{{ colors.blue('Celery') }}", "value": "celery" },
+      { "title": "{{ colors.blue('Sentry') }}", "value": "sentry" },
+      {
+        "title": "{{ colors.blue('Whitenoise') }}",
+        "description": "Required if {{ colors.blue('Cloud Provider') }} is None.",
+        "value": "whitenoise",
+        "selected": "{% if cloudProvider == 'None' %}true{% else %}false{% endif %}"
+      },
+      { "title": "{{ colors.blue('PGAdmin') }}", "value": "pgadmin" }
     ],
-    "choicesType": "multiselect",
-    "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}"
+    "choicesType": "multiselect"
   },
   "useMailpit": {
     "value": false,
