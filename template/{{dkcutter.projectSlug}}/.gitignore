@@ -59,9 +59,6 @@ docs/_build/
 # PyBuilder
 target/
 
-# pyenv
-.python-version
-
 {% if dkcutter.useCelery -%}
 # celery beat schedule file
 celerybeat-schedule
