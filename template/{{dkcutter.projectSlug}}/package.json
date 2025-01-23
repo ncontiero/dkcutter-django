@@ -8,8 +8,8 @@
   "scripts": {},
   "devDependencies": {
     "@dkshs/eslint-config": "^3.4.0",
-    "@rspack/cli": "^1.2.1",
-    "@rspack/core": "^1.2.1",
+    "@rspack/cli": "^1.2.2",
+    "@rspack/core": "^1.2.2",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.18.0",
     "postcss": "^8.5.1",
