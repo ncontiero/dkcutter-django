@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "lint:fix": "pnpm lint --fix",
     "check": "pnpm lint && pnpm typecheck",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "dependencies": {
     "dkcutter": "4.5.0"
