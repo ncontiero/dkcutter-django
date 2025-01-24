@@ -15,18 +15,6 @@ dependencies = [
   "ruff==0.9.3",
 ]
 
-[tool.black]
-line-length = 119
-target-version = [ "py312" ]
-
-[tool.isort]
-profile = "black"
-line_length = 119
-known_first_party = [
-  "tests",
-  "hooks",
-]
-
 [tool.djlint]
 blank_line_after_tag = "load,extends"
 close_void_tags = true
