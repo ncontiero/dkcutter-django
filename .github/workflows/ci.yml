@@ -58,7 +58,7 @@ jobs:
       - name: Install Python dependencies
         run: uv sync
       - name: Run tests
-        run: uv run pnpm test
+        run: uv run tox
 
   docker:
     strategy:
