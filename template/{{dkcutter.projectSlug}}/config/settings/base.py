@@ -13,7 +13,7 @@ import dj_database_url
 from decouple import config
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
-# {{ projectSlug }}/
+# {{ dkcutter.projectSlug }}/
 APPS_DIR = BASE_DIR / "{{ dkcutter.projectSlug }}"
 
 # GENERAL
