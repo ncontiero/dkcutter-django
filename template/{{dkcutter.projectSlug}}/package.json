@@ -11,7 +11,7 @@
     "@rspack/cli": "^1.2.2",
     "@rspack/core": "^1.2.2",
     "autoprefixer": "^10.4.20",
-    "eslint": "^9.18.0",
+    "eslint": "^9.19.0",
     "postcss": "^8.5.1",
     "postcss-loader": "^8.1.1",
     "postcss-preset-env": "^10.1.3",
