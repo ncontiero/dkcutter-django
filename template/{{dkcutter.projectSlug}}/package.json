@@ -18,5 +18,8 @@
     "tailwindcss": "^3.4.17",
     "webpack-bundle-tracker": "^3.1.1",
     "webpack-merge": "^6.0.1"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

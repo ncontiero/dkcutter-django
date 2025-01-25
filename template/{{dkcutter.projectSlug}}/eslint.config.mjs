@@ -10,9 +10,6 @@ export default dkshs({
       ],
     },
   },
-  unicorn: {
-    overrides: { "unicorn/prefer-query-selector": "off" },
-  },
   toml: {
     overrides: { "toml/indent": ["error", 4] },
   },
