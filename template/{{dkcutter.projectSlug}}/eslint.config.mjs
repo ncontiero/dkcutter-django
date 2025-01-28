@@ -10,7 +10,4 @@ export default dkshs({
       ],
     },
   },
-  toml: {
-    overrides: { "toml/indent": ["error", 4] },
-  },
 });
