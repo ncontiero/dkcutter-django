@@ -48,8 +48,8 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       checkPaths(paths);
 
       // Check that the project is linted
-      await execa("ruff", ["check"], { cwd: target });
-      await execa("ruff", ["format"], { cwd: target });
+      await execa("ruff", ["check", "."], { cwd: target });
+      await execa("ruff", ["format", "."], { cwd: target });
 
       // django-upgrade
       const files = await fg.glob("**/*.py", { cwd: target });
