@@ -6,14 +6,21 @@ import { logger } from "./utils/logger";
 // The content of this string is evaluated by Jinja, and plays an important role.
 // It updates the dkcutter context to trim leading and trailing spaces
 // from domain/email values
-// {{ dkcutter.update('domainName', dkcutter.domainName|trim) }}
-// {{ dkcutter.update('email', dkcutter.email|trim) }}
+// {{ dkcutter.update("domainName", dkcutter.domainName|trim) }}
+// {{ dkcutter.update("email", dkcutter.email|trim) }}
+
+// And this add values in context for ease in conditions.
+// {{ dkcutter.add("useMailpit", "{% if 'mailpit' in dkcutter.additionalTools %}true{% endif %}") }}
+// {{ dkcutter.add("useCelery", "{% if 'celery' in dkcutter.additionalTools %}true{% endif %}") }}
+// {{ dkcutter.add("useSentry", "{% if 'sentry' in dkcutter.additionalTools %}true{% endif %}") }}
+// {{ dkcutter.add("useWhitenoise", "{% if 'whitenoise' in dkcutter.additionalTools %}true{% endif %}") }}
+// {{ dkcutter.add("usePgadmin", "{% if 'pgadmin' in dkcutter.additionalTools %}true{% endif %}") }}
 
 const ctx = {
-  useWhitenoise: toBoolean("{{ dkcutter.useWhitenoise }}"),
+  useWhitenoise: toBoolean("{{ 'whitenoise' in dkcutter.additionalTools }}"),
   cloudProvider: "{{ dkcutter.cloudProvider }}",
   mailService: "{{ dkcutter.mailService }}",
-  useMailpit: toBoolean("{{ dkcutter.useMailpit }}"),
+  useMailpit: toBoolean("{{ 'mailpit' in dkcutter.additionalTools }}"),
 };
 
 export function validateProject() {

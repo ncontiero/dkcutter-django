@@ -70,15 +70,8 @@ If you want to start faster, you can use the following options:
 | `--restFramework <string>`        | Select a REST API framework.                                                              |
 | `--mailService <string>`          | Select an email service that Django-Anymail provides.                                     |
 | `--frontendPipeline <string>`     | Select a pipeline to compile and optimize frontend assets (JS, CSS, …).                   |
-| `--additionalTools <string>`      | Select additional tools to use with `frontendPipeline`.                                   |
-| `--useMailpit [boolean]`          | Include [Mailpit][mailpit-url] in the project. If `mailService` is different from `None`. |
-| `--useCelery [boolean]`           | Include [Celery](https://github.com/celery/celery) in the project.                        |
-| `--useSentry [boolean]`           | Include [Sentry](https://github.com/getsentry/sentry) in the project.                     |
-| `--useWhitenoise [boolean]`       | Include [Whitenoise](https://github.com/evansd/whitenoise) in the project.                |
-| `--usePgadmin [boolean]`          | Include [pgAdmin](https://www.pgadmin.org/) in the project.                               |
+| `--additionalTools <string>`      | Select additional tools to use.                                                           |
 | `--automatedDepsUpdater <string>` | Choose Automated Dependency Updater. [See for more info][options-url].                    |
-
-[mailpit-url]: https://github.com/axllent/mailpit/
 
 [See for more information about options][options-url].
 
@@ -87,16 +80,16 @@ If you want to start faster, you can use the following options:
 The following would be the structure of an application with Sentry:
 
 ```bash
-pnpm dlx dkcutter gh:dkshs/dkcutter-django --useSentry
+pnpm dlx dkcutter gh:dkshs/dkcutter-django --additionalTools sentry
 ```
 
 If you want to use all the default values with the exception of one or more, you can do it as follows:
 
 ```bash
-pnpm dlx dkcutter gh:dkshs/dkcutter-django --useCelery --useSentry -y
+pnpm dlx dkcutter gh:dkshs/dkcutter-django --additionalTools celery,sentry -y
 ```
 
-This will use the default values, with the exception of the `--useCelery` and `--useSentry` options.
+This will use the default values except for `--additionalTools`.
 
 ## For local development, see the following
 

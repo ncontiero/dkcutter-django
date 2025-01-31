@@ -49,7 +49,7 @@ http:
     {%- if dkcutter.useCelery %}
 
     flower-secure-router:
-      rule: "Host(`{{ dkcutter.domainName }}`)"
+      rule: Host(`{{ dkcutter.domainName }}`)
       entryPoints:
         - flower
       service: flower

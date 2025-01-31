@@ -55,20 +55,15 @@ This page describes all the template options that will be prompted by the [dkcut
   - None
   - [Rspack](https://rspack.dev/)
 
-- **Additional Tools**: Select additional tools to use with Frontend Pipeline:
+- **Additional Tools**: Select additional tools to use:
 
   - [TailwindCSS](https://tailwindcss.com/)
   - [ESLint](https://eslint.org/)
-
-- **Use mailpit**: Indicates whether the project should be configured to use [Mailpit](https://github.com/axllent/mailpit/).
-
-- **Use celery**: Indicates whether the project should be configured to use [Celery](https://github.com/celery/celery).
-
-- **Use sentry**: Indicates whether the project should be configured to use [Sentry](https://github.com/getsentry/sentry).
-
-- **Use whitenoise**: Indicates whether the project should be configured to use [WhiteNoise](https://github.com/evansd/whitenoise).
-
-- **Use pgadmin**: Indicates whether the project should be configured to use [pgAdmin](https://www.pgadmin.org/).
+  - [Mailpit](https://github.com/axllent/mailpit)
+  - [Celery](https://github.com/celery/celery)
+  - [Sentry](https://github.com/getsentry/sentry)
+  - [WhiteNoise](https://github.com/evansd/whitenoise)
+  - [PGAdmin](https://www.pgadmin.org/)
 
 - **Automated Deps Updater**: Indicates whether the project should be configured using the following automated deps updater:
 

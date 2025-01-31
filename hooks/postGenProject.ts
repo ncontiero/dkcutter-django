@@ -17,7 +17,7 @@ const context = {
   frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,
   additionalTools:
     "{{ dkcutter.additionalTools }}" as unknown as AdditionalTools,
-  useCelery: toBoolean("{{ dkcutter.useCelery }}"),
+  useCelery: toBoolean("{{ 'celery' in dkcutter.additionalTools }}"),
   automatedDepsUpdater:
     "{{ dkcutter.automatedDepsUpdater }}" as AutomatedDepsUpdater,
 };

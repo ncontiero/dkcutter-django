@@ -15,7 +15,9 @@ from sentry_sdk.integrations.redis import RedisIntegration
 {% endif -%}
 from .base import *  # noqa: F403
 from .base import DATABASES
+{%- if not dkcutter.useWhitenoise or dkcutter.mailService != "None" %}
 from .base import INSTALLED_APPS
+{%- endif %}
 from .base import REDIS_URL
 {%- if dkcutter.restFramework == "DRF" %}
 from .base import SPECTACULAR_SETTINGS
@@ -276,9 +278,6 @@ ANYMAIL = {}
 # ------------------------------------------------------------------------------
 # https://github.com/jasongi/collectfasta#installation
 INSTALLED_APPS = ["collectfasta", *INSTALLED_APPS]
-{% endif %}
-{%- if dkcutter.cloudProvider == "None" and dkcutter.useWhitenoise and dkcutter.mailService == "None" %}
-INSTALLED_APPS = [*INSTALLED_APPS]
 {% endif %}
 # LOGGING
 # ------------------------------------------------------------------------------

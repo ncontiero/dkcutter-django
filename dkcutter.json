@@ -77,40 +77,34 @@
     "value": "none",
     "choices": [
       {
-        "title": "Add TailwindCSS",
+        "title": "Add {{ colors.blue('TailwindCSS') }}",
         "value": "tailwindcss",
         "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}",
         "helpTextForDisabled": "Disabled because {{ colors.blue('Frontend Pipeline') }} is None"
       },
       {
-        "title": "Add ESLint",
+        "title": "Add {{ colors.blue('ESLint') }}",
         "value": "eslint",
         "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}",
         "helpTextForDisabled": "Disabled because {{ colors.blue('Frontend Pipeline') }} is None"
-      }
+      },
+      {
+        "title": "Add {{ colors.blue('Mailpit') }}",
+        "value": "mailpit",
+        "disabled": "{% if mailService == 'None' %}true{% else %}false{% endif %}",
+        "helpTextForDisabled": "Disabled because {{ colors.blue('Mail Service') }} is None"
+      },
+      { "title": "Add {{ colors.blue('Celery') }}", "value": "celery" },
+      { "title": "Add {{ colors.blue('Sentry') }}", "value": "sentry" },
+      {
+        "title": "Add {{ colors.blue('WhiteNoise') }}",
+        "value": "whitenoise",
+        "description": "This is mandatory if the {{ colors.blue('Cloud Provider') }} is None.",
+        "selected": "{% if cloudProvider == 'None' %}true{% else %}false{% endif %}"
+      },
+      { "title": "Add {{ colors.blue('PGAdmin') }}", "value": "pgadmin" }
     ],
     "choicesType": "multiselect"
-  },
-  "useMailpit": {
-    "value": false,
-    "promptMessage": "Would you like to use {{ colors.blue('Mailpit') }}?",
-    "disabled": "{% if mailService == 'None' %}true{% else %}false{% endif %}"
-  },
-  "useCelery": {
-    "value": false,
-    "promptMessage": "Would you like to use {{ colors.blue('Celery') }}?"
-  },
-  "useSentry": {
-    "value": false,
-    "promptMessage": "Would you like to use {{ colors.blue('Sentry') }}?"
-  },
-  "useWhitenoise": {
-    "value": false,
-    "promptMessage": "Would you like to use {{ colors.blue('Whitenoise') }}?"
-  },
-  "usePgadmin": {
-    "value": false,
-    "promptMessage": "Would you like to use {{ colors.blue('PGAdmin') }}?"
   },
   "automatedDepsUpdater": {
     "value": "none",
