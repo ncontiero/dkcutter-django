@@ -45,3 +45,8 @@ docker compose -f docker-compose.local.yml run --rm \
 if [ -f "package.json" ]; then
   docker compose -f docker-compose.local.yml run --rm node npm run build
 fi
+
+# Run npm lint script if eslint.config.mjs is present
+if [ -f "eslint.config.mjs" ]; then
+  docker compose -f docker-compose.local.yml run --rm node npm run lint
+fi
