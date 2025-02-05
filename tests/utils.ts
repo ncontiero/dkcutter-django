@@ -42,7 +42,7 @@ export function constructArgs(combination: { [key: string]: any }) {
   const args: string[] = [];
   let name = "";
   for (const [item, value] of Object.entries(combination)) {
-    name += `${item}_${value}_`.replace(" ", "");
+    name += `${item}_${value}_`.replaceAll(" ", "");
     args.push(`--${item}`, value);
   }
   name = name.slice(0, -1);
