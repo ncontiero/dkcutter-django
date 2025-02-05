@@ -169,9 +169,9 @@ Prerequisites:
 
 By default, it’s enabled both in local and production environments (`docker-compose.local.yml` and `docker-compose.production.yml` Docker Compose configs, respectively) through a `flower` service. For added security, `flower` requires its clients to provide authentication credentials specified as the corresponding environments’ `.envs/.local/.django` and `.envs/.production/.django` `CELERY_FLOWER_USER` and `CELERY_FLOWER_PASSWORD` environment variables. Check out <http://localhost:5555> and see for yourself.
 
-### Using Rspack
+### Using Rspack or Webpack
 
-If you’ve opted for Rspack as front-end pipeline, the project comes configured with live reloading. As you change your CSS/JS source files, the task runner will automatically rebuild the corresponding CSS and JS assets and reload them in your browser without refreshing the page.
+If you’ve opted for Rspack or Webpack as front-end pipeline, the project comes configured with live reloading. As you change your CSS/JS source files, the task runner will automatically rebuild the corresponding CSS and JS assets and reload them in your browser without refreshing the page.
 
 The stack comes with a dedicated node service to build the static assets, watch for changes and proxy requests to the Django app with live reloading scripts injected in the response. For everything to work smoothly, you need to access the application at the port served by the node service, which is <http://localhost:3000> by default.
 
