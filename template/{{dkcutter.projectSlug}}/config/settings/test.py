@@ -35,7 +35,7 @@ TEMPLATES[0]["OPTIONS"]["debug"] = True  # type: ignore[index]
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = "http://media.testserver/"
 
-{% if dkcutter.frontendPipeline in ["Rspack"] -%}
+{% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] -%}
 
 # django-webpack-loader
 # ------------------------------------------------------------------------------

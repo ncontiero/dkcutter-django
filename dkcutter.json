@@ -69,7 +69,7 @@
     "promptMessage": "What {{ colors.blue('Mail Service') }} would you like to use?"
   },
   "frontendPipeline": {
-    "value": ["None", "Rspack"],
+    "value": ["None", "Rspack", "Webpack"],
     "promptMessage": "What {{ colors.blue('Frontend Pipeline') }} would you like to use?"
   },
   "additionalTools": {

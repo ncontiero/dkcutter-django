@@ -14,18 +14,18 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
-      {%- if dkcutter.frontendPipeline == 'Rspack' and not dkcutter.useWhitenoise %}
+      {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] and not dkcutter.useWhitenoise %}
       args:
         # These variable can be defined in an .env file in the root of the repo
-        {%- if dkcutter.cloudProvider == 'AWS' %}
+        {%- if dkcutter.cloudProvider == "AWS" %}
         DJANGO_AWS_STORAGE_BUCKET_NAME: ${DJANGO_AWS_STORAGE_BUCKET_NAME}
         DJANGO_AWS_S3_CUSTOM_DOMAIN: ${DJANGO_AWS_S3_CUSTOM_DOMAIN}
-        {%- elif dkcutter.cloudProvider == 'GCP' %}
+        {%- elif dkcutter.cloudProvider == "GCP" %}
         DJANGO_GCP_STORAGE_BUCKET_NAME: ${DJANGO_GCP_STORAGE_BUCKET_NAME}
         {%- endif %}
       {%- endif %}
     image: {{ dkcutter.projectSlug }}_production_django
-    {%- if dkcutter.cloudProvider == 'None' %}
+    {%- if dkcutter.cloudProvider == "None" %}
     volumes:
       - production_django_media:/app/{{ dkcutter.projectSlug }}/media
     {%- endif %}

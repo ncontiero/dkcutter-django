@@ -92,7 +92,7 @@ services:
     command: /start-flower
 
   {%- endif %}
-  {%- if dkcutter.frontendPipeline in ["Rspack"] %}
+  {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
 
   node:
     build:

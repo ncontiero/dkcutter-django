@@ -54,6 +54,7 @@ This page describes all the template options that will be prompted by the [dkcut
 
   - None
   - [Rspack](https://rspack.dev/)
+  - [Webpack](https://webpack.js.org/)
 
 - **Additional Tools**: Select additional tools to use:
 

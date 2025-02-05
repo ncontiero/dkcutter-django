@@ -72,7 +72,7 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
     "drf_spectacular",
 {%- endif %}
-{%- if dkcutter.frontendPipeline in ["Rspack"] %}
+{%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
     "webpack_loader",
 {%- endif %}
     "django_cleanup.apps.CleanupConfig",
@@ -286,7 +286,7 @@ SPECTACULAR_SETTINGS = {
     "SCHEMA_PATH_PREFIX": "/api/",
 }
 {% endif -%}
-{%- if dkcutter.frontendPipeline in ["Rspack"] %}
+{%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
 # django-webpack-loader
 # ------------------------------------------------------------------------------
 WEBPACK_LOADER = {

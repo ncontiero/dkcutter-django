@@ -1,20 +1,14 @@
 import path from "node:path";
-import { defineConfig } from "@rspack/cli";
-import { rspack } from "@rspack/core";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import TerserPlugin from "terser-webpack-plugin";
 import BundleTracker from "webpack-bundle-tracker";
-
-// Target browsers, see: https://github.com/browserslist/browserslist
-const BROWSER_TARGETS = [
-  "chrome >= 87",
-  "edge >= 88",
-  "firefox >= 78",
-  "safari >= 14",
-];
 
 const BASE_PATH = path.join(import.meta.dirname, "../");
 const PROJECT_PATH = path.join(BASE_PATH, "{{ dkcutter.projectSlug }}");
 
-export const commonConfig = defineConfig({
+/** @type {import('webpack').Configuration} */
+export const commonConfig = {
   target: "web",
   context: BASE_PATH,
   entry: {
@@ -26,7 +20,6 @@ export const commonConfig = defineConfig({
     publicPath: "/static/bundles/",
     filename: "js/[name]-[fullhash].js",
     chunkFilename: "js/[name]-[hash].js",
-    cssFilename: "css/[name]-[contenthash].css",
     assetModuleFilename: "assets/[name]-[hash][ext]",
     clean: true,
   },
@@ -35,44 +28,29 @@ export const commonConfig = defineConfig({
       path: path.resolve(BASE_PATH),
       filename: "webpack-stats.json",
     }),
+    new MiniCssExtractPlugin({ filename: "css/[name].[contenthash].css" }),
   ],
   module: {
     rules: [
+      // we pass the output from babel loader to react-hot loader
       {
         test: /\.js$/,
-        use: [
-          {
-            loader: "builtin:swc-loader",
-            options: {
-              jsc: { parser: { syntax: "ecmascript" } },
-              env: { targets: BROWSER_TARGETS },
-            },
-          },
-        ],
+        loader: "babel-loader",
       },
       {
         test: /\.css$/,
-        type: "css",
-        use: ["postcss-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
       },
     ],
   },
   optimization: {
-    minimizer: [
-      new rspack.SwcJsMinimizerRspackPlugin(),
-      new rspack.LightningCssMinimizerRspackPlugin({
-        minimizerOptions: { targets: BROWSER_TARGETS },
-      }),
-    ],
+    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
   },
   resolve: {
     modules: ["node_modules"],
-    extensions: ["...", ".js", ".jsx"],
+    extensions: ["...", ".js", "jsx"],
     alias: {
       "@": path.resolve(PROJECT_PATH, "src"),
     },
   },
-  experiments: {
-    css: true,
-  },
-});
+};

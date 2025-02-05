@@ -1,4 +1,4 @@
-{% if dkcutter.frontendPipeline in ["Rspack"] -%}
+{% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] -%}
 FROM docker.io/node:22-bookworm-slim AS client-builder
 
 ARG APP_HOME=/app
@@ -8,7 +8,7 @@ COPY ./package.json ${APP_HOME}
 RUN npm install && npm cache clean --force
 
 COPY . ${APP_HOME}
-{%- if dkcutter.frontendPipeline in ["Rspack"] and not dkcutter.useWhitenoise %}
+{%- if not dkcutter.useWhitenoise %}
 {%- if dkcutter.cloudProvider == "AWS" %}
 
 ARG DJANGO_AWS_STORAGE_BUCKET_NAME

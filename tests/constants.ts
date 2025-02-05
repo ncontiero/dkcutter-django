@@ -76,9 +76,13 @@ export const SUPPORTED_COMBINATIONS = [
   // with mailService Amazon SES is not supported
   { frontendPipeline: "None" },
   { frontendPipeline: "Rspack" },
+  { frontendPipeline: "Webpack" },
   { frontendPipeline: "Rspack", additionalTools: "tailwindcss" },
   { frontendPipeline: "Rspack", additionalTools: "eslint" },
   { frontendPipeline: "Rspack", additionalTools: "tailwindcss,eslint" },
+  { frontendPipeline: "Webpack", additionalTools: "tailwindcss" },
+  { frontendPipeline: "Webpack", additionalTools: "eslint" },
+  { frontendPipeline: "Webpack", additionalTools: "tailwindcss,eslint" },
   { additionalTools: "whitenoise" },
   { additionalTools: "mailpit" },
   { additionalTools: "sentry" },

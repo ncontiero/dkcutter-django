@@ -271,8 +271,8 @@ mailpit
 
 .ipython/
 
-{%- if dkcutter.frontendPipeline == 'Rspack' %}
-{{ dkcutter.projectSlug }}/static/rspack_bundles/
+{%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
+{{ dkcutter.projectSlug }}/static/bundles/
 webpack-stats.json
 
 {%- endif %}

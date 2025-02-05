@@ -6,7 +6,7 @@ import { logger } from "./utils/logger";
 import { updatePackageJson } from "./utils/updatePackageJson";
 
 type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
-type FrontendPipeline = "None" | "Rspack";
+type FrontendPipeline = "None" | "Rspack" | "Webpack";
 type AdditionalTool = "tailwindcss" | "eslint";
 type AdditionalTools = AdditionalTool[];
 
@@ -40,7 +40,15 @@ function removeSrcFolder() {
 
 function removeRspackFiles() {
   fs.removeSync("rspack");
-  removeSrcFolder();
+}
+
+function removeWebpackFiles() {
+  fs.removeSync("webpack");
+}
+
+function removeStaticCSSAndJS() {
+  const staticPath = path.join(projectDir, "static");
+  removeFiles([path.join(staticPath, "css"), path.join(staticPath, "js")]);
 }
 
 function removeTailwindFiles() {
@@ -58,27 +66,37 @@ function handleFrontendPipelineAndTools(
 ) {
   let scripts: Record<string, string> = {};
   const removeDevDeps = [];
+  const removeKeys = [];
 
   if (choice === "Rspack") {
     scripts = {
       build: "rspack build -c rspack/prod.config.mjs",
       dev: "rspack serve -c rspack/dev.config.mjs",
     };
-    removeFiles([
-      path.join(projectDir, "static", "css"),
-      path.join(projectDir, "static", "js"),
-    ]);
-  } else {
+    removeStaticCSSAndJS();
+    removeWebpackFiles();
+
     removeDevDeps.push(
-      "@rspack/cli",
-      "@rspack/core",
-      "autoprefixer",
-      "postcss",
-      "postcss-loader",
-      "postcss-preset-env",
-      "webpack-bundle-tracker",
-      "webpack-merge",
+      "@babel/core",
+      "@babel/preset-env",
+      "babel-loader",
+      "css-loader",
+      "css-minimizer-webpack-plugin",
+      "mini-css-extract-plugin",
+      "terser-webpack-plugin",
+      "webpack",
+      "webpack-cli",
+      "webpack-dev-server",
     );
+    removeKeys.push("babel");
+  } else if (choice === "Webpack") {
+    scripts = {
+      build: "webpack --config webpack/prod.config.mjs",
+      dev: "webpack serve --config webpack/dev.config.mjs",
+    };
+
+    removeDevDeps.push("@rspack/cli", "@rspack/core");
+    removeStaticCSSAndJS();
     removeRspackFiles();
   }
 
@@ -95,7 +113,12 @@ function handleFrontendPipelineAndTools(
     removeDevDeps.push("@dkshs/eslint-config", "eslint");
   }
 
-  updatePackageJson({ projectDir: projectRootDir, scripts, removeDevDeps });
+  updatePackageJson({
+    projectDir: projectRootDir,
+    scripts,
+    removeDevDeps,
+    keys: removeKeys,
+  });
 }
 
 function removePackageJsonFile() {
@@ -256,6 +279,8 @@ function main() {
 
   if (context.frontendPipeline === "None") {
     removeRspackFiles();
+    removeWebpackFiles();
+    removeSrcFolder();
     removeTailwindFiles();
     removeEslintFiles();
     removeNodeDockerfile();
