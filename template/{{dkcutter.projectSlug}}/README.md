@@ -1,14 +1,14 @@
 # {{dkcutter.projectName}}
 
-[![license mit](https://img.shields.io/badge/licence-MIT-56BEB8)](LICENSE)
 [![Built with DKCutter Django](https://img.shields.io/badge/built%20with-DKCutter%20Django-56BEB8.svg)](https://github.com/dkshs/dkcutter-django)
+[![license mit](https://img.shields.io/badge/licence-MIT-56BEB8)](LICENSE)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 {{ dkcutter.description }}
 
 ## Settings
 
-Moved to [settings](https://github.com/dkshs/dkcutter-django/blob/master/docs/settings.md).
+Moved to [settings](https://github.com/dkshs/dkcutter-django/blob/main/docs/settings.md).
 
 ## Basic Commands
 

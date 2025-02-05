@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/dkshs/dkcutter-django/ci.yml?branch=main)](https://github.com/dkshs/dkcutter-django/actions/workflows/ci.yml?query=branch%3Amain)
 [![license mit](https://img.shields.io/badge/licence-MIT-56BEB8)](LICENSE)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![Code style: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/format.json)](https://github.com/astral-sh/ruff)
 
 Powered by [DKCutter](https://github.com/dkshs/dkcutter), DKCutter Django is a framework for jumpstarting production-ready Django projects quickly.
 
