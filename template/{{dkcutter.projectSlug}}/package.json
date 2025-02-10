@@ -9,7 +9,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.8",
     "@babel/preset-env": "^7.26.8",
-    "@dkshs/eslint-config": "^4.0.1",
+    "@dkshs/eslint-config": "^4.0.2",
     "@rspack/cli": "^1.2.2",
     "@rspack/core": "^1.2.2",
     "autoprefixer": "^10.4.20",
