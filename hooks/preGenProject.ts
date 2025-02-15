@@ -32,17 +32,8 @@ export function validateProject() {
       useMailpit: z.boolean(),
     })
       .refine(
-        (data) => !(!data.useWhitenoise && data.cloudProvider === "None"),
+        (data) => data.useWhitenoise || data.cloudProvider !== "None",
         "You must choose a cloud provider if you don't use Whitenoise.",
-      )
-      .refine(
-        (data) =>
-          !(data.mailService === "Amazon SES" && data.cloudProvider !== "AWS"),
-        "Amazon SES is only available for AWS Cloud Provider.",
-      )
-      .refine(
-        (data) => !(data.useMailpit && data.mailService === "None"),
-        "You must choose a mail service if you use Mailpit.",
       )
       .parse(ctx);
   } catch (error) {
