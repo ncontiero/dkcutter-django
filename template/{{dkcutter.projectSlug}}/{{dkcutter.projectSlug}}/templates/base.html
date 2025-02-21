@@ -18,17 +18,17 @@
     <meta name="author" content="{% endraw %}{{ dkcutter.authorName }}{% raw %}" />
     <link href="{% static 'images/favicons/favicon.ico' %}" rel="icon" />
     {% endraw %}<!-- This file stores project-specific CSS -->
-    {%- if dkcutter.frontendPipeline == ["Rspack", "Webpack"] %}
+    {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
     {% raw %}{% render_bundle "main" "css" %}{% endraw %}
     {%- else %}
     {% raw %}<link href="{% static 'css/styles.css' %}" rel="stylesheet" />{% endraw %}
     {%- endif %}
-    {%- if dkcutter.frontendPipeline == ["Rspack", "Webpack"] %}{% raw %}
+    {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}{% raw %}
     <!-- Vendor dependencies bundled as one file -->
     {% render_bundle "vendors" "js" attrs="defer" %}{% endraw %}
     {%- endif %}
     <!-- place project specific Javascript in this file -->
-    {%- if dkcutter.frontendPipeline == ["Rspack", "Webpack"] %}
+    {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
     {% raw %}{% render_bundle "main" "js" attrs="defer" %}{% endraw %}
     {%- else %}
     {% raw %}<script defer src="{% static 'js/project.js' %}"></script>{% endraw %}
