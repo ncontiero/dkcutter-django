@@ -4,6 +4,7 @@ import { commonConfig } from "./common.config.mjs";
 export default merge(commonConfig, {
   mode: "development",
   devtool: "inline-source-map",
+  /** @type {import('@rspack/core').DevServer} */
   devServer: {
     devMiddleware: { writeToDisk: true },
     port: 3000,

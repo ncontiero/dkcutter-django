@@ -15,7 +15,6 @@ const staticUrl = `https://storage.googleapis.com/${process.env.DJANGO_GCP_STORA
 const staticUrl = "/static/";
 {%- endif %}
 
-/** @type {import('webpack').Configuration} */
 export default merge(commonConfig, {
   mode: "production",
   devtool: "source-map",

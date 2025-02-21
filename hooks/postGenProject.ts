@@ -42,6 +42,18 @@ function removeRspackFiles() {
   fs.removeSync("rspack");
 }
 
+function moveWebpackToRspack() {
+  const webpackConfigPath = path.resolve("webpack");
+  const rspackConfigPath = path.resolve("rspack");
+
+  const filesToMove = ["prod.config.mjs"];
+  filesToMove.forEach((file) => {
+    const src = path.join(webpackConfigPath, file);
+    const dest = path.join(rspackConfigPath, file);
+    fs.moveSync(src, dest);
+  });
+}
+
 function removeWebpackFiles() {
   fs.removeSync("webpack");
 }
@@ -74,6 +86,7 @@ function handleFrontendPipelineAndTools(
       dev: "rspack serve -c rspack/dev.config.mjs",
     };
     removeStaticCSSAndJS();
+    moveWebpackToRspack();
     removeWebpackFiles();
 
     removeDevDeps.push(

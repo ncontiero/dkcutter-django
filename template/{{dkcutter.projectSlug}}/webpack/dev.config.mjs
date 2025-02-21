@@ -1,10 +1,10 @@
 import { merge } from "webpack-merge";
 import { commonConfig } from "./common.config.mjs";
 
-/** @type {import('webpack').Configuration} */
 export default merge(commonConfig, {
   mode: "development",
   devtool: "inline-source-map",
+  /** @type {import('webpack-dev-server').Configuration} */
   devServer: {
     devMiddleware: { writeToDisk: true },
     port: 3000,
