@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) {{ dkcutter.now.getFullYear() }}, {{ dkcutter.authorName }}
+Copyright (c) {{ dkcutter.now.getFullYear() }}-PRESENT, {{ dkcutter.authorName }}
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
