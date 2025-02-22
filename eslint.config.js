@@ -11,6 +11,7 @@ const FILES_TO_IGNORE = [
   "pyproject.toml",
   "postcss.config.cjs",
   "prod.config.mjs",
+  "prod.config.ts",
 ];
 
 function ignoreFiles(files) {
