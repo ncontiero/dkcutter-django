@@ -72,6 +72,15 @@
     "value": ["None", "Rspack", "Webpack"],
     "promptMessage": "What {{ colors.blue('Frontend Pipeline') }} would you like to use?"
   },
+  "frontendPipelineLang": {
+    "value": "js",
+    "promptMessage": "What {{ colors.blue('Frontend Pipeline Language') }} would you like to use?",
+    "choices": [
+      { "title": "TypeScript", "value": "ts" },
+      { "title": "JavaScript", "value": "js" }
+    ],
+    "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}"
+  },
   "additionalTools": {
     "promptMessage": "Select additional tools: ",
     "value": "none",

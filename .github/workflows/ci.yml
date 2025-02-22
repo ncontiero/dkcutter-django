@@ -73,10 +73,14 @@ jobs:
             args: --useCelery --restFramework DNRF
           - name: Rspack
             args: --frontendPipeline Rspack
+          - name: Rspack with TS
+            args: --frontendPipeline Rspack --frontendPipelineLang ts
           - name: Rspack with TailwindCSS and Eslint
             args: --frontendPipeline Rspack --additionalTools tailwindcss,eslint
           - name: Webpack
             args: --frontendPipeline Webpack
+          - name: Webpack with TS
+            args: --frontendPipeline Webpack --frontendPipelineLang ts
           - name: Webpack with TailwindCSS and Eslint
             args: --frontendPipeline Webpack --additionalTools tailwindcss,eslint
 

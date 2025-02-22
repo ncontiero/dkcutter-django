@@ -1,19 +1,19 @@
+import type { Configuration } from "webpack";
 import path from "node:path";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import BundleTracker from "webpack-bundle-tracker";
 
-const BASE_PATH = path.join(import.meta.dirname, "../");
+const BASE_PATH = path.join(__dirname, "../");
 const PROJECT_PATH = path.join(BASE_PATH, "{{ dkcutter.projectSlug }}");
 
-/** @type {import('webpack').Configuration} */
-export const commonConfig = {
+export const commonConfig: Configuration = {
   target: "web",
   context: BASE_PATH,
   entry: {
-    main: path.resolve(PROJECT_PATH, "src/index.js"),
-    vendors: path.resolve(PROJECT_PATH, "src/vendors.js"),
+    main: path.resolve(PROJECT_PATH, "src/index.ts"),
+    vendors: path.resolve(PROJECT_PATH, "src/vendors.ts"),
   },
   output: {
     path: path.resolve(PROJECT_PATH, "static/bundles/"),
@@ -32,9 +32,8 @@ export const commonConfig = {
   ],
   module: {
     rules: [
-      // we pass the output from babel loader to react-hot loader
       {
-        test: /\.js(x?)$/,
+        test: /\.(t|j)s(x?)$/,
         loader: "babel-loader",
       },
       {
@@ -48,7 +47,7 @@ export const commonConfig = {
   },
   resolve: {
     modules: ["node_modules"],
-    extensions: ["...", ".js", "jsx"],
+    extensions: ["...", ".ts", "tsx", "js"],
     alias: {
       "@": path.resolve(PROJECT_PATH, "src"),
     },

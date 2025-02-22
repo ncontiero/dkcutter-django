@@ -7,6 +7,7 @@ import { updatePackageJson } from "./utils/updatePackageJson";
 
 type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
 type FrontendPipeline = "None" | "Rspack" | "Webpack";
+type FrontendPipelineLang = "js" | "ts";
 type AdditionalTool = "tailwindcss" | "eslint";
 type AdditionalTools = AdditionalTool[];
 
@@ -15,6 +16,8 @@ const context = {
   cloudProvider: "{{ dkcutter.cloudProvider }}",
   restFramework: "{{ dkcutter.restFramework }}",
   frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,
+  frontendPipelineLang:
+    "{{ dkcutter.frontendPipelineLang }}" as FrontendPipelineLang,
   additionalTools:
     "{{ dkcutter.additionalTools }}" as unknown as AdditionalTools,
   useCelery: toBoolean("{{ 'celery' in dkcutter.additionalTools }}"),
@@ -46,7 +49,7 @@ function moveWebpackToRspack() {
   const webpackConfigPath = path.resolve("webpack");
   const rspackConfigPath = path.resolve("rspack");
 
-  const filesToMove = ["prod.config.mjs"];
+  const filesToMove = ["prod.config.mjs", "prod.config.ts"];
   filesToMove.forEach((file) => {
     const src = path.join(webpackConfigPath, file);
     const dest = path.join(rspackConfigPath, file);
@@ -56,6 +59,26 @@ function moveWebpackToRspack() {
 
 function removeWebpackFiles() {
   fs.removeSync("webpack");
+}
+
+function removeLangsFiles(lang: FrontendPipelineLang) {
+  const webpackConfigPath = path.resolve("webpack");
+  const rspackConfigPath = path.resolve("rspack");
+
+  const filesToRemove = [
+    `common.config.${lang === "ts" ? "mjs" : "ts"}`,
+    `dev.config.${lang === "ts" ? "mjs" : "ts"}`,
+    `prod.config.${lang === "ts" ? "mjs" : "ts"}`,
+  ];
+
+  filesToRemove.forEach((file) => {
+    fs.removeSync(path.join(webpackConfigPath, file));
+    fs.removeSync(path.join(rspackConfigPath, file));
+  });
+
+  if (lang === "js") {
+    fs.removeSync("tsconfig.json");
+  }
 }
 
 function removeStaticCSSAndJS() {
@@ -74,6 +97,7 @@ function removeEslintFiles() {
 
 function handleFrontendPipelineAndTools(
   choice: FrontendPipeline,
+  lang: FrontendPipelineLang,
   tools: AdditionalTools,
 ) {
   let scripts: Record<string, string> = {};
@@ -82,8 +106,8 @@ function handleFrontendPipelineAndTools(
 
   if (choice === "Rspack") {
     scripts = {
-      build: "rspack build -c rspack/prod.config.mjs",
-      dev: "rspack serve -c rspack/dev.config.mjs",
+      build: `rspack build -c rspack/prod.config.${lang === "js" ? "mjs" : "ts"}`,
+      dev: `rspack serve -c rspack/dev.config.${lang === "js" ? "mjs" : "ts"}`,
     };
     removeStaticCSSAndJS();
     moveWebpackToRspack();
@@ -92,6 +116,7 @@ function handleFrontendPipelineAndTools(
     removeDevDeps.push(
       "@babel/core",
       "@babel/preset-env",
+      "@babel/preset-typescript",
       "babel-loader",
       "css-loader",
       "css-minimizer-webpack-plugin",
@@ -104,10 +129,13 @@ function handleFrontendPipelineAndTools(
     removeKeys.push("babel");
   } else if (choice === "Webpack") {
     scripts = {
-      build: "webpack --config webpack/prod.config.mjs",
-      dev: "webpack serve --config webpack/dev.config.mjs",
+      build: `webpack --config webpack/prod.config.${lang === "js" ? "mjs" : "ts"}`,
+      dev: `webpack serve --config webpack/dev.config.${lang === "js" ? "mjs" : "ts"}`,
     };
 
+    if (lang === "js") {
+      removeDevDeps.push("@babel/preset-typescript");
+    }
     removeDevDeps.push("@rspack/cli", "@rspack/core");
     removeStaticCSSAndJS();
     removeRspackFiles();
@@ -124,6 +152,11 @@ function handleFrontendPipelineAndTools(
   } else {
     removeEslintFiles();
     removeDevDeps.push("@dkshs/eslint-config", "eslint");
+  }
+
+  removeLangsFiles(lang);
+  if (lang === "js") {
+    removeDevDeps.push("ts-node", "typescript");
   }
 
   updatePackageJson({
@@ -301,6 +334,7 @@ function main() {
   } else {
     handleFrontendPipelineAndTools(
       context.frontendPipeline,
+      context.frontendPipelineLang,
       context.additionalTools,
     );
   }
