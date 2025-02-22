@@ -65,16 +65,21 @@ function removeLangsFiles(lang: FrontendPipelineLang) {
   const webpackConfigPath = path.resolve("webpack");
   const rspackConfigPath = path.resolve("rspack");
 
-  const filesToRemove = [
+  const configFilesToRemove = [
     `common.config.${lang === "ts" ? "mjs" : "ts"}`,
     `dev.config.${lang === "ts" ? "mjs" : "ts"}`,
     `prod.config.${lang === "ts" ? "mjs" : "ts"}`,
   ];
+  const filesToRemove = [
+    path.join(srcFolder, `index.${lang === "ts" ? "js" : "ts"}`),
+    path.join(srcFolder, `vendors.${lang === "ts" ? "js" : "ts"}`),
+  ];
 
-  filesToRemove.forEach((file) => {
+  configFilesToRemove.forEach((file) => {
     fs.removeSync(path.join(webpackConfigPath, file));
     fs.removeSync(path.join(rspackConfigPath, file));
   });
+  removeFiles(filesToRemove);
 
   if (lang === "js") {
     fs.removeSync("tsconfig.json");
