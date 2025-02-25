@@ -1,5 +1,5 @@
 {
-  "$schema": "https://github.com/dkshs/dkcutter/raw/refs/heads/main/dkcutter-schema.json",
+  "$schema": "https://dkcutter.dkshs.me/schema.json",
   "projectName": {
     "value": "My Awesome Project",
     "promptMessage": "What is the project name?"
