@@ -17,7 +17,7 @@
     "dkcutter": "4.5.0"
   },
   "devDependencies": {
-    "@dkshs/eslint-config": "4.3.0",
+    "@dkshs/eslint-config": "4.4.0",
     "@rspack/cli": "^1.2.7",
     "@rspack/core": "^1.2.7",
     "@types/fs-extra": "^11.0.4",
