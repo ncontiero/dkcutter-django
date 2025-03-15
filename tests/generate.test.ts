@@ -31,10 +31,10 @@ const it = vitestIt.extend<{
 });
 
 function runProjectCheckTest(combination: { [key: string]: any }) {
-  const args = constructArgs(combination);
+  const { args, testName } = constructArgs(combination);
   const name = args[1];
   it.concurrent(
-    name,
+    testName,
     async ({ supportedOptions }) => {
       const target = resolve(TEST_OUTPUT, name);
 
@@ -89,10 +89,10 @@ function runUnsupportedOptionsTest(
   combination: { [key: string]: any },
   testOption: "slug" | "options" = "options",
 ) {
-  const args = constructArgs(combination);
+  const { args, testName } = constructArgs(combination);
   const name = args[1];
   it.concurrent(
-    name,
+    testName,
     async ({ expect, invalidSlugs, unsupportedOptions }) => {
       // Generate the project and check that it fails
       const { exitCode } = await execa(

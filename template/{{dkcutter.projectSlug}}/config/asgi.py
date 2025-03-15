@@ -1,4 +1,3 @@
-# ruff: noqa
 """
 ASGI config for {{ dkcutter.projectName }} project.
 
