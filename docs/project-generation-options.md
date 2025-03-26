@@ -21,7 +21,6 @@ This page describes all the template options that will be prompted by the [dkcut
   - 15
   - 14
   - 13
-  - 12
 
 - **Cloud Provider**: Select a cloud provider for static & media files. The choices are:
 
