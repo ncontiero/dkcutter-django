@@ -73,16 +73,16 @@ jobs:
             args: --useCelery --restFramework DNRF
           - name: Rspack
             args: --frontendPipeline Rspack
-          - name: Rspack with TS
-            args: --frontendPipeline Rspack --frontendPipelineLang ts
           - name: Rspack with TailwindCSS and Eslint
             args: --frontendPipeline Rspack --additionalTools tailwindcss,eslint
+          - name: Rspack with TypeScript, TailwindCSS and Eslint
+            args: --frontendPipeline Rspack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
           - name: Webpack
             args: --frontendPipeline Webpack
-          - name: Webpack with TS
-            args: --frontendPipeline Webpack --frontendPipelineLang ts
           - name: Webpack with TailwindCSS and Eslint
             args: --frontendPipeline Webpack --additionalTools tailwindcss,eslint
+          - name: Webpack with TypeScript, TailwindCSS and Eslint
+            args: --frontendPipeline Webpack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
 
     name: "Docker ${{ matrix.script.name }}"
     runs-on: ubuntu-latest
