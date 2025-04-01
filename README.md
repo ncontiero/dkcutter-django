@@ -38,7 +38,7 @@ bunx dkcutter@latest gh:ncontiero/dkcutter-django
 
 You'll be prompted for some values. Provide them, then a Django project will be created for you.
 
-**Warning**: After this point, change 'Nicolas Contiero <https://github.com/ncontiero>', etc to your own information.
+**Warning**: After this point, change 'Nicolas Contiero', etc to your own information.
 
 Answer the prompts with your own desired [options][options-url]. For example:
 

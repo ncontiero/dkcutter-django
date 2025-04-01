@@ -17,7 +17,7 @@
     "promptMessage": "What is the project description?"
   },
   "authorName": {
-    "value": "Nicolas Contiero <https://github.com/ncontiero>",
+    "value": "Nicolas Contiero",
     "promptMessage": "What is the author name?",
     "validateRegex": {
       "regex": "^(?!.*/).*$",
