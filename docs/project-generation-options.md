@@ -1,6 +1,6 @@
 # Project Generation Options
 
-This page describes all the template options that will be prompted by the [dkcutter CLI](https://github.com/dkshs/dkcutter) prior to generating your project.
+This page describes all the template options that will be prompted by the [dkcutter CLI](https://github.com/ncontiero/dkcutter) prior to generating your project.
 
 - **Project name**: Your project's human-readable name, capitals and spaces allowed.
 

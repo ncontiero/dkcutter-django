@@ -1,6 +1,6 @@
 # {{dkcutter.projectName}}
 
-[![Built with DKCutter Django](https://img.shields.io/badge/built%20with-DKCutter%20Django-56BEB8.svg)](https://github.com/dkshs/dkcutter-django)
+[![Built with DKCutter Django](https://img.shields.io/badge/built%20with-DKCutter%20Django-56BEB8.svg)](https://github.com/ncontiero/dkcutter-django)
 [![license mit](https://img.shields.io/badge/licence-MIT-56BEB8)](LICENSE)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
@@ -8,7 +8,7 @@
 
 ## Settings
 
-Moved to [settings](https://github.com/dkshs/dkcutter-django/blob/main/docs/settings.md).
+Moved to [settings](https://github.com/ncontiero/dkcutter-django/blob/main/docs/settings.md).
 
 ## Basic Commands
 
@@ -81,7 +81,7 @@ celery -A config.celery_app worker -B -l info
 In development, it is often nice to be able to see emails that are being sent from your application. For that reason local SMTP server [Mailpit](https://github.com/axllent/mailpit/) with a web interface is available as docker container.
 
 Container mailpit will start automatically when you will run all docker containers.
-Please check [dkcutter-django Docker documentation](https://github.com/dkshs/dkcutter-django/blob/main/docs/deployment-with-docker.md) for more details how to start all containers.
+Please check [dkcutter-django Docker documentation](https://github.com/ncontiero/dkcutter-django/blob/main/docs/deployment-with-docker.md) for more details how to start all containers.
 
 With Mailpit running, to view messages that are sent by your application, open your browser and go to `http://127.0.0.1:8025`
 
@@ -102,4 +102,4 @@ The following details how to deploy this application.
 
 ### Docker
 
-See detailed [Docker documentation](https://github.com/dkshs/dkcutter-django/blob/main/docs/deployment-with-docker.md).
+See detailed [Docker documentation](https://github.com/ncontiero/dkcutter-django/blob/main/docs/deployment-with-docker.md).

@@ -4,14 +4,14 @@
 
 - Docker; if you don't have it yet, follow the [installation instructions](https://docs.docker.com/get-docker/#supported-platforms).
 - Docker Compose; refer to the official documentation for the [installation guide](https://docs.docker.com/compose/install/).
-- DKCutter; refer to the official GitHub repository of [DKCutter](https://github.com/dkshs/dkcutter).
+- DKCutter; refer to the official GitHub repository of [DKCutter](https://github.com/ncontiero/dkcutter).
 
 ## Before Getting Started
 
 Generate a new django project:
 
 ```bash
-npx dkcutter@latest gh:dkshs/dkcutter-django
+npx dkcutter@latest gh:ncontiero/dkcutter-django
 ```
 
 For more information refer to [Project Generation Options](./project-generation-options.md).

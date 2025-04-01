@@ -156,7 +156,7 @@ function handleFrontendPipelineAndTools(
     scripts["lint:fix"] = "eslint . --fix";
   } else {
     removeEslintFiles();
-    removeDevDeps.push("@dkshs/eslint-config", "eslint");
+    removeDevDeps.push("@ncontiero/eslint-config", "eslint");
   }
 
   removeLangsFiles(lang);

@@ -1,44 +1,44 @@
 # DKCutter Django
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/dkshs/dkcutter-django/ci.yml?branch=main)](https://github.com/dkshs/dkcutter-django/actions/workflows/ci.yml?query=branch%3Amain)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/ncontiero/dkcutter-django/ci.yml?branch=main)](https://github.com/ncontiero/dkcutter-django/actions/workflows/ci.yml?query=branch%3Amain)
 [![license mit](https://img.shields.io/badge/licence-MIT-56BEB8)](LICENSE)
 [![Code style: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/format.json)](https://github.com/astral-sh/ruff)
 
-Powered by [DKCutter](https://github.com/dkshs/dkcutter), DKCutter Django is a framework for jumpstarting production-ready Django projects quickly.
+Powered by [DKCutter](https://github.com/ncontiero/dkcutter), DKCutter Django is a framework for jumpstarting production-ready Django projects quickly.
 
-- If you have problems with DKCutter Django, please open [issues](https://github.com/dkshs/dkcutter-django/issues/new).
+- If you have problems with DKCutter Django, please open [issues](https://github.com/ncontiero/dkcutter-django/issues/new).
 
 ## Usage
 
-To scaffold an application using [dkcutter](https://github.com/dkshs/dkcutter), run any of the following four commands and answer the command prompt questions:
+To scaffold an application using [dkcutter](https://github.com/ncontiero/dkcutter), run any of the following four commands and answer the command prompt questions:
 
 ### npm
 
 ```bash
-npx dkcutter@latest gh:dkshs/dkcutter-django
+npx dkcutter@latest gh:ncontiero/dkcutter-django
 ```
 
 ### yarn
 
 ```bash
-yarn dlx dkcutter@latest gh:dkshs/dkcutter-django
+yarn dlx dkcutter@latest gh:ncontiero/dkcutter-django
 ```
 
 ### pnpm
 
 ```bash
-pnpm dlx dkcutter@latest gh:dkshs/dkcutter-django
+pnpm dlx dkcutter@latest gh:ncontiero/dkcutter-django
 ```
 
 ### bun
 
 ```bash
-bunx dkcutter@latest gh:dkshs/dkcutter-django
+bunx dkcutter@latest gh:ncontiero/dkcutter-django
 ```
 
 You'll be prompted for some values. Provide them, then a Django project will be created for you.
 
-**Warning**: After this point, change 'DKSHS', etc to your own information.
+**Warning**: After this point, change 'Nicolas Contiero <https://github.com/ncontiero>', etc to your own information.
 
 Answer the prompts with your own desired [options][options-url]. For example:
 
@@ -80,13 +80,13 @@ If you want to start faster, you can use the following options:
 The following would be the structure of an application with Sentry:
 
 ```bash
-pnpm dlx dkcutter gh:dkshs/dkcutter-django --additionalTools sentry
+pnpm dlx dkcutter gh:ncontiero/dkcutter-django --additionalTools sentry
 ```
 
 If you want to use all the default values with the exception of one or more, you can do it as follows:
 
 ```bash
-pnpm dlx dkcutter gh:dkshs/dkcutter-django --additionalTools celery,sentry -y
+pnpm dlx dkcutter gh:ncontiero/dkcutter-django --additionalTools celery,sentry -y
 ```
 
 This will use the default values except for `--additionalTools`.
