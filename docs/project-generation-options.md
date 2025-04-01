@@ -55,6 +55,11 @@ This page describes all the template options that will be prompted by the [dkcut
   - [Rspack](https://rspack.dev/)
   - [Webpack](https://webpack.js.org/)
 
+- **Frontend Pipeline Lang**: Select the language used by the Frontend Pipeline:
+
+  - JavaScript
+  - TypeScript
+
 - **Additional Tools**: Select additional tools to use:
 
   - [TailwindCSS](https://tailwindcss.com/)

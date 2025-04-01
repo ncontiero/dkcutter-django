@@ -70,6 +70,7 @@ If you want to start faster, you can use the following options:
 | `--restFramework <string>`        | Select a REST API framework.                                                              |
 | `--mailService <string>`          | Select an email service that Django-Anymail provides.                                     |
 | `--frontendPipeline <string>`     | Select a pipeline to compile and optimize frontend assets (JS, CSS, …).                   |
+| `--frontendPipelineLang <string>` | Select the language used by the Frontend Pipeline.                                        |
 | `--additionalTools <string>`      | Select additional tools to use.                                                           |
 | `--automatedDepsUpdater <string>` | Choose Automated Dependency Updater. [See for more info][options-url].                    |
 
