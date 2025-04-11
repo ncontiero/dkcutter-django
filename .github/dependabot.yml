@@ -18,8 +18,8 @@ updates:
     commit-message:
       prefix: "chore(deps): "
     groups:
-       docker-python:
-         patterns:
-           - "*"
+      docker-python:
+        patterns:
+          - "*"
     labels:
       - dependencies
