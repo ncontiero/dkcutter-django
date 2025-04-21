@@ -23,7 +23,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/prompts": "^2.4.9",
     "colorette": "^2.0.20",
-    "eslint": "^9.25.0",
+    "eslint": "^9.25.1",
     "execa": "^9.5.2",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.0",
@@ -32,7 +32,7 @@
     "tsx": "^4.19.3",
     "type-fest": "^4.40.0",
     "typescript": "^5.8.3",
-    "vitest": "^3.1.1",
+    "vitest": "^3.1.2",
     "zod": "^3.24.3"
   }
 }
