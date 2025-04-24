@@ -50,7 +50,7 @@ jobs:
           cache: pnpm
           node-version-file: .nvmrc
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
       - name: Install Node dependencies
