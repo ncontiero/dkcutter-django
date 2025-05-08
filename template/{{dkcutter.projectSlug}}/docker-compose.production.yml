@@ -65,7 +65,7 @@ services:
       {%- endif %}
 
   redis:
-    image: docker.io/redis:7
+    image: docker.io/redis:8
     {%- if dkcutter.useCelery %}
     volumes:
       - production_redis_data:/data
