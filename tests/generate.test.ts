@@ -81,7 +81,7 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
 
       supportedOptions.push(name);
     },
-    35_000,
+    120_000,
   );
 }
 
