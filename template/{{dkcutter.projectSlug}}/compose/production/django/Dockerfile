@@ -114,6 +114,12 @@ COPY --from=client-builder --chown=django:django ${APP_HOME} ${APP_HOME}
 COPY --chown=django:django . ${APP_HOME}
 {%- endif %}
 
+{%- if dkcutter.cloudProvider == "None" %}
+
+# explicitly create the media folder before changing ownership below
+RUN mkdir -p ${APP_HOME}/{{ dkcutter.projectSlug }}/media
+{%- endif %}
+
 # make django owner of the WORKDIR directory as well.
 RUN chown -R django:django ${APP_HOME}
 
