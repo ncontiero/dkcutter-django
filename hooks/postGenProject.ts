@@ -38,6 +38,10 @@ function removeFiles(files: string[]) {
 }
 
 function removeSrcFolder() {
+  const indexCss = path.join(srcFolder, "index.css");
+  fs.moveSync(indexCss, path.join(projectDir, "static", "css", "index.css"), {
+    overwrite: true,
+  });
   fs.removeSync(srcFolder);
 }
 

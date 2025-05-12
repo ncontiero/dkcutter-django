@@ -21,7 +21,7 @@
     {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
     {% raw %}{% render_bundle "main" "css" %}{% endraw %}
     {%- else %}
-    {% raw %}<link href="{% static 'css/styles.css' %}" rel="stylesheet" />{% endraw %}
+    {% raw %}<link href="{% static 'css/index.css' %}" rel="stylesheet" />{% endraw %}
     {%- endif %}
     {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}{% raw %}
     <!-- Vendor dependencies bundled as one file -->
