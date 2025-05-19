@@ -14,7 +14,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "dkcutter": "4.6.0"
+    "dkcutter": "5.0.0"
   },
   "devDependencies": {
     "@ncontiero/eslint-config": "5.2.0",
