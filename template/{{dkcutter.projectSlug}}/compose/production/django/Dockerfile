@@ -1,5 +1,5 @@
 {% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] -%}
-FROM docker.io/node:22.15.0-bookworm-slim AS client-builder
+FROM docker.io/node:22.16.0-bookworm-slim AS client-builder
 
 ARG APP_HOME=/app
 WORKDIR ${APP_HOME}
