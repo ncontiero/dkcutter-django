@@ -34,8 +34,8 @@ importers:
         specifier: ^9.27.0
         version: 9.27.0(jiti@1.21.7)
       execa:
-        specifier: ^9.5.3
-        version: 9.5.3
+        specifier: ^9.6.0
+        version: 9.6.0
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
@@ -1770,8 +1770,8 @@ packages:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
 
-  execa@9.5.3:
-    resolution: {integrity: sha512-QFNnTvU3UjgWFy8Ef9iDHvIdcgZ344ebkwYx4/KLbR+CKQA4xBaHzv+iRpp86QfMHP8faFQLh8iOc57215y4Rg==}
+  execa@9.6.0:
+    resolution: {integrity: sha512-jpWzZ1ZhwUmeWRhS7Qv3mhpOhLfwI+uAX4e5fOcXqwMR7EcJ0pj2kV1CVzHVMX/LphnKWD3LObjZCoJ71lKpHw==}
     engines: {node: ^18.19.0 || >=20.5.0}
 
   exit-hook@4.0.0:
@@ -5119,7 +5119,7 @@ snapshots:
       colorette: 2.0.20
       commander: 14.0.0
       cosmiconfig: 9.0.0(typescript@5.8.3)
-      execa: 9.5.3
+      execa: 9.6.0
       fs-extra: 11.3.0
       nunjucks: 3.2.4(chokidar@3.6.0)
       ora: 8.2.0
@@ -5660,7 +5660,7 @@ snapshots:
   events@3.3.0:
     optional: true
 
-  execa@9.5.3:
+  execa@9.6.0:
     dependencies:
       '@sindresorhus/merge-streams': 4.0.0
       cross-spawn: 7.0.6
