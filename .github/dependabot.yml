@@ -10,6 +10,8 @@ updates:
       - "template/{{dkcutter.projectSlug}}/compose/production/django/"
     schedule:
       interval: daily
+    allow:
+      - dependency-name: docker.io/python
     ignore:
       - dependency-name: "*"
         update-types:
@@ -20,6 +22,6 @@ updates:
     groups:
       docker-python:
         patterns:
-          - "*"
+          - docker.io/python
     labels:
       - dependencies
