@@ -5,7 +5,6 @@ export const SUPPORTED_COMBINATIONS = [
   { postgresqlVersion: "16" },
   { postgresqlVersion: "15" },
   { postgresqlVersion: "14" },
-  { postgresqlVersion: "13" },
   { cloudProvider: "AWS" },
   { cloudProvider: "AWS", additionalTools: "whitenoise" },
   { cloudProvider: "GCP" },
