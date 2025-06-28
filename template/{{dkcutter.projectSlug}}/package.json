@@ -10,7 +10,7 @@
     "@babel/core": "^7.27.7",
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-typescript": "^7.27.1",
-    "@ncontiero/eslint-config": "^5.2.0",
+    "@ncontiero/eslint-config": "^6.0.0",
     "@rspack/cli": "^1.4.1",
     "@rspack/core": "^1.4.1",
     "autoprefixer": "^10.4.21",
