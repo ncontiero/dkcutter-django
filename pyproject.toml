@@ -11,7 +11,7 @@ dependencies = [
   "django-upgrade==1.25.0",
   "djlint==1.36.4",
   "jinja2==3.1.6",
-  "ruff==0.12.1",
+  "ruff==0.12.2",
   "tox==4.27.0",
   "tox-uv==1.26.1",
 ]
