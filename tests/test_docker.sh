@@ -5,10 +5,23 @@
 
 set -o errexit
 set -x
+set -e
+
+finish() {
+  docker compose -f docker-compose.local.yml down --remove-orphans
+  docker volume rm my_awesome_project_my_awesome_project_local_postgres_data
+}
+
+# the cleanup doesn't work in the GitHub actions
+if [ -z "$GITHUB_ACTIONS" ]; then
+  trap finish EXIT
+fi
 
 # create a cache directory
 mkdir -p .cache/docker
 cd .cache/docker
+
+sudo rm -rf my_awesome_project
 
 # create the project using the default settings in dkcutter.json
 pnpm generate -o .cache/docker -y -f "$@"
