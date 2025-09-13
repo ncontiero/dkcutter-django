@@ -54,7 +54,7 @@ jobs:
       - name: Install Node dependencies
         run: pnpm install
       - name: Install Python dependencies
-        run: uv sync
+        run: uv sync --locked
       - name: Run tests
         run: uv run tox
 

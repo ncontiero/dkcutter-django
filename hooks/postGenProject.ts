@@ -1,4 +1,5 @@
 import path from "node:path";
+import { execaSync } from "execa";
 import fs from "fs-extra";
 
 import { toBoolean } from "./utils/coerce";
@@ -320,6 +321,59 @@ function removeApiStarterFiles() {
   removeFiles(apiStarterFiles);
 }
 
+function setupDependencies() {
+  logger.info("Installing dependencies, this might take a while...");
+
+  const uvDockerFolderPath = path.join(
+    projectRootDir,
+    "compose",
+    "local",
+    "uv",
+  );
+  const uvDockerImagePath = path.join(uvDockerFolderPath, "Dockerfile");
+  const uvImageTag = "dkcutter-django-uv-runner:latest";
+  let uvCmd = "docker";
+  const uvCmdArgs = ["add", "--no-sync"];
+
+  try {
+    execaSync(
+      "docker",
+      ["build", "-t", uvImageTag, "-f", uvDockerImagePath, "-q", "."],
+      { stdio: "inherit" },
+    );
+    uvCmdArgs.unshift("run", "--rm", "-v", ".:/app", uvImageTag, "uv");
+  } catch (error) {
+    logger.error(`Failed to build Docker image: ${error}`);
+    uvCmd = "uv";
+  }
+
+  // Install production dependencies
+  try {
+    execaSync(uvCmd, [...uvCmdArgs, "-r", "requirements/production.txt"], {
+      stdio: "inherit",
+    });
+  } catch (error) {
+    logger.error(`Failed to install production dependencies: ${error}`);
+    process.exit(1);
+  }
+
+  // Install local (development) dependencies
+  try {
+    execaSync(uvCmd, [...uvCmdArgs, "--dev", "-r", "requirements/local.txt"], {
+      stdio: "inherit",
+    });
+  } catch (error) {
+    logger.error(`Failed to install local dependencies: ${error}`);
+    process.exit(1);
+  }
+
+  // Remove the requirements directory
+  fs.removeSync(path.join(projectRootDir, "requirements"));
+  fs.removeSync(uvDockerFolderPath);
+
+  logger.success("Dependencies installed successfully.");
+}
+
 function main() {
   const gitignorePath = path.resolve(".gitignore");
 
@@ -364,6 +418,8 @@ function main() {
   }
 
   handleAutomatedDepsUpdater(context.automatedDepsUpdater);
+
+  setupDependencies();
 
   logger.success("Project initialized, keep up the good work!");
 }

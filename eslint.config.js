@@ -20,4 +20,9 @@ function ignoreFiles(files) {
 
 export default ncontiero({
   ignores: [".venv", "venv", ...(ignoreFiles(FILES_TO_IGNORE) || [])],
+  toml: {
+    overrides: {
+      "toml/indent": ["error", 4],
+    },
+  },
 });

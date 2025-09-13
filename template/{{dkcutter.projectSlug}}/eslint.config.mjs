@@ -10,4 +10,9 @@ export default ncontiero({
       ],
     },
   },
+  toml: {
+    overrides: {
+      "toml/indent": ["error", 4],
+    },
+  },
 });

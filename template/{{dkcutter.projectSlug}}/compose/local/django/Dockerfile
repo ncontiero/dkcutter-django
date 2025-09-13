@@ -1,52 +1,46 @@
 # define an alias for the specific python version used in this file.
-FROM docker.io/python:3.13.7-slim-bookworm AS python
+FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS python
 
 # Python build stage
 FROM python AS python-build-stage
 
-ARG BUILD_ENVIRONMENT=local
+ARG APP_HOME=/app
+
+WORKDIR ${APP_HOME}
+
+# we need to move the virtualenv outside of the $APP_HOME directory because it will be overriden by the docker compose mount
+ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PYTHON_DOWNLOADS=0
 
 # Install apt packages
 RUN apt-get update && apt-get install --no-install-recommends -y \
   # dependencies for building Python packages
   build-essential \
   # psycopg dependencies
-  libpq-dev
-
-# Requirements are installed here to ensure they will be cached.
-COPY ./requirements .
-
-# Create Python Dependency and Sub-Dependency Wheels.
-RUN pip wheel --wheel-dir /usr/src/app/wheels \
-  -r production.txt \
-  -r ${BUILD_ENVIRONMENT}.txt
-
-
-# Python 'run' stage
-FROM python AS python-run-stage
-
-ARG BUILD_ENVIRONMENT=local
-ARG APP_HOME=/app
-
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV BUILD_ENV=${BUILD_ENVIRONMENT}
-
-# devcontainer dependencies and utils
-RUN apt-get update && apt-get install --no-install-recommends -y \
+  libpq-dev \
+  gettext \
+  wait-for-it \
+  # devcontainer dependencies and utils
   sudo git gpg gnupg gpg-agent socat ssh \
   zsh \
   curl \
   wget \
   fonts-powerline \
-  # psycopg dependencies
-  libpq-dev \
-  wait-for-it \
-  # Translations dependencies
-  gettext \
   # cleaning up unused files
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
+
+# Requirements are installed here to ensure they will be cached.
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    --mount=type=bind,source=uv.lock,target=uv.lock:rw \
+    uv sync --no-install-project
+
+COPY . ${APP_HOME}
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    --mount=type=bind,source=uv.lock,target=uv.lock:rw \
+    uv sync
 
 # Create devcontainer user and add it to sudoers
 RUN groupadd --gid 1000 dev-user \
@@ -54,21 +48,13 @@ RUN groupadd --gid 1000 dev-user \
   && echo dev-user ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/dev-user \
   && chmod 0440 /etc/sudoers.d/dev-user
 
-WORKDIR ${APP_HOME}
+ENV PATH="/${APP_HOME}/.venv/bin:$PATH"
 
-# All absolute dir copies ignore workdir instruction. All relative dir copies are wrt to the workdir instruction
-# copy python dependency wheels from python-build-stage
-COPY --from=python-build-stage /usr/src/app/wheels /wheels/
-
-# use wheels to install python dependencies
-RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
-  && rm -rf /wheels/
-
-COPY --chown=dev-user:dev-user ./compose/production/django/entrypoint /entrypoint
+COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
-COPY --chown=dev-user:dev-user ./compose/local/django/start /start
+COPY ./compose/local/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
@@ -89,10 +75,7 @@ RUN chmod +x /start-flower
 RUN wget https://gist.github.com/ncontiero/ab9fdbb2cc4b6af40ef3627d4ba968a4/raw/df2cf7829dd00549f8d7889254f5db017a10a8b8/.p10k.zsh && \
   mv ./.p10k.zsh /home/dev-user
 
-# copy application code to WORKDIR
-COPY --chown=dev-user:dev-user . ${APP_HOME}
-
-RUN chown -R dev-user:dev-user ${APP_HOME}
+RUN chown dev-user:dev-user ${APP_HOME}
 
 USER dev-user
 

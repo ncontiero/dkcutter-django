@@ -18,6 +18,7 @@ services:
     ports:
       - 8000:8000
     volumes:
+      - /app/.venv
       - .:/app:z
     depends_on:
       - postgres

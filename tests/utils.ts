@@ -6,9 +6,14 @@ import { PATTERN } from "./constants";
  * Build a list containing absolute paths to the generated files.
  */
 export function buildFilesList(baseDir: string) {
+  const excludedDirs = ["node_modules", ".venv", "venv", "__pycache__"];
   const files = fs.readdirSync(baseDir);
   const paths: string[] = [];
   files.forEach((file) => {
+    if (excludedDirs.includes(file)) {
+      return;
+    }
+
     const filePath = path.join(baseDir, file);
     const stat = fs.statSync(filePath);
     if (stat.isDirectory()) {
