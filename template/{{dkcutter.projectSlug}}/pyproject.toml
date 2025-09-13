@@ -1,3 +1,16 @@
+[project]
+name = "{{ dkcutter.projectSlug }}"
+version = "0.1.0"
+description = "{{ dkcutter.description }}"
+authors = [ { name = "{{ dkcutter.authorName }}", email = "{{ dkcutter.email }}" } ]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = []
+
+[dependency-groups]
+dev = []
+
 # ==== pytest ====
 [tool.pytest.ini_options]
 minversion = "6.0"

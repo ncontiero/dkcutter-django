@@ -17,7 +17,7 @@ Moved to [settings](https://github.com/ncontiero/dkcutter-django/blob/main/docs/
 - To create a **superuser account**, use this command:
 
 ```bash
-python manage.py createsuperuser
+uv run python manage.py createsuperuser
 ```
 
 ### Type checks
@@ -25,7 +25,7 @@ python manage.py createsuperuser
 Running type checks with mypy:
 
 ```bash
-mypy {{dkcutter.projectSlug}}
+uv run mypy {{dkcutter.projectSlug}}
 ```
 
 ### Test coverage
@@ -33,15 +33,15 @@ mypy {{dkcutter.projectSlug}}
 To run the tests, check your test coverage, and generate an HTML coverage report:
 
 ```bash
-coverage run -m pytest
-coverage html
-open htmlcov/index.html
+uv run coverage run -m pytest
+uv run coverage html
+uv run open htmlcov/index.html
 ```
 
 #### Running tests with pytest
 
 ```bash
-pytest
+uv run pytest
 ```
 
 {%- if dkcutter.useCelery %}
@@ -54,7 +54,7 @@ To run a celery worker:
 
 ```bash
 cd {{dkcutter.projectSlug}}
-celery -A config.celery_app worker -l info
+uv run celery -A config.celery_app worker -l info
 ```
 
 Please note: For Celery's import magic to work, it is important where the celery commands are run. If you are in the same folder with *manage.py*, you should be right.
@@ -63,14 +63,14 @@ To run [periodic tasks](https://docs.celeryq.dev/en/stable/userguide/periodic-ta
 
 ```bash
 cd {{dkcutter.projectSlug}}
-celery -A config.celery_app beat
+uv run celery -A config.celery_app beat
 ```
 
 or you can embed the beat service inside a worker with the -B option (not recommended for production use):
 
 ```bash
 cd {{dkcutter.projectSlug}}
-celery -A config.celery_app worker -B -l info
+uv run celery -A config.celery_app worker -B -l info
 ```
 
 {%- endif %}
