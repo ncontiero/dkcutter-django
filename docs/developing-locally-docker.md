@@ -26,6 +26,23 @@ docker compose -f docker-compose.local.yml build
 
 Generally, if you want to emulate production environment use `docker-compose.production.yml` instead. And this is true for any other actions you might need to perform: whenever a switch is required, just do it!
 
+After we have created our initial image we need to generate a lockfile for our dependencies.
+Docker cannot write to the host system during builds, so we have to run the command to generate the lockfile in the container.
+This is important for reproducible builds and to ensure that the dependencies are installed correctly in the container.
+Updating the lockfile manually is normally not necessary when you add packages through `uv add <package_name>`.
+
+This is done by running the following command:
+
+```bash
+docker compose -f docker-compose.local.yml run --rm django uv lock
+```
+
+To be sure we are on the right track we need to build our image again:
+
+```bash
+docker compose -f docker-compose.local.yml build
+```
+
 ## Run the Stack
 
 This brings up both Django, PostgreSQL and PGAdmin. The first time it is run it might take a while to get started, but subsequent runs will occur quickly.
@@ -116,10 +133,10 @@ The three envs we are presented with here are `POSTGRES_DB`, `POSTGRES_USER`, an
 
 ### Add 3rd party python packages
 
-To install a new 3rd party python package, you cannot use `pip install <package_name>`, that would only add the package to the container. The container is ephemeral, so that new library won’t be persisted if you run another container. Instead, you should modify the Docker image: You have to modify the relevant requirement file: base, local or production by adding:
+To install a new 3rd party python package, you cannot use `uv add <package_name>` (unless you're using Compose and/or volumes), that would only add the package to the container. The container is ephemeral, so that new library won’t be persisted if you run another container. Instead, you should modify the Docker image: You have to modify `pyproject.toml` and either add it to `project.dependencies` or to `tool.uv.dev-dependencies` by adding:
 
 ```txt
-<package_name>==<package_version>
+"<package_name>==<package_version>"
 ```
 
 To get this change picked up, you’ll need to rebuild the image(s) and restart the running container:
