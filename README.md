@@ -10,6 +10,9 @@ Powered by [DKCutter](https://github.com/ncontiero/dkcutter), DKCutter Django is
 
 ## Usage
 
+> [!NOTE]
+> It is recommended to have [uv](https://docs.astral.sh/uv/getting-started/installation/) installed if you are on Windows or do not have Docker.
+
 To scaffold an application using [dkcutter](https://github.com/ncontiero/dkcutter), run any of the following four commands and answer the command prompt questions:
 
 ### npm
