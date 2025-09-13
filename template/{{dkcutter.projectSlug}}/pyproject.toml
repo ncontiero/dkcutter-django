@@ -5,7 +5,7 @@ description = "{{ dkcutter.description }}"
 authors = [ { name = "{{ dkcutter.authorName }}", email = "{{ dkcutter.email }}" } ]
 license = { text = "MIT" }
 readme = "README.md"
-requires-python = ">=3.13,<3.14"
+requires-python = "==3.13.*"
 dependencies = []
 
 [dependency-groups]

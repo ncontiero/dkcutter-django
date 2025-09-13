@@ -332,7 +332,8 @@ function setupDependencies() {
   );
   const uvDockerImagePath = path.join(uvDockerFolderPath, "Dockerfile");
   const uvImageTag = "dkcutter-django-uv-runner:latest";
-  const uvCmdArgs = ["run", "--rm", "-v", ".:/app", uvImageTag, "uv", "add"];
+  let uvCmd = "docker";
+  const uvCmdArgs = ["add", "--no-sync"];
 
   try {
     execaSync(
@@ -340,18 +341,17 @@ function setupDependencies() {
       ["build", "-t", uvImageTag, "-f", uvDockerImagePath, "-q", "."],
       { stdio: "inherit" },
     );
+    uvCmdArgs.unshift("run", "--rm", "-v", ".:/app", uvImageTag, "uv");
   } catch (error) {
     logger.error(`Failed to build Docker image: ${error}`);
-    process.exit(1);
+    uvCmd = "uv";
   }
 
   // Install production dependencies
   try {
-    execaSync(
-      "docker",
-      [...uvCmdArgs, "--no-sync", "-r", "requirements/production.txt"],
-      { stdio: "inherit" },
-    );
+    execaSync(uvCmd, [...uvCmdArgs, "-r", "requirements/production.txt"], {
+      stdio: "inherit",
+    });
   } catch (error) {
     logger.error(`Failed to install production dependencies: ${error}`);
     process.exit(1);
@@ -359,11 +359,9 @@ function setupDependencies() {
 
   // Install local (development) dependencies
   try {
-    execaSync(
-      "docker",
-      [...uvCmdArgs, "--no-sync", "--dev", "-r", "requirements/local.txt"],
-      { stdio: "inherit" },
-    );
+    execaSync(uvCmd, [...uvCmdArgs, "--dev", "-r", "requirements/local.txt"], {
+      stdio: "inherit",
+    });
   } catch (error) {
     logger.error(`Failed to install local dependencies: ${error}`);
     process.exit(1);
