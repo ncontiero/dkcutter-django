@@ -52,6 +52,45 @@ function getPkgManagerVersion() {
   }
 }
 
+function removeLockFiles() {
+  const lockFiles = [
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    "bun.lock",
+  ];
+
+  lockFiles.forEach((file) => {
+    const filePath = path.join(projectRootDir, file);
+    if (!fs.existsSync(filePath)) return;
+
+    // Determine the lock file for the selected package manager
+    let selectedLockFile: string | null = null;
+    switch (context.pkgManager) {
+      case "pnpm":
+        selectedLockFile = "pnpm-lock.yaml";
+        break;
+      case "yarn":
+        selectedLockFile = "yarn.lock";
+        break;
+      case "bun":
+        selectedLockFile = "bun.lock";
+        break;
+      default:
+        selectedLockFile = "package-lock.json";
+    }
+
+    // Remove all lock files except the one for the selected package manager
+    if (file !== selectedLockFile) {
+      try {
+        fs.removeSync(filePath);
+      } catch (error) {
+        logger.error(`Failed to remove ${file}: ${error}`);
+      }
+    }
+  });
+}
+
 function appendToGitignore(gitignorePath: string, lines: string) {
   fs.appendFileSync(gitignorePath, lines);
 }
@@ -408,6 +447,8 @@ function main() {
   } else {
     updatePackageJson({ projectDir: projectRootDir, keys: ["packageManager"] });
   }
+
+  removeLockFiles();
 
   setFlagsInEnvs(generateRandomUser(), generateRandomUser());
   setFlagsInSettings();
