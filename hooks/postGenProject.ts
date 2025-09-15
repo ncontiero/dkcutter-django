@@ -423,7 +423,6 @@ async function setupDependencies() {
 
   if (context.frontendPipeline !== "None") {
     try {
-      await fs.mkdir(path.join(projectRootDir, "node_modules"));
       await execa(
         "docker",
         [
@@ -431,8 +430,6 @@ async function setupDependencies() {
           "--rm",
           "-v",
           ".:/app",
-          "-u",
-          context.pkgManager === "bun" ? "bun" : "node",
           nodeImageTag,
           context.pkgManager,
           "install",
