@@ -15,3 +15,6 @@ WORKDIR /app
 {% if dkcutter.pkgManager != "bun" -%}
 RUN corepack enable
 {% endif -%}
+
+RUN chown node:node /app
+USER node

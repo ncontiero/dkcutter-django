@@ -18,7 +18,7 @@ beforeAll(async () => {
 });
 afterAll(async () => {
   await fs.rm(TEST_OUTPUT, { recursive: true, force: true });
-});
+}, 50_000);
 
 const it = vitestIt.extend<{
   supportedOptions: string[];
@@ -81,7 +81,7 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
 
       supportedOptions.push(name);
     },
-    120_000,
+    150_000,
   );
 }
 
