@@ -31,5 +31,10 @@ RUN bun install
 {% endif %}
 ENV PATH=./node_modules/.bin/:$PATH
 
+{% if dkcutter.pkgManager == "bun" -%}
+RUN chown bun:bun /app
+USER bun
+{% else -%}
 RUN chown node:node /app
 USER node
+{% endif -%}
