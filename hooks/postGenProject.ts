@@ -1,7 +1,8 @@
+import type { PackageManager } from "./utils/types";
 import path from "node:path";
 import { execaSync } from "execa";
-import fs from "fs-extra";
 
+import fs from "fs-extra";
 import { toBoolean } from "./utils/coerce";
 import { logger } from "./utils/logger";
 import { updatePackageJson } from "./utils/updatePackageJson";
@@ -14,6 +15,7 @@ type AdditionalTools = AdditionalTool[];
 
 const context = {
   projectSlug: "{{ dkcutter.projectSlug }}",
+  pkgManager: "{{ dkcutter._pkgManager }}" as PackageManager,
   cloudProvider: "{{ dkcutter.cloudProvider }}",
   restFramework: "{{ dkcutter.restFramework }}",
   frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,
@@ -26,9 +28,29 @@ const context = {
     "{{ dkcutter.automatedDepsUpdater }}" as AutomatedDepsUpdater,
 };
 
+const pkgManagersDefaultVersions: Record<PackageManager, string> = {
+  npm: "npm@10.9.3",
+  pnpm: "pnpm@10.16.1",
+  yarn: "yarn@4.9.4",
+  bun: "bun@1.2.22",
+};
+
 const projectRootDir = path.resolve(".");
 const projectDir = path.resolve(context.projectSlug);
 const srcFolder = path.join(projectDir, "src");
+
+function getPkgManagerVersion() {
+  try {
+    const pkg = context.pkgManager;
+    const { stdout } = execaSync(pkg, ["-v"]);
+    return `${pkg}@${stdout}`;
+  } catch {
+    logger.warn(
+      `Failed to get version for package manager ${context.pkgManager}, using default version instead.`,
+    );
+    return pkgManagersDefaultVersions[context.pkgManager];
+  }
+}
 
 function appendToGitignore(gitignorePath: string, lines: string) {
   fs.appendFileSync(gitignorePath, lines);
@@ -376,6 +398,16 @@ function setupDependencies() {
 
 function main() {
   const gitignorePath = path.resolve(".gitignore");
+
+  const pkgVersion = getPkgManagerVersion();
+  if (pkgVersion) {
+    updatePackageJson({
+      projectDir: projectRootDir,
+      modifyKey: { packageManager: pkgVersion },
+    });
+  } else {
+    updatePackageJson({ projectDir: projectRootDir, keys: ["packageManager"] });
+  }
 
   setFlagsInEnvs(generateRandomUser(), generateRandomUser());
   setFlagsInSettings();

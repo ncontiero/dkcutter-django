@@ -1,5 +1,6 @@
 .venv/
 venv/
+node_modules/
 .git/
 .gitignore
 .gitattributes
@@ -7,3 +8,5 @@ venv/
 .editorconfig
 .pre-commit-config.yaml
 .envs/
+*.md
+{{ dkcutter.projectSlug }}/static/bundles/

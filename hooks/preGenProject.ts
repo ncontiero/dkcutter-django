@@ -10,6 +10,7 @@ import { logger } from "./utils/logger";
 // {{ dkcutter.update("email", dkcutter.email|trim) }}
 
 // And this add values in context for ease in conditions.
+// {{ dkcutter.update("pkgManager", dkcutter._pkgManager) }}
 // {{ dkcutter.add("useMailpit", "{% if 'mailpit' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useCelery", "{% if 'celery' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useSentry", "{% if 'sentry' in dkcutter.additionalTools %}true{% endif %}") }}
