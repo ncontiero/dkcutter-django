@@ -28,6 +28,12 @@ const context = {
     "{{ dkcutter.automatedDepsUpdater }}" as AutomatedDepsUpdater,
 };
 
+const pkgLockFiles = [
+  "package-lock.json",
+  "pnpm-lock.yaml",
+  "yarn.lock",
+  "bun.lock",
+];
 const pkgManagersDefaultVersions: Record<PackageManager, string> = {
   npm: "npm@10.9.3",
   pnpm: "pnpm@10.16.1",
@@ -53,14 +59,7 @@ function getPkgManagerVersion() {
 }
 
 function removeLockFiles() {
-  const lockFiles = [
-    "package-lock.json",
-    "pnpm-lock.yaml",
-    "yarn.lock",
-    "bun.lock",
-  ];
-
-  lockFiles.forEach((file) => {
+  pkgLockFiles.forEach((file) => {
     const filePath = path.join(projectRootDir, file);
     if (!fs.existsSync(filePath)) return;
 
@@ -240,6 +239,7 @@ function handleFrontendPipelineAndTools(
 
 function removePackageJsonFile() {
   fs.removeSync(path.join(projectRootDir, "package.json"));
+  removeFiles(pkgLockFiles);
 }
 
 function removeCeleryFiles() {
