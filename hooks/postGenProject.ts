@@ -423,6 +423,7 @@ async function setupDependencies() {
 
   if (context.frontendPipeline !== "None") {
     try {
+      await fs.mkdir(path.join(projectRootDir, "node_modules"));
       await execa(
         "docker",
         [
@@ -430,6 +431,8 @@ async function setupDependencies() {
           "--rm",
           "-v",
           ".:/app",
+          "-u",
+          context.pkgManager === "bun" ? "bun" : "node",
           nodeImageTag,
           context.pkgManager,
           "install",
@@ -470,7 +473,7 @@ async function setupDependencies() {
 
   // Remove the requirements directory
   await fs.remove(path.join(projectRootDir, "requirements"));
-  await fs.remove(composeFolder);
+  // await fs.remove(composeFolder);
 
   // logger.success("Dependencies installed successfully.");
   spinner.succeed(colorize("success", "Dependencies installed successfully."));

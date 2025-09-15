@@ -139,6 +139,9 @@ typings/
 .yarn/build-state.yml
 .yarn/install-state.gz
 
+# Pnpm
+.pnpm-store/
+
 ### Linux template
 *~
 
