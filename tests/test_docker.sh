@@ -23,7 +23,7 @@ fi
 mkdir -p .cache/docker
 cd .cache/docker
 
-rm -rf my_awesome_project
+sudo rm -rf my_awesome_project
 
 # create the project using the default settings in dkcutter.json
 pnpm generate -o .cache/docker -y -f "$@"

@@ -14,11 +14,3 @@ ENV PATH="$PNPM_HOME:$PATH"
 {% if dkcutter.pkgManager != "bun" -%}
 RUN corepack enable
 {% endif -%}
-
-{% if dkcutter.pkgManager == "bun" -%}
-RUN chown bun:bun /app
-USER bun
-{% else -%}
-RUN chown node:node /app
-USER node
-{% endif -%}

@@ -423,17 +423,15 @@ async function setupDependencies() {
 
   if (context.frontendPipeline !== "None") {
     try {
+      const nonRootUser = context.pkgManager === "bun" ? "bun" : "node";
+      const dockerOpts = ["run", "--rm", "-v", ".:/app", nodeImageTag];
+
+      await execa("docker", [...dockerOpts, context.pkgManager, "install"], {
+        stdio: "inherit",
+      });
       await execa(
         "docker",
-        [
-          "run",
-          "--rm",
-          "-v",
-          ".:/app",
-          nodeImageTag,
-          context.pkgManager,
-          "install",
-        ],
+        [...dockerOpts, "chown", "-R", `${nonRootUser}:${nonRootUser}`, "/app"],
         { stdio: "inherit" },
       );
     } catch (error) {
