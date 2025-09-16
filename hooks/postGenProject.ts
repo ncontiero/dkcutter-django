@@ -1,9 +1,10 @@
 import type { PackageManager } from "./utils/types";
+import os from "node:os";
 import path from "node:path";
 import { execa, execaSync } from "execa";
 import fs from "fs-extra";
-
 import ora from "ora";
+
 import { toBoolean } from "./utils/coerce";
 import { colorize, logger } from "./utils/logger";
 import { updatePackageJson } from "./utils/updatePackageJson";
@@ -423,17 +424,22 @@ async function setupDependencies() {
 
   if (context.frontendPipeline !== "None") {
     try {
+      const dockerArgs = ["run", "--rm", "-v", ".:/app"];
+
+      let userInfo: os.UserInfo<string> | null;
+      try {
+        userInfo = os.userInfo();
+      } catch {
+        userInfo = null;
+      }
+
+      if (userInfo && typeof userInfo.uid === "number" && userInfo.uid !== -1) {
+        dockerArgs.push("-u", `${userInfo.uid}:${userInfo.gid}`);
+      }
+
       await execa(
         "docker",
-        [
-          "run",
-          "--rm",
-          "-v",
-          ".:/app",
-          nodeImageTag,
-          context.pkgManager,
-          "install",
-        ],
+        [...dockerArgs, nodeImageTag, context.pkgManager, "install"],
         { stdio: "inherit" },
       );
     } catch (error) {
