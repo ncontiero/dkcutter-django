@@ -1,6 +1,10 @@
 .venv/
 venv/
 node_modules/
+.yarn/cache
+.yarn/install-state.gz
+.pnp.*
+pnpm-store/
 .git/
 .gitignore
 .gitattributes
