@@ -3,7 +3,8 @@ FROM docker.io/oven/bun:1.2.22-slim
 {% else -%}
 FROM docker.io/node:22.19.0-bookworm-slim
 {% endif %}
-WORKDIR /app
+ARG APP_HOME=/app
+WORKDIR ${APP_HOME}
 
 {% if dkcutter.pkgManager == "npm" -%}
 COPY package.json package-lock.json ./
@@ -15,26 +16,26 @@ ENV PATH="$PNPM_HOME:$PATH"
 
 RUN corepack enable
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml ${APP_HOME}
 
 RUN pnpm install
 {% elif dkcutter.pkgManager == "yarn" -%}
 RUN corepack enable
 
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock ${APP_HOME}
 
 RUN yarn install
 {% elif dkcutter.pkgManager == "bun" -%}
-COPY package.json bun.lock ./
+COPY package.json bun.lock ${APP_HOME}
 
 RUN bun install
 {% endif %}
 ENV PATH=./node_modules/.bin/:$PATH
 
 {% if dkcutter.pkgManager == "bun" -%}
-RUN chown bun:bun /app
+RUN chown -R bun:bun ${APP_HOME}
 USER bun
 {% else -%}
-RUN chown node:node /app
+RUN chown -R node:node ${APP_HOME}
 USER node
 {% endif -%}
