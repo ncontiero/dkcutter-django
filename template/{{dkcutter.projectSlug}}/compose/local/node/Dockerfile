@@ -31,4 +31,4 @@ COPY package.json bun.lock ${APP_HOME}
 RUN bun install
 {% endif %}
 
-ENV PATH="/${APP_HOME}/node_modules/.bin/:$PATH"
+ENV PATH="${APP_HOME}/node_modules/.bin/:$PATH"
