@@ -7,6 +7,8 @@ set -o errexit
 set -x
 set -e
 
+DOCKER_CMD="docker compose -f docker-compose.local.yml run --rm"
+
 finish() {
   docker compose -f docker-compose.local.yml down --remove-orphans
   docker volume rm my_awesome_project_my_awesome_project_local_postgres_data
@@ -35,19 +37,19 @@ docker compose -f docker-compose.local.yml run django uv lock
 docker compose -f docker-compose.local.yml build
 
 # run the project's type checks
-docker compose -f docker-compose.local.yml run --rm django mypy my_awesome_project
+$DOCKER_CMD django mypy my_awesome_project
 
 # run the project's tests
-docker compose -f docker-compose.local.yml run --rm django pytest -p no:cacheprovider
+$DOCKER_CMD django pytest -p no:cacheprovider
 
 # return non-zero status code if there are migrations that have not been created
-docker compose -f docker-compose.local.yml run --rm django python manage.py makemigrations --check || {
+$DOCKER_CMD django python manage.py makemigrations --check || {
   echo "ERROR: there were changes in the models, but migration listed above have not been created and are not saved in version control"
   exit 1
 }
 
 # Make sure the check doesn't raise any warnings
-docker compose -f docker-compose.local.yml run --rm \
+$DOCKER_CMD \
   -e DJANGO_SECRET_KEY="$(openssl rand -base64 64)" \
   -e REDIS_URL=redis://redis:6379/0 \
   -e DJANGO_AWS_ACCESS_KEY_ID=x \
@@ -74,12 +76,27 @@ docker run --rm \
   -e MAILGUN_DOMAIN=x \
   django-prod python manage.py check --settings=config.settings.production --deploy --database default --fail-level WARNING
 
-# Run npm build script if package.json is present
-if [ -f "package.json" ]; then
-  docker compose -f docker-compose.local.yml run --rm node npm run build
+# Detect the package manager based on the lock file
+if [ -f "package-lock.json" ]; then
+  package_manager="npm"
+elif [ -f "pnpm-lock.yaml" ]; then
+  package_manager="pnpm"
+elif [ -f "yarn.lock" ]; then
+  package_manager="yarn"
+# Note: Bun's lockfile is typically binary and named 'bun.lockb'
+elif [ -f "bun.lockb" ] || [ -f "bun.lock" ]; then
+  package_manager="bun"
 fi
 
-# Run npm lint script if eslint.config.mjs is present
-if [ -f "eslint.config.mjs" ]; then
-  docker compose -f docker-compose.local.yml run --rm node npm run lint
+# If a package manager was detected, run the commands
+if [ -n "$package_manager" ]; then
+  # Run the build script
+  $DOCKER_CMD node $package_manager run build
+
+  # Run the lint script if the ESLint config file is present
+  if [ -f "eslint.config.mjs" ]; then
+      $DOCKER_CMD node $package_manager run lint
+  fi
+else
+  echo "⚠️ No lock file (package-lock.json, pnpm-lock.yaml, yarn.lock, or bun.lockb) found. Nothing to do."
 fi

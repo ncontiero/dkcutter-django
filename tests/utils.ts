@@ -1,16 +1,15 @@
 import path from "node:path";
 import fs from "fs-extra";
-import { PATTERN } from "./constants";
+import { EXCLUDED_DIRS, PATTERN } from "./constants";
 
 /**
  * Build a list containing absolute paths to the generated files.
  */
 export function buildFilesList(baseDir: string) {
-  const excludedDirs = ["node_modules", ".venv", "venv", "__pycache__"];
   const files = fs.readdirSync(baseDir);
   const paths: string[] = [];
   files.forEach((file) => {
-    if (excludedDirs.includes(file)) {
+    if (EXCLUDED_DIRS.includes(file)) {
       return;
     }
 

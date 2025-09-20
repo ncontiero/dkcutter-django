@@ -2,6 +2,7 @@
   "name": "{{dkcutter.projectSlug}}",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "",
   "description": "{{dkcutter.description}}",
   "author": "{{dkcutter.authorName}}",
   "license": "MIT",

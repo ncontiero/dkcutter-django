@@ -81,6 +81,17 @@
     ],
     "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}"
   },
+  "pkgManagerToUse": {
+    "value": "npm",
+    "promptMessage": "What {{ colors.blue('Package Manager') }} would you like to use?",
+    "choices": [
+      { "title": "npm", "value": "npm" },
+      { "title": "Yarn", "value": "yarn" },
+      { "title": "pnpm", "value": "pnpm" },
+      { "title": "bun", "value": "bun" }
+    ],
+    "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}"
+  },
   "additionalTools": {
     "promptMessage": "Select additional tools: ",
     "value": "none",
@@ -123,5 +134,7 @@
       { "title": "Github Dependabot", "value": "dependabot" }
     ],
     "promptMessage": "What {{ colors.blue('Automated Dependency Updater')}} do you want to use?"
-  }
+  },
+  "_pkgManager": "{{ pkgManagerToUse }}",
+  "_pkgRun": "{{ _pkgManager }}{% if not _pkgManager in ['pnpm', 'yarn'] %} run{% endif %}"
 }

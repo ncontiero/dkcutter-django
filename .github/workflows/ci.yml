@@ -71,8 +71,16 @@ jobs:
             args: --useCelery --restFramework DNRF
           - name: Rspack
             args: --frontendPipeline Rspack
+          - name: Rspack with pnpm
+            args: --frontendPipeline Rspack --pkgManagerToUse pnpm
+          - name: Rspack with yarn
+            args: --frontendPipeline Rspack --pkgManagerToUse yarn
+          - name: Rspack with bun
+            args: --frontendPipeline Rspack --pkgManagerToUse bun
           - name: Rspack with TailwindCSS and Eslint
             args: --frontendPipeline Rspack --additionalTools tailwindcss,eslint
+          - name: Rspack with TailwindCSS, Eslint and yarn
+            args: --frontendPipeline Rspack --additionalTools tailwindcss,eslint --pkgManagerToUse yarn
           - name: Rspack with TypeScript, TailwindCSS and Eslint
             args: --frontendPipeline Rspack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
           - name: Webpack

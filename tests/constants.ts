@@ -74,12 +74,57 @@ export const SUPPORTED_COMBINATIONS = [
   // with mailService Amazon SES is not supported
   { frontendPipeline: "None" },
   { frontendPipeline: "Rspack" },
+  { frontendPipeline: "Rspack", pkgManagerToUse: "yarn" },
+  { frontendPipeline: "Rspack", pkgManagerToUse: "pnpm" },
+  { frontendPipeline: "Rspack", pkgManagerToUse: "bun" },
   { frontendPipeline: "Webpack" },
+  { frontendPipeline: "Webpack", pkgManagerToUse: "yarn" },
+  { frontendPipeline: "Webpack", pkgManagerToUse: "pnpm" },
+  { frontendPipeline: "Webpack", pkgManagerToUse: "bun" },
   { frontendPipeline: "Rspack", additionalTools: "tailwindcss" },
   { frontendPipeline: "Rspack", additionalTools: "eslint" },
+  {
+    frontendPipeline: "Rspack",
+    additionalTools: "eslint",
+    frontendPipelineLang: "ts",
+  },
+  {
+    frontendPipeline: "Rspack",
+    additionalTools: "eslint",
+    pkgManagerToUse: "yarn",
+  },
+  {
+    frontendPipeline: "Rspack",
+    additionalTools: "eslint",
+    pkgManagerToUse: "pnpm",
+  },
+  {
+    frontendPipeline: "Rspack",
+    additionalTools: "eslint",
+    pkgManagerToUse: "bun",
+  },
   { frontendPipeline: "Rspack", additionalTools: "tailwindcss,eslint" },
   { frontendPipeline: "Webpack", additionalTools: "tailwindcss" },
-  { frontendPipeline: "Webpack", additionalTools: "eslint" },
+  {
+    frontendPipeline: "Webpack",
+    additionalTools: "eslint",
+    frontendPipelineLang: "ts",
+  },
+  {
+    frontendPipeline: "Webpack",
+    additionalTools: "eslint",
+    pkgManagerToUse: "yarn",
+  },
+  {
+    frontendPipeline: "Webpack",
+    additionalTools: "eslint",
+    pkgManagerToUse: "pnpm",
+  },
+  {
+    frontendPipeline: "Webpack",
+    additionalTools: "eslint",
+    pkgManagerToUse: "bun",
+  },
   { frontendPipeline: "Webpack", additionalTools: "tailwindcss,eslint" },
   { additionalTools: "whitenoise" },
   { additionalTools: "mailpit" },
@@ -95,6 +140,7 @@ export const UNSUPPORTED_COMBINATIONS = [
   { postgresqlVersion: 5 },
   { frontendPipeline: "Non" },
   { frontendPipeline: "Rspack", additionalTools: "tailwi" },
+  { frontendPipeline: "Rspack", pkgManagerToUse: "run" },
   { additionalTools: "tailwindcss" },
   { additionalTools: "eslint" },
   { additionalTools: "tailwindcss,eslint" },
@@ -107,3 +153,15 @@ export const UNSUPPORTED_COMBINATIONS = [
   { automatedDepsUpdater: "xpto" },
 ];
 export const INVALID_SLUGS = ["", " ", "1est", "tes1@", "t!es", "project slug"];
+
+export const EXCLUDED_DIRS = [
+  "node_modules",
+  ".venv",
+  "venv",
+  "__pycache__",
+  // Package managers
+  ".pnpm-store",
+  ".local/state/pnpm",
+  ".bun",
+  ".yarn",
+];
