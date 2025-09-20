@@ -1,21 +1,22 @@
-import type { PackageManager } from "./utils/types";
-import os from "node:os";
+import type {
+  AdditionalTools,
+  AutomatedDepsUpdater,
+  Context,
+  FrontendPipeline,
+  FrontendPipelineLang,
+  PackageManager,
+} from "./utils/types";
+
 import path from "node:path";
 import { execa } from "execa";
 import fs from "fs-extra";
-import ora from "ora";
 
+import { setupDependencies } from "./helpers/dependencies";
 import { toBoolean } from "./utils/coerce";
-import { colorize, logger } from "./utils/logger";
+import { logger } from "./utils/logger";
 import { updatePackageJson } from "./utils/updatePackageJson";
 
-type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
-type FrontendPipeline = "None" | "Rspack" | "Webpack";
-type FrontendPipelineLang = "js" | "ts";
-type AdditionalTool = "tailwindcss" | "eslint";
-type AdditionalTools = AdditionalTool[];
-
-const context = {
+const context: Context = {
   projectSlug: "{{ dkcutter.projectSlug }}",
   pkgManager: "{{ dkcutter._pkgManager }}" as PackageManager,
   cloudProvider: "{{ dkcutter.cloudProvider }}",
@@ -50,7 +51,7 @@ const srcFolder = path.join(projectDir, "src");
 async function getPkgManagerVersion() {
   try {
     const pkg = context.pkgManager;
-    const { stdout } = await execa(pkg, ["-v"], { shell: true });
+    const { stdout } = await execa(pkg, ["-v"]);
     return `${pkg}@${stdout}`;
   } catch {
     logger.warn(
@@ -387,104 +388,6 @@ function removeApiStarterFiles() {
   removeFiles(apiStarterFiles);
 }
 
-async function buildDockerImage(tag: string, dockerfilePath: string) {
-  await execa("docker", ["build", "-t", tag, "-f", dockerfilePath, "-q", "."], {
-    stdio: "inherit",
-  });
-}
-
-async function setupDependencies() {
-  const spinner = ora(
-    colorize("info", "Installing dependencies, this might take a while..."),
-  ).start();
-
-  const composeFolder = path.join(projectRootDir, "compose", "local", "runner");
-  const uvDockerImagePath = path.join(composeFolder, "uv.Dockerfile");
-  const nodeDockerImagePath = path.join(composeFolder, "node.Dockerfile");
-
-  const uvImageTag = "dkcutter-django-uv-runner:latest";
-  const nodeImageTag = "dkcutter-django-node-runner:latest";
-
-  let uvCmd = "docker";
-  const uvCmdArgs = ["add", "--no-sync"];
-
-  if (context.frontendPipeline !== "None") {
-    try {
-      await buildDockerImage(nodeImageTag, nodeDockerImagePath);
-    } catch (error) {
-      logger.error(`Failed to build Node.js Docker image: ${error}`);
-      logger.warn("Frontend dependencies won't be installed.");
-    }
-  }
-
-  try {
-    await buildDockerImage(uvImageTag, uvDockerImagePath);
-    uvCmdArgs.unshift("run", "--rm", "-v", ".:/app", uvImageTag, "uv");
-  } catch (error) {
-    logger.error(`Failed to build Docker image: ${error}`);
-    uvCmd = "uv";
-  }
-
-  if (context.frontendPipeline !== "None") {
-    try {
-      const dockerArgs = ["run", "--rm", "-v", ".:/app"];
-
-      let userInfo: os.UserInfo<string> | null;
-      try {
-        userInfo = os.userInfo();
-      } catch {
-        userInfo = null;
-      }
-
-      if (userInfo && typeof userInfo.uid === "number" && userInfo.uid !== -1) {
-        dockerArgs.push("-u", `${userInfo.uid}:${userInfo.gid}`);
-      }
-
-      await execa(
-        "docker",
-        [...dockerArgs, nodeImageTag, context.pkgManager, "install"],
-        { stdio: "inherit" },
-      );
-    } catch (error) {
-      logger.error(`Failed to install frontend dependencies: ${error}`);
-      logger.warn("Frontend dependencies won't be installed.");
-    }
-  }
-
-  // Install production dependencies
-  try {
-    await execa(uvCmd, [...uvCmdArgs, "-r", "requirements/production.txt"], {
-      stdio: "inherit",
-    });
-  } catch (error) {
-    logger.error(`Failed to install production dependencies: ${error}`);
-    spinner.fail(colorize("error", "Failed to install dependencies."));
-    process.exit(1);
-  }
-
-  // Install local (development) dependencies
-  try {
-    await execa(
-      uvCmd,
-      [...uvCmdArgs, "--dev", "-r", "requirements/local.txt"],
-      {
-        stdio: "inherit",
-      },
-    );
-  } catch (error) {
-    logger.error(`Failed to install local dependencies: ${error}`);
-    spinner.fail(colorize("error", "Failed to install dependencies."));
-    process.exit(1);
-  }
-
-  // Remove the requirements directory
-  await fs.remove(path.join(projectRootDir, "requirements"));
-  await fs.remove(composeFolder);
-
-  // logger.success("Dependencies installed successfully.");
-  spinner.succeed(colorize("success", "Dependencies installed successfully."));
-}
-
 async function main() {
   const gitignorePath = path.resolve(".gitignore");
 
@@ -543,7 +446,7 @@ async function main() {
 
   handleAutomatedDepsUpdater(context.automatedDepsUpdater);
 
-  await setupDependencies();
+  await setupDependencies(context, projectRootDir);
 
   logger.success("Project initialized, keep up the good work!");
 }
