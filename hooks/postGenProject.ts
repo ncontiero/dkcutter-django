@@ -372,6 +372,9 @@ function removeAwsDockerfile() {
   const awsFiles = [path.join("compose", "production", "aws")];
   removeFiles(awsFiles);
 }
+function removeNVMFile() {
+  fs.removeSync(path.join(projectRootDir, ".nvmrc"));
+}
 function removeNodeDockerfile() {
   const nodeFiles = [path.join("compose", "local", "node")];
   removeFiles(nodeFiles);
@@ -513,6 +516,7 @@ async function main() {
     removeTailwindFiles();
     removeEslintFiles();
     removeNodeDockerfile();
+    removeNVMFile();
     removePackageJsonFile();
   } else {
     handleFrontendPipelineAndTools(
