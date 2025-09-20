@@ -30,12 +30,5 @@ COPY package.json bun.lock ${APP_HOME}
 
 RUN bun install
 {% endif %}
-ENV PATH=./node_modules/.bin/:$PATH
 
-{% if dkcutter.pkgManager == "bun" -%}
-RUN chown -R bun:bun ${APP_HOME}
-USER bun
-{% else -%}
-RUN chown -R node:node ${APP_HOME}
-USER node
-{% endif -%}
+ENV PATH="/${APP_HOME}/node_modules/.bin/:$PATH"

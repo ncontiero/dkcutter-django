@@ -4,7 +4,6 @@ FROM docker.io/oven/bun:1.2.22-slim
 FROM docker.io/node:22.19.0-bookworm-slim
 {% endif %}
 ARG APP_HOME=/app
-ENV HOME=${APP_HOME}
 WORKDIR ${APP_HOME}
 
 {% if dkcutter.pkgManager == "pnpm" -%}
@@ -18,9 +17,9 @@ RUN corepack enable
 {% endif -%}
 
 {% if dkcutter.pkgManager == "bun" -%}
-RUN chown bun:bun /app
+RUN chown bun:bun ${APP_HOME}
 USER bun
 {% else -%}
-RUN chown node:node /app
+RUN chown node:node ${APP_HOME}
 USER node
 {% endif -%}

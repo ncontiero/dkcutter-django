@@ -1,7 +1,7 @@
 import type { PackageManager } from "./utils/types";
 import os from "node:os";
 import path from "node:path";
-import { execa, execaSync } from "execa";
+import { execa } from "execa";
 import fs from "fs-extra";
 import ora from "ora";
 
@@ -38,7 +38,7 @@ const pkgLockFiles = [
 ];
 const pkgManagersDefaultVersions: Record<PackageManager, string> = {
   npm: "npm@10.9.3",
-  pnpm: "pnpm@10.16.1",
+  pnpm: "pnpm@10.17.0",
   yarn: "yarn@4.9.4",
   bun: "bun@1.2.22",
 };
@@ -47,10 +47,10 @@ const projectRootDir = path.resolve(".");
 const projectDir = path.resolve(context.projectSlug);
 const srcFolder = path.join(projectDir, "src");
 
-function getPkgManagerVersion() {
+async function getPkgManagerVersion() {
   try {
     const pkg = context.pkgManager;
-    const { stdout } = execaSync(pkg, ["-v"]);
+    const { stdout } = await execa(pkg, ["-v"], { shell: true });
     return `${pkg}@${stdout}`;
   } catch {
     logger.warn(
@@ -485,7 +485,7 @@ async function setupDependencies() {
 async function main() {
   const gitignorePath = path.resolve(".gitignore");
 
-  const pkgVersion = getPkgManagerVersion();
+  const pkgVersion = await getPkgManagerVersion();
   if (pkgVersion) {
     updatePackageJson({
       projectDir: projectRootDir,
