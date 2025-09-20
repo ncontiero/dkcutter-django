@@ -153,3 +153,15 @@ export const UNSUPPORTED_COMBINATIONS = [
   { automatedDepsUpdater: "xpto" },
 ];
 export const INVALID_SLUGS = ["", " ", "1est", "tes1@", "t!es", "project slug"];
+
+export const EXCLUDED_DIRS = [
+  "node_modules",
+  ".venv",
+  "venv",
+  "__pycache__",
+  // Package managers
+  ".pnpm-store",
+  ".local/state/pnpm",
+  ".bun",
+  ".yarn",
+];
