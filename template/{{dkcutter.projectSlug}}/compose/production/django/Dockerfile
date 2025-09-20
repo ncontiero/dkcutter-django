@@ -1,28 +1,73 @@
 {% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] -%}
-FROM docker.io/node:22.19.0-bookworm-slim AS client-builder
+{%- if dkcutter.pkgManager == "bun" -%}
+FROM docker.io/oven/bun:1.2.22-slim AS client-base
+{%- else -%}
+FROM docker.io/node:22.19.0-bookworm-slim AS client-base
+{%- endif %}
 
-ARG APP_HOME=/app
-WORKDIR ${APP_HOME}
+WORKDIR /app
 
-COPY ./package.json ${APP_HOME}
-RUN npm install && npm cache clean --force
+{% if dkcutter.pkgManager == "npm" -%}
+FROM client-base AS client-deps
 
-COPY . ${APP_HOME}
+COPY ./package.json ./package-lock.json* ./
+
+RUN --mount=type=cache,target=/root/.npm npm ci
+{%- elif dkcutter.pkgManager == "pnpm" -%}
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
+RUN corepack enable
+
+FROM client-base AS client-deps
+
+COPY ./package.json ./pnpm-lock.yaml* ./pnpm-workspace.yaml* ./
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+{%- elif dkcutter.pkgManager == "yarn" -%}
+RUN corepack enable
+
+FROM client-base AS client-deps
+
+COPY ./package.json ./yarn.lock* ./
+
+RUN --mount=type=cache,target=/root/.yarn/cache yarn install --frozen-lockfile
+{%- elif dkcutter.pkgManager == "bun" -%}
+FROM client-base AS client-deps
+
+COPY ./package.json ./bun.lock* ./
+
+RUN --mount=type=cache,id=bun,target=/root/.bun bun install --frozen-lockfile
+{%- endif %}
+
+FROM client-base AS client-builder
+
 {%- if not dkcutter.useWhitenoise %}
 {%- if dkcutter.cloudProvider == "AWS" %}
 
 ARG DJANGO_AWS_STORAGE_BUCKET_NAME
-ENV DJANGO_AWS_STORAGE_BUCKET_NAME=${DJANGO_AWS_STORAGE_BUCKET_NAME}
 ARG DJANGO_AWS_S3_CUSTOM_DOMAIN
+
+ENV DJANGO_AWS_STORAGE_BUCKET_NAME=${DJANGO_AWS_STORAGE_BUCKET_NAME}
 ENV DJANGO_AWS_S3_CUSTOM_DOMAIN=${DJANGO_AWS_S3_CUSTOM_DOMAIN}
 {%- elif dkcutter.cloudProvider == "GCP" %}
 
 ARG DJANGO_GCP_STORAGE_BUCKET_NAME
+
 ENV DJANGO_GCP_STORAGE_BUCKET_NAME=${DJANGO_GCP_STORAGE_BUCKET_NAME}
 {%- endif %}
 {%- endif %}
 
-RUN npm run build
+COPY --from=client-deps /app/node_modules /app/node_modules
+COPY . /app
+
+RUN {{ dkcutter._pkgRun }} build
+
+FROM client-base AS client-build
+
+COPY . /app
+COPY --from=client-builder /app/webpack-stats.json /app/webpack-stats.json
+COPY --from=client-builder /app/{{ dkcutter.projectSlug }}/static/bundles /app/{{ dkcutter.projectSlug }}/static/bundles
 
 {% endif -%}
 # define an alias for the specific python version used in this file.
@@ -48,7 +93,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked --no-install-project --no-dev
 
 {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
-COPY --from=client-builder ${APP_HOME} ${APP_HOME}
+COPY --from=client-build ${APP_HOME} ${APP_HOME}
 {% else %}
 COPY . ${APP_HOME}
 {%- endif %}

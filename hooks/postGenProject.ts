@@ -1,9 +1,12 @@
+import type { PackageManager } from "./utils/types";
+import os from "node:os";
 import path from "node:path";
-import { execaSync } from "execa";
+import { execa } from "execa";
 import fs from "fs-extra";
+import ora from "ora";
 
 import { toBoolean } from "./utils/coerce";
-import { logger } from "./utils/logger";
+import { colorize, logger } from "./utils/logger";
 import { updatePackageJson } from "./utils/updatePackageJson";
 
 type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
@@ -14,6 +17,7 @@ type AdditionalTools = AdditionalTool[];
 
 const context = {
   projectSlug: "{{ dkcutter.projectSlug }}",
+  pkgManager: "{{ dkcutter._pkgManager }}" as PackageManager,
   cloudProvider: "{{ dkcutter.cloudProvider }}",
   restFramework: "{{ dkcutter.restFramework }}",
   frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,
@@ -26,9 +30,67 @@ const context = {
     "{{ dkcutter.automatedDepsUpdater }}" as AutomatedDepsUpdater,
 };
 
+const pkgLockFiles = [
+  "package-lock.json",
+  "pnpm-lock.yaml",
+  "yarn.lock",
+  "bun.lock",
+];
+const pkgManagersDefaultVersions: Record<PackageManager, string> = {
+  npm: "npm@10.9.3",
+  pnpm: "pnpm@10.17.0",
+  yarn: "yarn@4.9.4",
+  bun: "bun@1.2.22",
+};
+
 const projectRootDir = path.resolve(".");
 const projectDir = path.resolve(context.projectSlug);
 const srcFolder = path.join(projectDir, "src");
+
+async function getPkgManagerVersion() {
+  try {
+    const pkg = context.pkgManager;
+    const { stdout } = await execa(pkg, ["-v"], { shell: true });
+    return `${pkg}@${stdout}`;
+  } catch {
+    logger.warn(
+      `Failed to get version for package manager ${context.pkgManager}, using default version instead.`,
+    );
+    return pkgManagersDefaultVersions[context.pkgManager];
+  }
+}
+
+function removeLockFiles() {
+  pkgLockFiles.forEach((file) => {
+    const filePath = path.join(projectRootDir, file);
+    if (!fs.existsSync(filePath)) return;
+
+    // Determine the lock file for the selected package manager
+    let selectedLockFile: string | null = null;
+    switch (context.pkgManager) {
+      case "pnpm":
+        selectedLockFile = "pnpm-lock.yaml";
+        break;
+      case "yarn":
+        selectedLockFile = "yarn.lock";
+        break;
+      case "bun":
+        selectedLockFile = "bun.lock";
+        break;
+      default:
+        selectedLockFile = "package-lock.json";
+    }
+
+    // Remove all lock files except the one for the selected package manager
+    if (file !== selectedLockFile) {
+      try {
+        fs.removeSync(filePath);
+      } catch (error) {
+        logger.error(`Failed to remove ${file}: ${error}`);
+      }
+    }
+  });
+}
 
 function appendToGitignore(gitignorePath: string, lines: string) {
   fs.appendFileSync(gitignorePath, lines);
@@ -179,6 +241,7 @@ function handleFrontendPipelineAndTools(
 
 function removePackageJsonFile() {
   fs.removeSync(path.join(projectRootDir, "package.json"));
+  removeFiles(pkgLockFiles);
 }
 
 function removeCeleryFiles() {
@@ -309,6 +372,9 @@ function removeAwsDockerfile() {
   const awsFiles = [path.join("compose", "production", "aws")];
   removeFiles(awsFiles);
 }
+function removeNVMFile() {
+  fs.removeSync(path.join(projectRootDir, ".nvmrc"));
+}
 function removeNodeDockerfile() {
   const nodeFiles = [path.join("compose", "local", "node")];
   removeFiles(nodeFiles);
@@ -321,61 +387,118 @@ function removeApiStarterFiles() {
   removeFiles(apiStarterFiles);
 }
 
-function setupDependencies() {
-  logger.info("Installing dependencies, this might take a while...");
+async function buildDockerImage(tag: string, dockerfilePath: string) {
+  await execa("docker", ["build", "-t", tag, "-f", dockerfilePath, "-q", "."], {
+    stdio: "inherit",
+  });
+}
 
-  const uvDockerFolderPath = path.join(
-    projectRootDir,
-    "compose",
-    "local",
-    "uv",
-  );
-  const uvDockerImagePath = path.join(uvDockerFolderPath, "Dockerfile");
+async function setupDependencies() {
+  const spinner = ora(
+    colorize("info", "Installing dependencies, this might take a while..."),
+  ).start();
+
+  const composeFolder = path.join(projectRootDir, "compose", "local", "runner");
+  const uvDockerImagePath = path.join(composeFolder, "uv.Dockerfile");
+  const nodeDockerImagePath = path.join(composeFolder, "node.Dockerfile");
+
   const uvImageTag = "dkcutter-django-uv-runner:latest";
+  const nodeImageTag = "dkcutter-django-node-runner:latest";
+
   let uvCmd = "docker";
   const uvCmdArgs = ["add", "--no-sync"];
 
+  if (context.frontendPipeline !== "None") {
+    try {
+      await buildDockerImage(nodeImageTag, nodeDockerImagePath);
+    } catch (error) {
+      logger.error(`Failed to build Node.js Docker image: ${error}`);
+      logger.warn("Frontend dependencies won't be installed.");
+    }
+  }
+
   try {
-    execaSync(
-      "docker",
-      ["build", "-t", uvImageTag, "-f", uvDockerImagePath, "-q", "."],
-      { stdio: "inherit" },
-    );
+    await buildDockerImage(uvImageTag, uvDockerImagePath);
     uvCmdArgs.unshift("run", "--rm", "-v", ".:/app", uvImageTag, "uv");
   } catch (error) {
     logger.error(`Failed to build Docker image: ${error}`);
     uvCmd = "uv";
   }
 
+  if (context.frontendPipeline !== "None") {
+    try {
+      const dockerArgs = ["run", "--rm", "-v", ".:/app"];
+
+      let userInfo: os.UserInfo<string> | null;
+      try {
+        userInfo = os.userInfo();
+      } catch {
+        userInfo = null;
+      }
+
+      if (userInfo && typeof userInfo.uid === "number" && userInfo.uid !== -1) {
+        dockerArgs.push("-u", `${userInfo.uid}:${userInfo.gid}`);
+      }
+
+      await execa(
+        "docker",
+        [...dockerArgs, nodeImageTag, context.pkgManager, "install"],
+        { stdio: "inherit" },
+      );
+    } catch (error) {
+      logger.error(`Failed to install frontend dependencies: ${error}`);
+      logger.warn("Frontend dependencies won't be installed.");
+    }
+  }
+
   // Install production dependencies
   try {
-    execaSync(uvCmd, [...uvCmdArgs, "-r", "requirements/production.txt"], {
+    await execa(uvCmd, [...uvCmdArgs, "-r", "requirements/production.txt"], {
       stdio: "inherit",
     });
   } catch (error) {
     logger.error(`Failed to install production dependencies: ${error}`);
+    spinner.fail(colorize("error", "Failed to install dependencies."));
     process.exit(1);
   }
 
   // Install local (development) dependencies
   try {
-    execaSync(uvCmd, [...uvCmdArgs, "--dev", "-r", "requirements/local.txt"], {
-      stdio: "inherit",
-    });
+    await execa(
+      uvCmd,
+      [...uvCmdArgs, "--dev", "-r", "requirements/local.txt"],
+      {
+        stdio: "inherit",
+      },
+    );
   } catch (error) {
     logger.error(`Failed to install local dependencies: ${error}`);
+    spinner.fail(colorize("error", "Failed to install dependencies."));
     process.exit(1);
   }
 
   // Remove the requirements directory
-  fs.removeSync(path.join(projectRootDir, "requirements"));
-  fs.removeSync(uvDockerFolderPath);
+  await fs.remove(path.join(projectRootDir, "requirements"));
+  await fs.remove(composeFolder);
 
-  logger.success("Dependencies installed successfully.");
+  // logger.success("Dependencies installed successfully.");
+  spinner.succeed(colorize("success", "Dependencies installed successfully."));
 }
 
-function main() {
+async function main() {
   const gitignorePath = path.resolve(".gitignore");
+
+  const pkgVersion = await getPkgManagerVersion();
+  if (pkgVersion) {
+    updatePackageJson({
+      projectDir: projectRootDir,
+      modifyKey: { packageManager: pkgVersion },
+    });
+  } else {
+    updatePackageJson({ projectDir: projectRootDir, keys: ["packageManager"] });
+  }
+
+  removeLockFiles();
 
   setFlagsInEnvs(generateRandomUser(), generateRandomUser());
   setFlagsInSettings();
@@ -393,6 +516,7 @@ function main() {
     removeTailwindFiles();
     removeEslintFiles();
     removeNodeDockerfile();
+    removeNVMFile();
     removePackageJsonFile();
   } else {
     handleFrontendPipelineAndTools(
@@ -419,9 +543,12 @@ function main() {
 
   handleAutomatedDepsUpdater(context.automatedDepsUpdater);
 
-  setupDependencies();
+  await setupDependencies();
 
   logger.success("Project initialized, keep up the good work!");
 }
 
-main();
+main().catch((error) => {
+  logger.error(`An error occurred: ${error}`);
+  process.exit(1);
+});
