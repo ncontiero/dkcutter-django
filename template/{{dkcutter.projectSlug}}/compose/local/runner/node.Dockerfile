@@ -4,6 +4,7 @@ FROM docker.io/oven/bun:1.2.22-slim
 FROM docker.io/node:22.19.0-bookworm-slim
 {% endif %}
 ARG APP_HOME=/app
+ENV HOME=${APP_HOME}
 WORKDIR ${APP_HOME}
 
 {% if dkcutter.pkgManager == "pnpm" -%}
