@@ -143,6 +143,9 @@ typings/
 .pnpm-store/
 .local/state/pnpm
 
+# Bun
+.bun/
+
 ### Linux template
 *~
 
