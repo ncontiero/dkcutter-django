@@ -141,6 +141,7 @@ typings/
 
 # Pnpm
 .pnpm-store/
+.local/state/pnpm
 
 ### Linux template
 *~
