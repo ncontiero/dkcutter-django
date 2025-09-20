@@ -53,7 +53,7 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
 
       // django-upgrade
       const files = await fg.glob("**/*.py", { cwd: target });
-      await execa("django-upgrade", ["--target-version", "5.0", ...files], {
+      await execa("django-upgrade", ["--target-version", "5.2", ...files], {
         cwd: target,
       });
 
