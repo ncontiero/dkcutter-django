@@ -44,7 +44,7 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       });
 
       // Check that the project was generated
-      const paths = buildFilesList(target);
+      const paths = await buildFilesList(target);
       checkPaths(paths);
 
       // Check that the project is linted
@@ -74,7 +74,7 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       if (hasEslint) {
         const getWarnings = process.env.GET_WARNINGS === "true";
         const args = getWarnings ? ["--max-warnings", "0"] : [];
-        await execa("npx", ["eslint", ".", ...args], {
+        await execa("pnpm", ["dlx", "eslint", ".", ...args], {
           cwd: target,
         });
       }

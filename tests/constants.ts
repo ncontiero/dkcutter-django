@@ -88,42 +88,12 @@ export const SUPPORTED_COMBINATIONS = [
     additionalTools: "eslint",
     frontendPipelineLang: "ts",
   },
-  {
-    frontendPipeline: "Rspack",
-    additionalTools: "eslint",
-    pkgManagerToUse: "yarn",
-  },
-  {
-    frontendPipeline: "Rspack",
-    additionalTools: "eslint",
-    pkgManagerToUse: "pnpm",
-  },
-  {
-    frontendPipeline: "Rspack",
-    additionalTools: "eslint",
-    pkgManagerToUse: "bun",
-  },
   { frontendPipeline: "Rspack", additionalTools: "tailwindcss,eslint" },
   { frontendPipeline: "Webpack", additionalTools: "tailwindcss" },
   {
     frontendPipeline: "Webpack",
     additionalTools: "eslint",
     frontendPipelineLang: "ts",
-  },
-  {
-    frontendPipeline: "Webpack",
-    additionalTools: "eslint",
-    pkgManagerToUse: "yarn",
-  },
-  {
-    frontendPipeline: "Webpack",
-    additionalTools: "eslint",
-    pkgManagerToUse: "pnpm",
-  },
-  {
-    frontendPipeline: "Webpack",
-    additionalTools: "eslint",
-    pkgManagerToUse: "bun",
   },
   { frontendPipeline: "Webpack", additionalTools: "tailwindcss,eslint" },
   { additionalTools: "whitenoise" },
