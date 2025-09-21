@@ -149,11 +149,14 @@ export async function setupDependencies(
   };
 
   try {
-    await installFrontendDependencies(
-      context,
-      DOCKER_TAGS.node,
-      DOCKER_FILES.node,
-    );
+    if (context.installFrontendDeps) {
+      await installFrontendDependencies(
+        context,
+        DOCKER_TAGS.node,
+        DOCKER_FILES.node,
+      );
+    }
+
     await installPythonDependencies(DOCKER_TAGS.uv, DOCKER_FILES.uv);
 
     // Cleanup

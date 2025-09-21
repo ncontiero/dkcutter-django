@@ -135,6 +135,10 @@
     ],
     "promptMessage": "What {{ colors.blue('Automated Dependency Updater')}} do you want to use?"
   },
+  "installFrontendDeps": {
+    "value": true,
+    "promptMessage": "Do you want to install the frontend dependencies now?"
+  },
   "_pkgManager": "{{ pkgManagerToUse }}",
   "_pkgRun": "{{ _pkgManager }}{% if not _pkgManager in ['pnpm', 'yarn'] %} run{% endif %}"
 }

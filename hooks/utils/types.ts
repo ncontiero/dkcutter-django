@@ -15,4 +15,5 @@ export type Context = {
   additionalTools: AdditionalTools;
   useCelery: boolean;
   automatedDepsUpdater: AutomatedDepsUpdater;
+  installFrontendDeps: boolean;
 };

@@ -55,5 +55,6 @@ export function constructArgs(combination: { [key: string]: any }) {
     "--projectName",
     projectName.slice(0, 16).concat(Math.random().toString().slice(2, 8)),
   );
+  args.push("--installFrontendDeps", "false");
   return { args, testName: projectName };
 }

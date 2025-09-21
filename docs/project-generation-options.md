@@ -59,6 +59,13 @@ This page describes all the template options that will be prompted by the [dkcut
   - JavaScript
   - TypeScript
 
+- **Frontend Package Manager**: Select the package manager for the Frontend Pipeline:
+
+  - npm
+  - pnpm
+  - Yarn
+  - bun
+
 - **Additional Tools**: Select additional tools to use:
 
   - [TailwindCSS](https://tailwindcss.com/)
@@ -74,3 +81,5 @@ This page describes all the template options that will be prompted by the [dkcut
   - None
   - [Mend Renovate](https://docs.renovatebot.com/)
   - [Github Dependabot](https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file)
+
+- **Install Frontend Deps**: Install Frontend dependencies after generating the project. This requires that you have the selected package manager or Docker installed on your machine.

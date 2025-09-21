@@ -29,6 +29,7 @@ const context: Context = {
   useCelery: toBoolean("{{ 'celery' in dkcutter.additionalTools }}"),
   automatedDepsUpdater:
     "{{ dkcutter.automatedDepsUpdater }}" as AutomatedDepsUpdater,
+  installFrontendDeps: toBoolean("{{ dkcutter.installFrontendDeps }}"),
 };
 
 const pkgLockFiles = [

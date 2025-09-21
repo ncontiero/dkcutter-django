@@ -74,8 +74,10 @@ If you want to start faster, you can use the following options:
 | `--mailService <string>`          | Select an email service that Django-Anymail provides.                                     |
 | `--frontendPipeline <string>`     | Select a pipeline to compile and optimize frontend assets (JS, CSS, …).                   |
 | `--frontendPipelineLang <string>` | Select the language used by the Frontend Pipeline.                                        |
+| `--pkgManagerToUse <string>`      | Select the package manager for the Frontend Pipeline.                                     |
 | `--additionalTools <string>`      | Select additional tools to use.                                                           |
 | `--automatedDepsUpdater <string>` | Choose Automated Dependency Updater. [See for more info][options-url].                    |
+| `--installFrontendDeps <boolean>` | Install Frontend dependencies.                                                            |
 
 [See for more information about options][options-url].
 
