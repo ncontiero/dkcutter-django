@@ -14,7 +14,7 @@ Before you begin, check out the docker-compose.production.yml file in the root o
 - `redis`: Redis instance for caching;
 - `traefik`: Traefik reverse proxy with HTTPS on by default.
 
-Provided you have opted for Celery (via setting `use_celery` to `y`) there are three more services:
+Provided you have opted for Celery (via setting `additionalTools`) there are three more services:
 
 - `celeryworker` running a Celery worker process;
 - `celerybeat` running a Celery beat process;

@@ -165,10 +165,29 @@ Notice that the `container_name` is generated dynamically using your project slu
 
 ### Mailpit
 
-When developing locally you can go with [Mailpit](https://github.com/axllent/mailpit/) for email testing provided `use_mailpit` was set to `y` on setup. To proceed,
+When developing locally you can go with [Mailpit](https://github.com/axllent/mailpit/) for email testing if you selected Mailpit from the additional tools in the setup. To proceed,
 
 1. make sure `<project_slug>_local_mailpit` container is up and running;
 2. open up <http://127.0.0.1:8025>.
+
+### React Email
+
+If you chose [React Email](https://react.email/) during project setup, you can use it to create emails more easily and accessibly using React components.
+
+You can view and edit your emails in the `emails` directory. To see the changes in real-time, run the following command and access <http://localhost:3001> in your browser:
+
+```bash
+docker compose -f docker-compose.local.yml run --rm node <package manager> run dev:email
+```
+
+> [!NOTE]
+> Replace `<package manager>` with the package manager you selected for the frontend (npm, pnpm, yarn, or bun).
+
+To build the emails and make them available for use in Django, run the build command:
+
+```bash
+docker compose -f docker-compose.local.yml run --rm node <package manager> run build:email
+```
 
 ### Celery tasks in local development
 
@@ -182,7 +201,7 @@ Possible uses could be for testing, or ease of profiling with DJDT.
 
 Prerequisites:
 
-- `useCelery` was set on project initialization.
+- Have Celery selected in the additional tools at project startup.
 
 By default, it’s enabled both in local and production environments (`docker-compose.local.yml` and `docker-compose.production.yml` Docker Compose configs, respectively) through a `flower` service. For added security, `flower` requires its clients to provide authentication credentials specified as the corresponding environments’ `.envs/.local/.django` and `.envs/.production/.django` `CELERY_FLOWER_USER` and `CELERY_FLOWER_PASSWORD` environment variables. Check out <http://localhost:5555> and see for yourself.
 
