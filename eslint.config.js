@@ -18,11 +18,19 @@ function ignoreFiles(files) {
   return files.map((file) => `${TEMPLATE_GLOB}${file}`);
 }
 
-export default ncontiero({
-  ignores: [".venv", "venv", ...(ignoreFiles(FILES_TO_IGNORE) || [])],
-  toml: {
-    overrides: {
-      "toml/indent": ["error", 4],
+export default ncontiero(
+  {
+    ignores: [".venv", "venv", ...(ignoreFiles(FILES_TO_IGNORE) || [])],
+    toml: {
+      overrides: {
+        "toml/indent": ["error", 4],
+      },
     },
   },
-});
+  {
+    files: ["**/emails/**/*.tsx"],
+    rules: {
+      "import/no-default-export": "off",
+    },
+  },
+);
