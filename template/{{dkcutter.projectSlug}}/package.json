@@ -6,6 +6,9 @@
   "description": "{{dkcutter.description}}",
   "author": "{{dkcutter.authorName}}",
   "license": "MIT",
+  "workspaces": [
+    "emails"
+  ],
   "scripts": {},
   "devDependencies": {
     "@babel/core": "^7.28.4",

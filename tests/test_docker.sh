@@ -93,6 +93,11 @@ if [ -n "$package_manager" ]; then
   # Run the build script
   $DOCKER_CMD node $package_manager run build
 
+  # Run the build email script if the emails folder is present
+  if [ -f "emails/package.json" ]; then
+      $DOCKER_CMD node $package_manager run build:email
+  fi
+
   # Run the lint script if the ESLint config file is present
   if [ -f "eslint.config.mjs" ]; then
       $DOCKER_CMD node $package_manager run lint
