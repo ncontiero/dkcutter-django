@@ -486,6 +486,7 @@ async function main() {
       removeNVMFile();
       removePackageJsonFile();
       removePkgManagerFiles();
+      removeEmailFiles();
     }
   }
 
