@@ -71,7 +71,7 @@ ENV DJANGO_GCP_STORAGE_BUCKET_NAME=${DJANGO_GCP_STORAGE_BUCKET_NAME}
 {%- endif %}
 
 COPY --from=client-deps /app/node_modules /app/node_modules
-{% if "reactemail" in dkcutter.additionalTools -%}
+{% if "reactemail" in dkcutter.additionalTools and dkcutter.pkgManager != "npm" -%}
 COPY --from=client-deps /app/emails/node_modules /app/emails/node_modules
 {%- endif %}
 COPY . /app

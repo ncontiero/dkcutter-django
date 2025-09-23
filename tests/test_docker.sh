@@ -90,8 +90,10 @@ fi
 
 # If a package manager was detected, run the commands
 if [ -n "$package_manager" ]; then
-  # Run the build script
-  $DOCKER_CMD node $package_manager run build
+  # Run the build script if script is present
+  if [ -f "webpack" ] || [ -f "rspack" ]; then
+      $DOCKER_CMD node $package_manager run build
+  fi
 
   # Run the build email script if the emails folder is present
   if [ -f "emails/package.json" ]; then

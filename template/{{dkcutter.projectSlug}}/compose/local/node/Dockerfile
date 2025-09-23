@@ -27,6 +27,9 @@ COPY package.json yarn.lock ${APP_HOME}
 RUN yarn install
 {% elif dkcutter.pkgManager == "bun" -%}
 COPY package.json bun.lock ${APP_HOME}
+{% if "reactemail" in dkcutter.additionalTools -%}
+COPY ./emails/package.json ${APP_HOME}/emails/
+{%- endif %}
 
 RUN bun install
 {% endif %}
