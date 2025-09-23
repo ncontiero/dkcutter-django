@@ -220,6 +220,8 @@ function handleReactEmailSetup({
     fs.removeSync(emailsComponentsTailwind);
     fs.removeSync(path.join(emailsFolder, "utils"));
   }
+
+  return scripts;
 }
 
 function handleFrontendPipelineAndTools(
@@ -289,7 +291,7 @@ function handleFrontendPipelineAndTools(
   }
 
   if (tools.includes("reactemail")) {
-    handleReactEmailSetup({ scripts });
+    scripts = handleReactEmailSetup({ scripts });
   } else {
     removeEmailFiles();
     removeKeys.push("workspaces");
