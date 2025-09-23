@@ -7,7 +7,7 @@ ARG APP_HOME=/app
 WORKDIR ${APP_HOME}
 
 {% if dkcutter.pkgManager == "npm" -%}
-COPY package.json package-lock.json ${APP_HOME}
+COPY ./package.json ./package-lock.json* ${APP_HOME}
 {% if "reactemail" in dkcutter.additionalTools -%}
 COPY ./emails/package.json ${APP_HOME}/emails/
 {%- endif %}
@@ -19,7 +19,7 @@ ENV PATH="$PNPM_HOME:$PATH"
 
 RUN corepack enable
 
-COPY package.json pnpm-lock.yaml ${APP_HOME}
+COPY ./package.json ./pnpm-lock.yaml* ./pnpm-workspace.yaml* ${APP_HOME}
 {% if "reactemail" in dkcutter.additionalTools -%}
 COPY ./emails/package.json ${APP_HOME}/emails/
 {%- endif %}
@@ -28,14 +28,14 @@ RUN pnpm install
 {% elif dkcutter.pkgManager == "yarn" -%}
 RUN corepack enable
 
-COPY package.json yarn.lock ${APP_HOME}
+COPY ./package.json ./yarn.lock* ${APP_HOME}
 {% if "reactemail" in dkcutter.additionalTools -%}
 COPY ./emails/package.json ${APP_HOME}/emails/
 {%- endif %}
 
 RUN yarn install
 {% elif dkcutter.pkgManager == "bun" -%}
-COPY package.json bun.lock ${APP_HOME}
+COPY ./package.json ./bun.lock* ${APP_HOME}
 {% if "reactemail" in dkcutter.additionalTools -%}
 COPY ./emails/package.json ${APP_HOME}/emails/
 {%- endif %}
