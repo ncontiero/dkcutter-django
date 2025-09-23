@@ -120,7 +120,6 @@ export const UNSUPPORTED_COMBINATIONS = [
   { additionalTools: "tailwindcss" },
   { additionalTools: "eslint" },
   { additionalTools: "tailwindcss,eslint" },
-  { useTailwindInReactEmail: true },
   { restFramework: "NOn" },
   { restFramework: "Rest" },
   { cloudProvider: "None", additionalTools: "" },
