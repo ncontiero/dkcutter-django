@@ -509,6 +509,15 @@ async function main() {
       });
     }
 
+    if (context.pkgManager === "bun") {
+      logger.warn(
+        "Bun's Node.js compatibility is a work in progress. You might face issues with tools like Webpack or other Node.js tools.",
+      );
+      logger.warn(
+        "If you encounter issues, check Bun's compatibility documentation: https://bun.sh/docs/runtime/nodejs-apis",
+      );
+    }
+
     handlePkgManagerFiles();
 
     handleFrontendPipelineAndTools(
