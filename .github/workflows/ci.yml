@@ -107,9 +107,10 @@ jobs:
       COMPOSE_DOCKER_CLI_BUILD: 1
 
     steps:
-      - name: Free up disk space
+      - name: Free up disk space (for Yarn builds)
+        if: contains(matrix.script.args, 'yarn')
         run: |
-          echo "Initial disk space:"
+          echo "Yarn build detected. Freeing up disk space..."
           df -h
           
           # Remove large pre-installed tools
