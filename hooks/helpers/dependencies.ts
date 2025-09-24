@@ -60,31 +60,39 @@ async function installFrontendDependencies(
   let command: string = context.pkgManager;
   let args = ["install"];
 
-  const builtSuccessfully = await tryBuildDockerImage(
-    nodeImageTag,
-    nodeDockerImagePath,
+  const { exitCode: pkgManagerExitCode } = await execa(
+    context.pkgManager,
+    ["--version"],
+    { reject: false },
   );
 
-  if (builtSuccessfully) {
-    command = "docker";
-    const userInfo = os.userInfo();
-    const userArgs =
-      userInfo?.uid !== -1 ? ["-u", `${userInfo.uid}:${userInfo.gid}`] : [];
-
-    args = [
-      "run",
-      "--rm",
-      "-v",
-      ".:/app",
-      ...userArgs,
+  if (pkgManagerExitCode !== 0) {
+    const builtSuccessfully = await tryBuildDockerImage(
       nodeImageTag,
-      context.pkgManager,
-      "install",
-    ];
-  } else {
-    logger.warn(
-      `Could not build Docker image for Node.js. Falling back to local '${context.pkgManager}'.`,
+      nodeDockerImagePath,
     );
+
+    if (builtSuccessfully) {
+      command = "docker";
+      const userInfo = os.userInfo();
+      const userArgs =
+        userInfo?.uid !== -1 ? ["-u", `${userInfo.uid}:${userInfo.gid}`] : [];
+
+      args = [
+        "run",
+        "--rm",
+        "-v",
+        ".:/app",
+        ...userArgs,
+        nodeImageTag,
+        context.pkgManager,
+        "install",
+      ];
+    } else {
+      logger.warn(
+        `Could not build Docker image for Node.js. Falling back to local '${context.pkgManager}'.`,
+      );
+    }
   }
 
   try {
