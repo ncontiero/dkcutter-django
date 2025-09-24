@@ -14,7 +14,7 @@ async function runCommand(
   failureMessage: string,
 ) {
   try {
-    await execa(command, args, { env: { ...process.env, CI: "true" } });
+    await execa(command, args);
   } catch (error) {
     logger.error(`${failureMessage}`);
 
@@ -45,6 +45,17 @@ async function tryBuildDockerImage(
   }
 }
 
+async function isPackageManagerAvailable(pkgManager: string) {
+  try {
+    const { exitCode } = await execa(pkgManager, ["--version"], {
+      reject: false,
+    });
+    return exitCode === 0;
+  } catch {
+    return false;
+  }
+}
+
 async function installFrontendDependencies(
   context: Context,
   nodeImageTag: string,
@@ -60,13 +71,15 @@ async function installFrontendDependencies(
   let command: string = context.pkgManager;
   let args = ["install"];
 
-  const { exitCode: pkgManagerExitCode } = await execa(
+  const useLocalPackageManager = await isPackageManagerAvailable(
     context.pkgManager,
-    ["--version"],
-    { reject: false },
   );
 
-  if (pkgManagerExitCode !== 0) {
+  if (!useLocalPackageManager) {
+    logger.info(
+      `'${context.pkgManager}' not found locally. Attempting to use Docker as a fallback.`,
+    );
+
     const builtSuccessfully = await tryBuildDockerImage(
       nodeImageTag,
       nodeDockerImagePath,
