@@ -28,7 +28,7 @@ RUN pnpm install
 {% elif dkcutter.pkgManager == "yarn" -%}
 RUN corepack enable
 
-COPY ./package.json ./yarn.lock* ${APP_HOME}
+COPY ./package.json ./.yarnrc.yml ./yarn.lock* ${APP_HOME}
 {% if "reactemail" in dkcutter.additionalTools -%}
 COPY ./emails/package.json ${APP_HOME}/emails/
 {%- endif %}

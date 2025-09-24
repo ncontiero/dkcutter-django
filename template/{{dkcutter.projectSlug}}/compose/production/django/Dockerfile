@@ -35,7 +35,7 @@ RUN corepack enable
 
 FROM client-base AS client-deps
 
-COPY ./package.json ./yarn.lock* ./
+COPY ./package.json ./.yarnrc.yml ./yarn.lock* ./
 {% if "reactemail" in dkcutter.additionalTools -%}
 COPY ./emails/package.json ./emails/
 {%- endif %}

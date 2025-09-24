@@ -78,31 +78,31 @@ docker run --rm \
 
 # Detect the package manager based on the lock file
 if [ -f "package-lock.json" ]; then
-  package_manager="npm"
+  package_manager="npm run"
 elif [ -f "pnpm-lock.yaml" ]; then
-  package_manager="pnpm"
+  package_manager="pnpm run"
 elif [ -f "yarn.lock" ]; then
   package_manager="yarn"
 # Note: Bun's lockfile is typically binary and named 'bun.lockb'
 elif [ -f "bun.lockb" ] || [ -f "bun.lock" ]; then
-  package_manager="bun"
+  package_manager="bun run"
 fi
 
 # If a package manager was detected, run the commands
 if [ -n "$package_manager" ]; then
   # Run the build script if script is present
-  if [ -f "webpack" ] || [ -f "rspack" ]; then
-      $DOCKER_CMD node $package_manager run build
+  if [ -d "webpack" ] || [ -d "rspack" ]; then
+    $DOCKER_CMD node $package_manager build
   fi
 
   # Run the build email script if the emails folder is present
   if [ -f "emails/package.json" ]; then
-      $DOCKER_CMD node $package_manager run build:email
+    $DOCKER_CMD node $package_manager build:email
   fi
 
   # Run the lint script if the ESLint config file is present
   if [ -f "eslint.config.mjs" ]; then
-      $DOCKER_CMD node $package_manager run lint
+    $DOCKER_CMD node $package_manager lint
   fi
 else
   echo "⚠️ No lock file (package-lock.json, pnpm-lock.yaml, yarn.lock, or bun.lockb) found. Nothing to do."
