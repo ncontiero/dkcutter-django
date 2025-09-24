@@ -79,12 +79,16 @@ jobs:
             args: --frontendPipeline Rspack --pkgManagerToUse bun
           - name: Rspack with TailwindCSS and Eslint
             args: --frontendPipeline Rspack --additionalTools tailwindcss,eslint
+          - name: Rspack with React Email and Eslint
+            args: --frontendPipeline Rspack --additionalTools reactemail,eslint
           - name: Rspack with TypeScript, TailwindCSS and Eslint
             args: --frontendPipeline Rspack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
           - name: Webpack
             args: --frontendPipeline Webpack
           - name: Webpack with TailwindCSS and Eslint
             args: --frontendPipeline Webpack --additionalTools tailwindcss,eslint
+          - name: Webpack with React Email and Eslint
+            args: --frontendPipeline Webpack --additionalTools reactemail,eslint
           - name: Webpack with TypeScript, TailwindCSS and Eslint
             args: --frontendPipeline Webpack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
           - name: React Email
