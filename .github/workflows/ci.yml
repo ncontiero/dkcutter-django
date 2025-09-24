@@ -115,6 +115,7 @@ jobs:
           
           # Remove large pre-installed tools
           sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet
           
           echo "Disk space after cleanup:"
           df -h
