@@ -41,8 +41,8 @@ const pkgLockFiles = [
 ];
 const pkgManagersDefaultVersions: Record<PackageManager, string> = {
   npm: "npm@10.9.3",
-  pnpm: "pnpm@10.17.0",
-  yarn: "yarn@4.9.4",
+  pnpm: "pnpm@10.17.1",
+  yarn: "yarn@4.10.2",
   bun: "bun@1.2.22",
 };
 
