@@ -59,15 +59,9 @@ This page describes all the template options that will be prompted by the [dkcut
   - JavaScript
   - TypeScript
 
-- **Frontend Package Manager**: Select the package manager for the Frontend Pipeline:
-
-  - npm
-  - pnpm
-  - Yarn
-  - bun
-
 - **Additional Tools**: Select additional tools to use:
 
+  - [React Email](https://react.email/)
   - [TailwindCSS](https://tailwindcss.com/)
   - [ESLint](https://eslint.org/)
   - [Mailpit](https://github.com/axllent/mailpit)
@@ -75,6 +69,15 @@ This page describes all the template options that will be prompted by the [dkcut
   - [Sentry](https://github.com/getsentry/sentry)
   - [WhiteNoise](https://github.com/evansd/whitenoise)
   - [PGAdmin](https://www.pgadmin.org/)
+
+- **Use TailwindCSS in React Email**: Indicates whether the project should use TailwindCSS in React Email (It is not necessary to have chosen TailwindCSS in the additional tools option).
+
+- **Frontend Package Manager**: Select the package manager for the Frontend Pipeline:
+
+  - npm
+  - pnpm
+  - Yarn
+  - bun
 
 - **Automated Deps Updater**: Indicates whether the project should be configured using the following automated deps updater:
 

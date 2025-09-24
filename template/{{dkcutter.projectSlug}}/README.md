@@ -86,6 +86,28 @@ Please check [dkcutter-django Docker documentation](https://github.com/ncontiero
 With Mailpit running, to view messages that are sent by your application, open your browser and go to `http://127.0.0.1:8025`
 
 {%- endif %}
+{%- if "reactemail" in dkcutter.additionalTools %}
+
+### React Email
+
+With [React Email](https://react.email/) you can create emails more easily and accessibly using React components.
+
+You can view and edit your emails in the `emails` directory. To see the changes in real-time, run the following command and access <http://localhost:3001> in your browser:
+
+```bash
+<package manager> run dev:email
+```
+
+> [!NOTE]
+> Replace `<package manager>` with the package manager you selected for the frontend (npm, pnpm, yarn, or bun).
+
+To build the emails and make them available for use in Django, run the build command:
+
+```bash
+<package manager> run build:email
+```
+
+{%- endif %}
 {%- if dkcutter.useSentry %}
 
 ### Sentry

@@ -50,7 +50,10 @@ async function installFrontendDependencies(
   nodeImageTag: string,
   nodeDockerImagePath: string,
 ) {
-  if (context.frontendPipeline === "None") {
+  if (
+    context.frontendPipeline === "None" &&
+    !context.additionalTools.includes("reactemail")
+  ) {
     return; // No action needed
   }
 

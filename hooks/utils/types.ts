@@ -1,7 +1,7 @@
 export type PackageManager = "npm" | "pnpm" | "yarn" | "bun";
 export type FrontendPipeline = "None" | "Rspack" | "Webpack";
 export type FrontendPipelineLang = "js" | "ts";
-export type AdditionalTool = "tailwindcss" | "eslint";
+export type AdditionalTool = "reactemail" | "tailwindcss" | "eslint";
 export type AdditionalTools = AdditionalTool[];
 export type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
 
@@ -13,6 +13,7 @@ export type Context = {
   frontendPipeline: FrontendPipeline;
   frontendPipelineLang: FrontendPipelineLang;
   additionalTools: AdditionalTools;
+  useTailwindInReactEmail: boolean;
   useCelery: boolean;
   automatedDepsUpdater: AutomatedDepsUpdater;
   installFrontendDeps: boolean;

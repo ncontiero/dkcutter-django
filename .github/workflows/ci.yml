@@ -79,16 +79,26 @@ jobs:
             args: --frontendPipeline Rspack --pkgManagerToUse bun
           - name: Rspack with TailwindCSS and Eslint
             args: --frontendPipeline Rspack --additionalTools tailwindcss,eslint
-          - name: Rspack with TailwindCSS, Eslint and yarn
-            args: --frontendPipeline Rspack --additionalTools tailwindcss,eslint --pkgManagerToUse yarn
+          - name: Rspack with React Email and Eslint
+            args: --frontendPipeline Rspack --additionalTools reactemail,eslint
           - name: Rspack with TypeScript, TailwindCSS and Eslint
             args: --frontendPipeline Rspack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
           - name: Webpack
             args: --frontendPipeline Webpack
           - name: Webpack with TailwindCSS and Eslint
             args: --frontendPipeline Webpack --additionalTools tailwindcss,eslint
+          - name: Webpack with React Email and Eslint
+            args: --frontendPipeline Webpack --additionalTools reactemail,eslint
           - name: Webpack with TypeScript, TailwindCSS and Eslint
             args: --frontendPipeline Webpack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
+          - name: React Email
+            args: --additionalTools reactemail
+          - name: React Email with pnpm
+            args: --additionalTools reactemail --pkgManagerToUse pnpm
+          - name: React Email with yarn
+            args: --additionalTools reactemail --pkgManagerToUse yarn
+          - name: React Email with bun
+            args: --additionalTools reactemail --pkgManagerToUse bun
 
     name: "Docker ${{ matrix.script.name }}"
     runs-on: ubuntu-latest
@@ -97,6 +107,19 @@ jobs:
       COMPOSE_DOCKER_CLI_BUILD: 1
 
     steps:
+      - name: Free up disk space
+        run: |
+          echo "Initial disk space:"
+          df -h
+          
+          # Remove large pre-installed tools
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/.ghcup
+          
+          echo "Disk space after cleanup:"
+          df -h
       - name: Checkout repo
         uses: actions/checkout@v5
       - name: Setup pnpm

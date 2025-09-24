@@ -26,6 +26,7 @@ const context: Context = {
     "{{ dkcutter.frontendPipelineLang }}" as FrontendPipelineLang,
   additionalTools:
     "{{ dkcutter.additionalTools }}" as unknown as AdditionalTools,
+  useTailwindInReactEmail: toBoolean("{{ dkcutter.useTailwindInReactEmail }}"),
   useCelery: toBoolean("{{ 'celery' in dkcutter.additionalTools }}"),
   automatedDepsUpdater:
     "{{ dkcutter.automatedDepsUpdater }}" as AutomatedDepsUpdater,
@@ -62,36 +63,37 @@ async function getPkgManagerVersion() {
   }
 }
 
-function removeLockFiles() {
-  pkgLockFiles.forEach((file) => {
-    const filePath = path.join(projectRootDir, file);
-    if (!fs.existsSync(filePath)) return;
+function handlePkgManagerFiles() {
+  const filesToRemove: string[] = [];
+  const yarnFiles = [".yarnrc.yml", "yarn.lock"];
+  const pnpmFiles = ["pnpm-workspace.yaml", "pnpm-lock.yaml"];
 
-    // Determine the lock file for the selected package manager
-    let selectedLockFile: string | null = null;
-    switch (context.pkgManager) {
-      case "pnpm":
-        selectedLockFile = "pnpm-lock.yaml";
-        break;
-      case "yarn":
-        selectedLockFile = "yarn.lock";
-        break;
-      case "bun":
-        selectedLockFile = "bun.lock";
-        break;
-      default:
-        selectedLockFile = "package-lock.json";
-    }
+  switch (context.pkgManager) {
+    case "npm":
+      filesToRemove.push(...yarnFiles, ...pnpmFiles, "bun.lock");
+      break;
+    case "pnpm":
+      filesToRemove.push(...yarnFiles, "package-lock.json", "bun.lock");
+      updatePackageJson({ projectDir: projectRootDir, keys: ["workspaces"] });
+      break;
+    case "yarn":
+      filesToRemove.push(...pnpmFiles, "package-lock.json", "bun.lock");
+      break;
+    case "bun":
+      filesToRemove.push(...yarnFiles, ...pnpmFiles, "package-lock.json");
+      break;
+  }
 
-    // Remove all lock files except the one for the selected package manager
-    if (file !== selectedLockFile) {
-      try {
-        fs.removeSync(filePath);
-      } catch (error) {
-        logger.error(`Failed to remove ${file}: ${error}`);
-      }
-    }
-  });
+  removeFiles(filesToRemove);
+}
+function removePkgManagerFiles() {
+  const filesToRemove = [
+    ...pkgLockFiles,
+    ".yarnrc",
+    ".yarnrc.yml",
+    "pnpm-workspace.yaml",
+  ];
+  removeFiles(filesToRemove);
 }
 
 function appendToGitignore(gitignorePath: string, lines: string) {
@@ -165,8 +167,61 @@ function removeTailwindFiles() {
   removeFiles(tailwindFiles);
 }
 
+function removeEmailFiles() {
+  const filesToRemove = ["pnpm-workspace.yaml", "emails"];
+  removeFiles(filesToRemove);
+}
+
 function removeEslintFiles() {
   fs.removeSync("eslint.config.mjs");
+}
+
+function handleReactEmailSetup({
+  scripts,
+}: {
+  scripts: Record<string, string>;
+}) {
+  const buildScript = scripts.build;
+  const devScript = scripts.dev;
+
+  const emailCMD: string[] = [context.pkgManager];
+  const workspace = `@${context.projectSlug}/emails`;
+  switch (context.pkgManager) {
+    case "npm":
+      emailCMD.push("run", "-w", workspace);
+      break;
+    case "pnpm":
+    case "bun":
+      emailCMD.push(`--filter=${workspace}`, "run");
+      break;
+    case "yarn":
+      emailCMD.push("workspace", workspace);
+      break;
+  }
+
+  const cmd = emailCMD.join(" ");
+  scripts = {
+    build: buildScript,
+    "build:email": `${cmd} export`,
+    dev: devScript,
+    "dev:email": `${cmd} dev`,
+  };
+
+  const emailsFolder = path.join(projectRootDir, "emails");
+  const emailsComponents = path.join(emailsFolder, "components");
+  const emailsComponentsTailwind = path.join(
+    emailsFolder,
+    "components-with-tailwind",
+  );
+  if (context.useTailwindInReactEmail) {
+    fs.removeSync(emailsComponents);
+    fs.moveSync(emailsComponentsTailwind, emailsComponents);
+  } else {
+    fs.removeSync(emailsComponentsTailwind);
+    fs.removeSync(path.join(emailsFolder, "utils"));
+  }
+
+  return scripts;
 }
 
 function handleFrontendPipelineAndTools(
@@ -178,6 +233,21 @@ function handleFrontendPipelineAndTools(
   const removeDevDeps = [];
   const removeKeys = [];
 
+  const webpackDeps = [
+    "@babel/core",
+    "@babel/preset-env",
+    "@babel/preset-typescript",
+    "babel-loader",
+    "css-loader",
+    "css-minimizer-webpack-plugin",
+    "mini-css-extract-plugin",
+    "terser-webpack-plugin",
+    "webpack",
+    "webpack-cli",
+    "webpack-dev-server",
+  ];
+  const rspackDeps = ["@rspack/cli", "@rspack/core"];
+
   if (choice === "Rspack") {
     scripts = {
       build: `rspack build -c rspack/prod.config.${lang === "js" ? "mjs" : "ts"}`,
@@ -187,19 +257,7 @@ function handleFrontendPipelineAndTools(
     moveWebpackToRspack();
     removeWebpackFiles();
 
-    removeDevDeps.push(
-      "@babel/core",
-      "@babel/preset-env",
-      "@babel/preset-typescript",
-      "babel-loader",
-      "css-loader",
-      "css-minimizer-webpack-plugin",
-      "mini-css-extract-plugin",
-      "terser-webpack-plugin",
-      "webpack",
-      "webpack-cli",
-      "webpack-dev-server",
-    );
+    removeDevDeps.push(...webpackDeps);
     removeKeys.push("babel");
   } else if (choice === "Webpack") {
     scripts = {
@@ -210,14 +268,33 @@ function handleFrontendPipelineAndTools(
     if (lang === "js") {
       removeDevDeps.push("@babel/preset-typescript");
     }
-    removeDevDeps.push("@rspack/cli", "@rspack/core");
+    removeDevDeps.push(...rspackDeps);
     removeStaticCSSAndJS();
     removeRspackFiles();
+  } else {
+    removeDevDeps.push(
+      ...webpackDeps,
+      ...rspackDeps,
+      "autoprefixer",
+      "postcss",
+      "postcss-loader",
+      "postcss-preset-env",
+      "webpack-bundle-tracker",
+      "webpack-merge",
+    );
+    removeKeys.push("babel", "browserslist");
   }
 
   if (!tools.includes("tailwindcss")) {
     removeTailwindFiles();
     removeDevDeps.push("tailwindcss");
+  }
+
+  if (tools.includes("reactemail")) {
+    scripts = handleReactEmailSetup({ scripts });
+  } else {
+    removeEmailFiles();
+    removeKeys.push("workspaces");
   }
 
   if (tools.includes("eslint")) {
@@ -243,7 +320,6 @@ function handleFrontendPipelineAndTools(
 
 function removePackageJsonFile() {
   fs.removeSync(path.join(projectRootDir, "package.json"));
-  removeFiles(pkgLockFiles);
 }
 
 function removeCeleryFiles() {
@@ -392,18 +468,6 @@ function removeApiStarterFiles() {
 async function main() {
   const gitignorePath = path.resolve(".gitignore");
 
-  const pkgVersion = await getPkgManagerVersion();
-  if (pkgVersion) {
-    updatePackageJson({
-      projectDir: projectRootDir,
-      modifyKey: { packageManager: pkgVersion },
-    });
-  } else {
-    updatePackageJson({ projectDir: projectRootDir, keys: ["packageManager"] });
-  }
-
-  removeLockFiles();
-
   setFlagsInEnvs(generateRandomUser(), generateRandomUser());
   setFlagsInSettings();
 
@@ -418,11 +482,35 @@ async function main() {
     removeWebpackFiles();
     removeSrcFolder();
     removeTailwindFiles();
-    removeEslintFiles();
-    removeNodeDockerfile();
-    removeNVMFile();
-    removePackageJsonFile();
-  } else {
+    if (!context.additionalTools.includes("reactemail")) {
+      removeEslintFiles();
+      removeNodeDockerfile();
+      removeNVMFile();
+      removePackageJsonFile();
+      removePkgManagerFiles();
+      removeEmailFiles();
+    }
+  }
+
+  if (
+    context.frontendPipeline !== "None" ||
+    context.additionalTools.includes("reactemail")
+  ) {
+    const pkgVersion = await getPkgManagerVersion();
+    if (pkgVersion) {
+      updatePackageJson({
+        projectDir: projectRootDir,
+        modifyKey: { packageManager: pkgVersion },
+      });
+    } else {
+      updatePackageJson({
+        projectDir: projectRootDir,
+        keys: ["packageManager"],
+      });
+    }
+
+    handlePkgManagerFiles();
+
     handleFrontendPipelineAndTools(
       context.frontendPipeline,
       context.frontendPipelineLang,

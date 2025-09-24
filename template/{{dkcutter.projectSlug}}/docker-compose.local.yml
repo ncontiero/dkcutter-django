@@ -93,7 +93,7 @@ services:
     command: /start-flower
 
   {%- endif %}
-  {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
+  {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] or "reactemail" in dkcutter.additionalTools %}
 
   node:
     build:
@@ -109,7 +109,11 @@ services:
       - /app/node_modules
     command: {{ dkcutter._pkgRun }} dev
     ports:
+      {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
       - "3000:3000"
+      {%- elif "reactemail" in dkcutter.additionalTools %}
+      - "3001:3001"
+      {%- endif %}
 
   {%- endif %}
   {%- if dkcutter.usePgadmin %}

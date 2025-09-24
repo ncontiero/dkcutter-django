@@ -7,7 +7,10 @@ ARG APP_HOME=/app
 WORKDIR ${APP_HOME}
 
 {% if dkcutter.pkgManager == "npm" -%}
-COPY package.json package-lock.json ./
+COPY ./package.json ./package-lock.json* ${APP_HOME}
+{% if "reactemail" in dkcutter.additionalTools -%}
+COPY ./emails/package.json ${APP_HOME}/emails/
+{%- endif %}
 
 RUN npm install && npm cache clean --force
 {% elif dkcutter.pkgManager == "pnpm" -%}
@@ -16,19 +19,27 @@ ENV PATH="$PNPM_HOME:$PATH"
 
 RUN corepack enable
 
-COPY package.json pnpm-lock.yaml ${APP_HOME}
+COPY ./package.json ./pnpm-lock.yaml* ./pnpm-workspace.yaml* ${APP_HOME}
+{% if "reactemail" in dkcutter.additionalTools -%}
+COPY ./emails/package.json ${APP_HOME}/emails/
+{%- endif %}
 
 RUN pnpm install
 {% elif dkcutter.pkgManager == "yarn" -%}
 RUN corepack enable
 
-COPY package.json yarn.lock ${APP_HOME}
+COPY ./package.json ./.yarnrc.yml ./yarn.lock* ${APP_HOME}
+{% if "reactemail" in dkcutter.additionalTools -%}
+COPY ./emails/package.json ${APP_HOME}/emails/
+{%- endif %}
 
 RUN yarn install
 {% elif dkcutter.pkgManager == "bun" -%}
-COPY package.json bun.lock ${APP_HOME}
+COPY ./package.json ./bun.lock* ${APP_HOME}
+{% if "reactemail" in dkcutter.additionalTools -%}
+COPY ./emails/package.json ${APP_HOME}/emails/
+{%- endif %}
 
 RUN bun install
 {% endif %}
-
 ENV PATH="${APP_HOME}/node_modules/.bin/:$PATH"

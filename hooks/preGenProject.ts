@@ -1,5 +1,6 @@
-import { z } from "zod";
+import type { FrontendPipeline } from "./utils/types";
 
+import { z } from "zod";
 import { toBoolean } from "./utils/coerce";
 import { logger } from "./utils/logger";
 
@@ -18,6 +19,9 @@ import { logger } from "./utils/logger";
 // {{ dkcutter.add("usePgadmin", "{% if 'pgadmin' in dkcutter.additionalTools %}true{% endif %}") }}
 
 const ctx = {
+  frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,
+  useReactEmail: toBoolean("{{ 'reactemail' in dkcutter.additionalTools }}"),
+  useEslint: toBoolean("{{ 'eslint' in dkcutter.additionalTools }}"),
   useWhitenoise: toBoolean("{{ 'whitenoise' in dkcutter.additionalTools }}"),
   cloudProvider: "{{ dkcutter.cloudProvider }}",
   mailService: "{{ dkcutter.mailService }}",
@@ -27,11 +31,21 @@ const ctx = {
 export function validateProject() {
   try {
     z.object({
+      frontendPipeline: z.enum(["None", "Rspack", "Webpack"]),
+      useReactEmail: z.boolean(),
+      useEslint: z.boolean(),
       useWhitenoise: z.boolean(),
       cloudProvider: z.string(),
       mailService: z.string(),
       useMailpit: z.boolean(),
     })
+      .refine(
+        (data) =>
+          !data.useEslint ||
+          data.frontendPipeline !== "None" ||
+          data.useReactEmail,
+        "ESLint requires a Frontend Pipeline or React Email to be selected.",
+      )
       .refine(
         (data) => data.useWhitenoise || data.cloudProvider !== "None",
         "You must choose a cloud provider if you don't use Whitenoise.",

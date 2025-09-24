@@ -1,4 +1,4 @@
-{% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] -%}
+{% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] or "reactemail" in dkcutter.additionalTools -%}
 {%- if dkcutter.pkgManager == "bun" -%}
 FROM docker.io/oven/bun:1.2.22-slim AS client-base
 {%- else -%}
@@ -11,6 +11,9 @@ WORKDIR /app
 FROM client-base AS client-deps
 
 COPY ./package.json ./package-lock.json* ./
+{% if "reactemail" in dkcutter.additionalTools -%}
+COPY ./emails/package.json ./emails/
+{%- endif %}
 
 RUN --mount=type=cache,target=/root/.npm npm ci
 {%- elif dkcutter.pkgManager == "pnpm" -%}
@@ -22,6 +25,9 @@ RUN corepack enable
 FROM client-base AS client-deps
 
 COPY ./package.json ./pnpm-lock.yaml* ./pnpm-workspace.yaml* ./
+{% if "reactemail" in dkcutter.additionalTools -%}
+COPY ./emails/package.json ./emails/
+{%- endif %}
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 {%- elif dkcutter.pkgManager == "yarn" -%}
@@ -29,20 +35,26 @@ RUN corepack enable
 
 FROM client-base AS client-deps
 
-COPY ./package.json ./yarn.lock* ./
+COPY ./package.json ./.yarnrc.yml ./yarn.lock* ./
+{% if "reactemail" in dkcutter.additionalTools -%}
+COPY ./emails/package.json ./emails/
+{%- endif %}
 
 RUN --mount=type=cache,target=/root/.yarn/cache yarn install --frozen-lockfile
 {%- elif dkcutter.pkgManager == "bun" -%}
 FROM client-base AS client-deps
 
 COPY ./package.json ./bun.lock* ./
+{% if "reactemail" in dkcutter.additionalTools -%}
+COPY ./emails/package.json ./emails/
+{%- endif %}
 
 RUN --mount=type=cache,id=bun,target=/root/.bun bun install --frozen-lockfile
 {%- endif %}
 
 FROM client-base AS client-builder
 
-{%- if not dkcutter.useWhitenoise %}
+{%- if not dkcutter.useWhitenoise and dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
 {%- if dkcutter.cloudProvider == "AWS" %}
 
 ARG DJANGO_AWS_STORAGE_BUCKET_NAME
@@ -59,15 +71,27 @@ ENV DJANGO_GCP_STORAGE_BUCKET_NAME=${DJANGO_GCP_STORAGE_BUCKET_NAME}
 {%- endif %}
 
 COPY --from=client-deps /app/node_modules /app/node_modules
+{% if "reactemail" in dkcutter.additionalTools and dkcutter.pkgManager not in ["npm", "yarn", "bun"] -%}
+COPY --from=client-deps /app/emails/node_modules /app/emails/node_modules
+{%- endif %}
 COPY . /app
-
+{% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
 RUN {{ dkcutter._pkgRun }} build
+{%- endif %}
+{%- if "reactemail" in dkcutter.additionalTools %}
+RUN {{ dkcutter._pkgRun }} build:email
+{%- endif %}
 
 FROM client-base AS client-build
 
 COPY . /app
+{%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
 COPY --from=client-builder /app/webpack-stats.json /app/webpack-stats.json
 COPY --from=client-builder /app/{{ dkcutter.projectSlug }}/static/bundles /app/{{ dkcutter.projectSlug }}/static/bundles
+{%- endif %}
+{%- if "reactemail" in dkcutter.additionalTools %}
+COPY --from=client-builder /app/{{ dkcutter.projectSlug }}/templates/emails /app/{{ dkcutter.projectSlug }}/templates/emails
+{%- endif %}
 
 {% endif -%}
 # define an alias for the specific python version used in this file.
@@ -92,9 +116,9 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --locked --no-install-project --no-dev
 
-{%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
+{% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] or "reactemail" in dkcutter.additionalTools -%}
 COPY --from=client-build ${APP_HOME} ${APP_HOME}
-{% else %}
+{%- else -%}
 COPY . ${APP_HOME}
 {%- endif %}
 
@@ -160,7 +184,7 @@ RUN mkdir -p ${APP_HOME}/{{ dkcutter.projectSlug }}/media
 RUN chown django:django ${APP_HOME}
 
 # Place executables in the environment at the front of the path
-ENV PATH="/app/.venv/bin:$PATH"
+ENV PATH="${APP_HOME}/.venv/bin:$PATH"
 
 USER django
 
