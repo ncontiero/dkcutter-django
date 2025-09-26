@@ -33,12 +33,6 @@ const context: Context = {
   installFrontendDeps: toBoolean("{{ dkcutter.installFrontendDeps }}"),
 };
 
-const pkgLockFiles = [
-  "package-lock.json",
-  "pnpm-lock.yaml",
-  "yarn.lock",
-  "bun.lock",
-];
 const pkgManagersDefaultVersions: Record<PackageManager, string> = {
   npm: "npm@10.9.3",
   pnpm: "pnpm@10.17.1",
@@ -65,34 +59,29 @@ async function getPkgManagerVersion() {
 
 function handlePkgManagerFiles() {
   const filesToRemove: string[] = [];
-  const yarnFiles = [".yarnrc.yml", "yarn.lock"];
-  const pnpmFiles = ["pnpm-workspace.yaml", "pnpm-lock.yaml"];
+  const yarnFiles = [".yarnrc.yml"];
+  const pnpmFiles = ["pnpm-workspace.yaml"];
 
   switch (context.pkgManager) {
     case "npm":
-      filesToRemove.push(...yarnFiles, ...pnpmFiles, "bun.lock");
+      filesToRemove.push(...yarnFiles, ...pnpmFiles);
       break;
     case "pnpm":
-      filesToRemove.push(...yarnFiles, "package-lock.json", "bun.lock");
+      filesToRemove.push(...yarnFiles);
       updatePackageJson({ projectDir: projectRootDir, keys: ["workspaces"] });
       break;
     case "yarn":
-      filesToRemove.push(...pnpmFiles, "package-lock.json", "bun.lock");
+      filesToRemove.push(...pnpmFiles);
       break;
     case "bun":
-      filesToRemove.push(...yarnFiles, ...pnpmFiles, "package-lock.json");
+      filesToRemove.push(...yarnFiles, ...pnpmFiles);
       break;
   }
 
   removeFiles(filesToRemove);
 }
 function removePkgManagerFiles() {
-  const filesToRemove = [
-    ...pkgLockFiles,
-    ".yarnrc",
-    ".yarnrc.yml",
-    "pnpm-workspace.yaml",
-  ];
+  const filesToRemove = [".yarnrc", ".yarnrc.yml", "pnpm-workspace.yaml"];
   removeFiles(filesToRemove);
 }
 
