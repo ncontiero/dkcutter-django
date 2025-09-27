@@ -14,7 +14,7 @@
     "@babel/core": "^7.28.4",
     "@babel/preset-env": "^7.28.3",
     "@babel/preset-typescript": "^7.27.1",
-    "@ncontiero/eslint-config": "^6.1.0",
+    "@ncontiero/eslint-config": "^6.2.0",
     "@rspack/cli": "^1.5.7",
     "@rspack/core": "^1.5.7",
     "autoprefixer": "^10.4.21",

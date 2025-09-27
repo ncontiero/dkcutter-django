@@ -14,16 +14,16 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "dkcutter": "5.0.2"
+    "dkcutter": "5.0.3"
   },
   "devDependencies": {
-    "@ncontiero/eslint-config": "6.1.0",
+    "@ncontiero/eslint-config": "6.2.0",
     "@react-email/components": "^0.5.5",
     "@rspack/cli": "^1.5.7",
     "@rspack/core": "^1.5.7",
     "@types/fs-extra": "^11.0.4",
     "@types/prompts": "^2.4.9",
-    "@types/react": "^19.1.13",
+    "@types/react": "^19.1.14",
     "clsx": "^2.1.1",
     "colorette": "^2.0.20",
     "eslint": "^9.36.0",
@@ -34,7 +34,7 @@
     "prompts": "^2.4.2",
     "react": "^19.1.1",
     "tailwind-merge": "^3.3.1",
-    "tsx": "^4.20.5",
+    "tsx": "^4.20.6",
     "type-fest": "^5.0.1",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4",
