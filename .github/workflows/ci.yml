@@ -80,7 +80,7 @@ jobs:
           - name: Rspack with TailwindCSS and Eslint
             args: --frontendPipeline Rspack --additionalTools tailwindcss,eslint
           - name: Rspack with React Email and Eslint
-            args: --frontendPipeline Rspack --additionalTools reactemail,eslint
+            args: --frontendPipeline Rspack --additionalTools reactEmail,eslint
           - name: Rspack with TypeScript, TailwindCSS and Eslint
             args: --frontendPipeline Rspack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
           - name: Webpack
@@ -88,17 +88,17 @@ jobs:
           - name: Webpack with TailwindCSS and Eslint
             args: --frontendPipeline Webpack --additionalTools tailwindcss,eslint
           - name: Webpack with React Email and Eslint
-            args: --frontendPipeline Webpack --additionalTools reactemail,eslint
+            args: --frontendPipeline Webpack --additionalTools reactEmail,eslint
           - name: Webpack with TypeScript, TailwindCSS and Eslint
             args: --frontendPipeline Webpack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
           - name: React Email
-            args: --additionalTools reactemail
+            args: --additionalTools reactEmail
           - name: React Email with pnpm
-            args: --additionalTools reactemail --pkgManagerToUse pnpm
+            args: --additionalTools reactEmail --pkgManagerToUse pnpm
           - name: React Email with yarn
-            args: --additionalTools reactemail --pkgManagerToUse yarn
+            args: --additionalTools reactEmail --pkgManagerToUse yarn
           - name: React Email with bun
-            args: --additionalTools reactemail --pkgManagerToUse bun
+            args: --additionalTools reactEmail --pkgManagerToUse bun
 
     name: "Docker ${{ matrix.script.name }}"
     runs-on: ubuntu-latest

@@ -142,7 +142,7 @@ function removeLangsFiles(lang: FrontendPipelineLang) {
   removeFiles(filesToRemove);
 
   if (lang === "js") {
-    fs.removeSync("tsconfig.json");
+    removeTypescriptFiles();
   }
 }
 
@@ -152,8 +152,16 @@ function removeStaticCSSAndJS() {
 }
 
 function removeTailwindFiles() {
-  const tailwindFiles = [path.join("tailwind.config.js")];
+  const tailwindFiles = ["tailwind.config.js"];
   removeFiles(tailwindFiles);
+}
+
+function removeTypescriptFiles() {
+  removeFiles(["tsconfig.json"]);
+}
+
+function removePostcssFiles() {
+  removeFiles(["postcss.config.cjs"]);
 }
 
 function removeEmailFiles() {
@@ -272,6 +280,7 @@ function handleFrontendPipelineAndTools(
       "webpack-merge",
     );
     removeKeys.push("babel", "browserslist");
+    removePostcssFiles();
   }
 
   if (!tools.includes("tailwindcss")) {
@@ -279,7 +288,7 @@ function handleFrontendPipelineAndTools(
     removeDevDeps.push("tailwindcss");
   }
 
-  if (tools.includes("reactemail")) {
+  if (tools.includes("reactEmail")) {
     scripts = handleReactEmailSetup({ scripts });
   } else {
     removeEmailFiles();
@@ -471,7 +480,9 @@ async function main() {
     removeWebpackFiles();
     removeSrcFolder();
     removeTailwindFiles();
-    if (!context.additionalTools.includes("reactemail")) {
+    removePostcssFiles();
+    if (!context.additionalTools.includes("reactEmail")) {
+      removeTypescriptFiles();
       removeEslintFiles();
       removeNodeDockerfile();
       removeNVMFile();
@@ -483,7 +494,7 @@ async function main() {
 
   if (
     context.frontendPipeline !== "None" ||
-    context.additionalTools.includes("reactemail")
+    context.additionalTools.includes("reactEmail")
   ) {
     const pkgVersion = await getPkgManagerVersion();
     if (pkgVersion) {

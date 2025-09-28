@@ -1,4 +1,4 @@
-{% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] or "reactemail" in dkcutter.additionalTools -%}
+{% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] or "reactEmail" in dkcutter.additionalTools -%}
 {%- if dkcutter.pkgManager == "bun" -%}
 FROM docker.io/oven/bun:1.2.22-slim AS client-base
 {%- else -%}
@@ -11,7 +11,7 @@ WORKDIR /app
 FROM client-base AS client-deps
 
 COPY ./package.json ./package-lock.json* ./
-{% if "reactemail" in dkcutter.additionalTools -%}
+{% if "reactEmail" in dkcutter.additionalTools -%}
 COPY ./emails/package.json ./emails/
 {%- endif %}
 
@@ -25,7 +25,7 @@ RUN corepack enable
 FROM client-base AS client-deps
 
 COPY ./package.json ./pnpm-lock.yaml* ./pnpm-workspace.yaml* ./
-{% if "reactemail" in dkcutter.additionalTools -%}
+{% if "reactEmail" in dkcutter.additionalTools -%}
 COPY ./emails/package.json ./emails/
 {%- endif %}
 
@@ -36,7 +36,7 @@ RUN corepack enable
 FROM client-base AS client-deps
 
 COPY ./package.json ./.yarnrc.yml ./yarn.lock* ./
-{% if "reactemail" in dkcutter.additionalTools -%}
+{% if "reactEmail" in dkcutter.additionalTools -%}
 COPY ./emails/package.json ./emails/
 {%- endif %}
 
@@ -45,7 +45,7 @@ RUN --mount=type=cache,target=/root/.yarn/cache yarn install --frozen-lockfile
 FROM client-base AS client-deps
 
 COPY ./package.json ./bun.lock* ./
-{% if "reactemail" in dkcutter.additionalTools -%}
+{% if "reactEmail" in dkcutter.additionalTools -%}
 COPY ./emails/package.json ./emails/
 {%- endif %}
 
@@ -71,14 +71,14 @@ ENV DJANGO_GCP_STORAGE_BUCKET_NAME=${DJANGO_GCP_STORAGE_BUCKET_NAME}
 {%- endif %}
 
 COPY --from=client-deps /app/node_modules /app/node_modules
-{% if "reactemail" in dkcutter.additionalTools and dkcutter.pkgManager not in ["npm", "yarn", "bun"] -%}
+{% if "reactEmail" in dkcutter.additionalTools and dkcutter.pkgManager not in ["npm", "yarn", "bun"] -%}
 COPY --from=client-deps /app/emails/node_modules /app/emails/node_modules
 {%- endif %}
 COPY . /app
 {% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
 RUN {{ dkcutter._pkgRun }} build
 {%- endif %}
-{%- if "reactemail" in dkcutter.additionalTools %}
+{%- if "reactEmail" in dkcutter.additionalTools %}
 RUN {{ dkcutter._pkgRun }} build:email
 {%- endif %}
 
@@ -89,7 +89,7 @@ COPY . /app
 COPY --from=client-builder /app/webpack-stats.json /app/webpack-stats.json
 COPY --from=client-builder /app/{{ dkcutter.projectSlug }}/static/bundles /app/{{ dkcutter.projectSlug }}/static/bundles
 {%- endif %}
-{%- if "reactemail" in dkcutter.additionalTools %}
+{%- if "reactEmail" in dkcutter.additionalTools %}
 COPY --from=client-builder /app/{{ dkcutter.projectSlug }}/templates/emails /app/{{ dkcutter.projectSlug }}/templates/emails
 {%- endif %}
 
@@ -116,7 +116,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --locked --no-install-project --no-dev
 
-{% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] or "reactemail" in dkcutter.additionalTools -%}
+{% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] or "reactEmail" in dkcutter.additionalTools -%}
 COPY --from=client-build ${APP_HOME} ${APP_HOME}
 {%- else -%}
 COPY . ${APP_HOME}

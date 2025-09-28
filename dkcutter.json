@@ -85,7 +85,7 @@
     "promptMessage": "Select additional tools: ",
     "value": "none",
     "choices": [
-      { "title": "Add {{ colors.blue('React Email') }}", "value": "reactemail" },
+      { "title": "Add {{ colors.blue('React Email') }}", "value": "reactEmail" },
       {
         "title": "Add {{ colors.blue('TailwindCSS') }}",
         "value": "tailwindcss",
@@ -118,7 +118,7 @@
   "useTailwindInReactEmail": {
     "value": true,
     "promptMessage": "Do you want to use TailwindCSS in React Email?",
-    "disabled": "{% if 'reactemail' not in additionalTools %}true{% else %}false{% endif %}"
+    "disabled": "{% if 'reactEmail' not in additionalTools %}true{% else %}false{% endif %}"
   },
   "pkgManagerToUse": {
     "value": "npm",
@@ -129,7 +129,7 @@
       { "title": "pnpm", "value": "pnpm" },
       { "title": "bun", "value": "bun" }
     ],
-    "disabled": "{% if frontendPipeline == 'None' and 'reactemail' not in additionalTools %}true{% else %}false{% endif %}"
+    "disabled": "{% if frontendPipeline == 'None' and 'reactEmail' not in additionalTools %}true{% else %}false{% endif %}"
   },
   "automatedDepsUpdater": {
     "value": "none",
@@ -142,7 +142,8 @@
   },
   "installFrontendDeps": {
     "value": true,
-    "promptMessage": "Do you want to install the frontend dependencies now?"
+    "promptMessage": "Do you want to install the frontend dependencies now?",
+    "disabled": "{% if frontendPipeline == 'None' and 'reactEmail' not in additionalTools %}true{% else %}false{% endif %}"
   },
   "_pkgManager": "{{ pkgManagerToUse }}",
   "_pkgRun": "{{ _pkgManager }}{% if not _pkgManager in ['pnpm', 'yarn'] %} run{% endif %}"

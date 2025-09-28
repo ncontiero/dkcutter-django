@@ -20,7 +20,7 @@ import { logger } from "./utils/logger";
 
 const ctx = {
   frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,
-  useReactEmail: toBoolean("{{ 'reactemail' in dkcutter.additionalTools }}"),
+  useReactEmail: toBoolean("{{ 'reactEmail' in dkcutter.additionalTools }}"),
   useEslint: toBoolean("{{ 'eslint' in dkcutter.additionalTools }}"),
   useWhitenoise: toBoolean("{{ 'whitenoise' in dkcutter.additionalTools }}"),
   cloudProvider: "{{ dkcutter.cloudProvider }}",

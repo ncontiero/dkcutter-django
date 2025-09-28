@@ -63,7 +63,7 @@ async function installFrontendDependencies(
 ) {
   if (
     context.frontendPipeline === "None" &&
-    !context.additionalTools.includes("reactemail")
+    !context.additionalTools.includes("reactEmail")
   ) {
     return; // No action needed
   }

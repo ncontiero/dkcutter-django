@@ -86,7 +86,7 @@ Please check [dkcutter-django Docker documentation](https://github.com/ncontiero
 With Mailpit running, to view messages that are sent by your application, open your browser and go to `http://127.0.0.1:8025`
 
 {%- endif %}
-{%- if "reactemail" in dkcutter.additionalTools %}
+{%- if "reactEmail" in dkcutter.additionalTools %}
 
 ### React Email
 
