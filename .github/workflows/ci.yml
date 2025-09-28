@@ -69,10 +69,10 @@ jobs:
             args: --useCelery --restFramework DRF
           - name: Celery & DNRF
             args: --useCelery --restFramework DNRF
-          - name: Rspack
-            args: --frontendPipeline Rspack
           - name: Rspack with pnpm
-            args: --frontendPipeline Rspack --pkgManagerToUse pnpm
+            args: --frontendPipeline Rspack
+          - name: Rspack with npm
+            args: --frontendPipeline Rspack --pkgManagerToUse npm
           - name: Rspack with yarn
             args: --frontendPipeline Rspack --pkgManagerToUse yarn
           - name: Rspack with bun
@@ -91,10 +91,10 @@ jobs:
             args: --frontendPipeline Webpack --additionalTools reactEmail,eslint
           - name: Webpack with TypeScript, TailwindCSS and Eslint
             args: --frontendPipeline Webpack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
-          - name: React Email
-            args: --additionalTools reactEmail
           - name: React Email with pnpm
-            args: --additionalTools reactEmail --pkgManagerToUse pnpm
+            args: --additionalTools reactEmail
+          - name: React Email with npm
+            args: --additionalTools reactEmail --pkgManagerToUse npm
           - name: React Email with yarn
             args: --additionalTools reactEmail --pkgManagerToUse yarn
           - name: React Email with bun

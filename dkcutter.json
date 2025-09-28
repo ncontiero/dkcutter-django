@@ -121,7 +121,7 @@
     "disabled": "{% if 'reactEmail' not in additionalTools %}true{% else %}false{% endif %}"
   },
   "pkgManagerToUse": {
-    "value": "npm",
+    "value": "{{ dkcutter.pkgManager }}",
     "promptMessage": "What {{ colors.blue('Package Manager') }} would you like to use?",
     "choices": [
       { "title": "npm", "value": "npm" },
