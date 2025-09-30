@@ -13,6 +13,9 @@ import { buildFilesList, checkPaths, constructArgs } from "./utils";
 
 const TEST_OUTPUT = resolve(".test");
 
+const isWindows = process.platform === "win32";
+const TIMEOUT = isWindows ? 300_000 : 150_000;
+
 beforeAll(async () => {
   await fs.emptyDir(TEST_OUTPUT);
 });
@@ -81,7 +84,7 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
 
       supportedOptions.push(name);
     },
-    150_000,
+    TIMEOUT,
   );
 }
 
