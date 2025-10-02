@@ -8,7 +8,7 @@ readme = "README.md"
 requires-python = "==3.13.*"
 dependencies = [
   {# set the an initial indentation for uv to follow #}
-  "django==5.2.6",
+  "django==5.2.7",
 ]
 
 [dependency-groups]
