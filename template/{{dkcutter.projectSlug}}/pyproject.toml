@@ -6,18 +6,24 @@ authors = [ { name = "{{ dkcutter.authorName }}", email = "{{ dkcutter.email }}"
 license = { text = "MIT" }
 readme = "README.md"
 requires-python = "==3.13.*"
-dependencies = []
+dependencies = [
+  {# set the an initial indentation for uv to follow #}
+  "django",
+]
 
 [dependency-groups]
-dev = []
+dev = [
+  {# set the an initial indentation for uv to follow #}
+  "ruff",
+]
 
 # ==== pytest ====
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "--ds=config.settings.test --reuse-db --import-mode=importlib"
 python_files = [
-    "tests.py",
-    "test_*.py",
+  "tests.py",
+  "test_*.py",
 ]
 
 # ==== Coverage ====
@@ -71,71 +77,71 @@ indent_size = 2
 target-version = "py313"
 # Exclude a variety of commonly ignored directories.
 extend-exclude = [
-    "*/migrations/*.py",
-    "staticfiles/*",
+  "*/migrations/*.py",
+  "staticfiles/*",
 ]
 
 [tool.ruff.lint]
 select = [
-    "E",
-    "F",
-    "W",
-    "C90",
-    "I",
-    "N",
-    "UP",
-    "YTT",
-    # "ANN", # flake8-annotations: we should support this in the future but 100+ errors atm
-    "ASYNC",
-    "S",
-    "BLE",
-    "FBT",
-    "B",
-    "A",
-    "COM",
-    "C4",
-    "DTZ",
-    "T10",
-    "DJ",
-    "EM",
-    "EXE",
-    "FA",
-    "ISC",
-    "ICN",
-    "G",
-    "INP",
-    "PIE",
-    "T20",
-    "PYI",
-    "PT",
-    "Q",
-    "RSE",
-    "RET",
-    "SLF",
-    "SLOT",
-    "SIM",
-    "TID",
-    "TC",
-    "INT",
-    # "ARG", # Unused function argument
-    "PTH",
-    "ERA",
-    "PD",
-    "PGH",
-    "PL",
-    "TRY",
-    "FLY",
-    # "NPY",
-    # "AIR",
-    "PERF",
-    # "FURB",
-    # "LOG",
-    "RUF"
+  "E",
+  "F",
+  "W",
+  "C90",
+  "I",
+  "N",
+  "UP",
+  "YTT",
+  # "ANN", # flake8-annotations: we should support this in the future but 100+ errors atm
+  "ASYNC",
+  "S",
+  "BLE",
+  "FBT",
+  "B",
+  "A",
+  "COM",
+  "C4",
+  "DTZ",
+  "T10",
+  "DJ",
+  "EM",
+  "EXE",
+  "FA",
+  "ISC",
+  "ICN",
+  "G",
+  "INP",
+  "PIE",
+  "T20",
+  "PYI",
+  "PT",
+  "Q",
+  "RSE",
+  "RET",
+  "SLF",
+  "SLOT",
+  "SIM",
+  "TID",
+  "TC",
+  "INT",
+  # "ARG", # Unused function argument
+  "PTH",
+  "ERA",
+  "PD",
+  "PGH",
+  "PL",
+  "TRY",
+  "FLY",
+  # "NPY",
+  # "AIR",
+  "PERF",
+  # "FURB",
+  # "LOG",
+  "RUF"
 ]
 ignore = [
-    "S101", # Use of assert detected https://docs.astral.sh/ruff/rules/assert/
-    "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
-    "SIM102" # sometimes it's better to nest
+  "S101", # Use of assert detected https://docs.astral.sh/ruff/rules/assert/
+  "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
+  "SIM102" # sometimes it's better to nest
 ]
 
 [tool.ruff.lint.isort]
