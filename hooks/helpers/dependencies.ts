@@ -37,7 +37,7 @@ async function tryBuildDockerImage(
   dockerfilePath: string,
 ): Promise<boolean> {
   try {
-    await execa("docker", ["build", "-t", tag, "-f", dockerfilePath, "."]);
+    await execa("docker", ["build", "--load", "-t", tag, "-f", dockerfilePath, "."]);
     return true;
   } catch (error) {
     logger.error(`Failed to build Docker image ${tag}: ${error}`);
