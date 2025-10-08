@@ -55,7 +55,7 @@
       { "value": "Mailgun" },
       {
         "value": "Amazon SES",
-        "disabled": "{% if cloudProvider != 'AWS' %}true{% else %}false{% endif %}"
+        "disabled": "{{ cloudProvider != 'AWS' }}"
       },
       { "value": "Mailjet" },
       { "value": "Mandrill" },
@@ -79,7 +79,7 @@
       { "title": "TypeScript", "value": "ts" },
       { "title": "JavaScript", "value": "js" }
     ],
-    "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}"
+    "disabled": "{{ frontendPipeline == 'None' }}"
   },
   "additionalTools": {
     "promptMessage": "Select additional tools: ",
@@ -89,7 +89,7 @@
       {
         "title": "Add {{ colors.blue('TailwindCSS') }}",
         "value": "tailwindcss",
-        "disabled": "{% if frontendPipeline == 'None' %}true{% else %}false{% endif %}",
+        "disabled": "{{ frontendPipeline == 'None' }}",
         "helpTextForDisabled": "Disabled because {{ colors.blue('Frontend Pipeline') }} is None"
       },
       {
@@ -100,7 +100,7 @@
       {
         "title": "Add {{ colors.blue('Mailpit') }}",
         "value": "mailpit",
-        "disabled": "{% if mailService == 'None' %}true{% else %}false{% endif %}",
+        "disabled": "{{ mailService == 'None' }}",
         "helpTextForDisabled": "Disabled because {{ colors.blue('Mail Service') }} is None"
       },
       { "title": "Add {{ colors.blue('Celery') }}", "value": "celery" },
@@ -109,7 +109,7 @@
         "title": "Add {{ colors.blue('WhiteNoise') }}",
         "value": "whitenoise",
         "description": "This is mandatory if the {{ colors.blue('Cloud Provider') }} is None.",
-        "selected": "{% if cloudProvider == 'None' %}true{% else %}false{% endif %}"
+        "selected": "{{ cloudProvider == 'None' }}"
       },
       { "title": "Add {{ colors.blue('PGAdmin') }}", "value": "pgadmin" }
     ],
@@ -118,7 +118,7 @@
   "useTailwindInReactEmail": {
     "value": true,
     "promptMessage": "Do you want to use TailwindCSS in React Email?",
-    "disabled": "{% if 'reactEmail' not in additionalTools %}true{% else %}false{% endif %}"
+    "disabled": "{{ 'reactEmail' not in additionalTools }}"
   },
   "pkgManagerToUse": {
     "value": "{{ dkcutter.pkgManager }}",
@@ -129,7 +129,7 @@
       { "title": "pnpm", "value": "pnpm" },
       { "title": "bun", "value": "bun" }
     ],
-    "disabled": "{% if frontendPipeline == 'None' and 'reactEmail' not in additionalTools %}true{% else %}false{% endif %}"
+    "disabled": "{{ frontendPipeline == 'None' and 'reactEmail' not in additionalTools }}"
   },
   "automatedDepsUpdater": {
     "value": "none",
@@ -143,7 +143,7 @@
   "installFrontendDeps": {
     "value": true,
     "promptMessage": "Do you want to install the frontend dependencies now?",
-    "disabled": "{% if frontendPipeline == 'None' and 'reactEmail' not in additionalTools %}true{% else %}false{% endif %}"
+    "disabled": "{{ frontendPipeline == 'None' and 'reactEmail' not in additionalTools }}"
   },
   "_pkgManager": "{{ pkgManagerToUse }}",
   "_pkgRun": "{{ _pkgManager }}{% if not _pkgManager in ['pnpm', 'yarn'] %} run{% endif %}"
