@@ -1,7 +1,7 @@
 {
   "name": "dkcutter-django",
   "type": "module",
-  "packageManager": "pnpm@10.18.0",
+  "packageManager": "pnpm@10.18.1",
   "description": "DKCutter Django is a framework for jumpstarting production-ready Django projects quickly.",
   "author": "Nicolas Contiero <https://github.com/ncontiero>",
   "license": "MIT",
@@ -18,12 +18,12 @@
   },
   "devDependencies": {
     "@ncontiero/eslint-config": "6.2.1",
-    "@react-email/components": "^0.5.5",
+    "@react-email/components": "^0.5.6",
     "@rspack/cli": "^1.5.8",
     "@rspack/core": "^1.5.8",
     "@types/fs-extra": "^11.0.4",
     "@types/prompts": "^2.4.9",
-    "@types/react": "^19.2.0",
+    "@types/react": "^19.2.2",
     "clsx": "^2.1.1",
     "colorette": "^2.0.20",
     "eslint": "^9.37.0",
@@ -38,6 +38,6 @@
     "type-fest": "^5.0.1",
     "typescript": "^5.9.3",
     "vitest": "^3.2.4",
-    "zod": "^4.1.11"
+    "zod": "^4.1.12"
   }
 }
