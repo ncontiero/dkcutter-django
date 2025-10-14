@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       dkcutter:
-        specifier: 5.0.5
-        version: 5.0.5(chokidar@3.6.0)(typescript@5.9.3)
+        specifier: 5.0.6
+        version: 5.0.6(chokidar@3.6.0)(typescript@5.9.3)
     devDependencies:
       '@ncontiero/eslint-config':
         specifier: 6.2.1
@@ -1620,8 +1620,8 @@ packages:
     resolution: {integrity: sha512-k1gCAXAsNgLwEL+Y8Wvl+M6oEFj5bgazfZULpS5CneoPPXRaCCW7dm+q21Ky2VEE5X+VeRDBVg1Pcvvsr4TtNQ==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
 
-  dkcutter@5.0.5:
-    resolution: {integrity: sha512-JVZ1v1M5G4gOq84SrmHqW0vMK4hVro6V3QQFF2h8PKU2lwFA65gdtA0ANuoIZDne/H+l2Cf/yD82LjDMZZ0xCg==}
+  dkcutter@5.0.6:
+    resolution: {integrity: sha512-YmkQ0x8UD4yChhpwE4+dkyutiAQ7/QrWZLL4P0p4//UGAfzK2y3+AWL+KnnmJ2lUPioR0QB+6rSfrwr38iiWHQ==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -5614,7 +5614,7 @@ snapshots:
 
   diff-sequences@27.5.1: {}
 
-  dkcutter@5.0.5(chokidar@3.6.0)(typescript@5.9.3):
+  dkcutter@5.0.6(chokidar@3.6.0)(typescript@5.9.3):
     dependencies:
       colorette: 2.0.20
       commander: 14.0.1
