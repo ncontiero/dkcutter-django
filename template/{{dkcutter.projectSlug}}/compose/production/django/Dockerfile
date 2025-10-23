@@ -2,7 +2,7 @@
 {%- if dkcutter.pkgManager == "bun" -%}
 FROM docker.io/oven/bun:1.2.23-slim AS client-base
 {%- else -%}
-FROM docker.io/node:22.20.0-bookworm-slim AS client-base
+FROM docker.io/node:22.21.0-bookworm-slim AS client-base
 {%- endif %}
 
 WORKDIR /app
