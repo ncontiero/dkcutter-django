@@ -17,7 +17,8 @@ export type Context = {
   useTailwindInReactEmail: boolean;
   useCelery: boolean;
   automatedDepsUpdater: AutomatedDepsUpdater;
-  installFrontendDeps: boolean;
+  installDependencies: boolean;
+  haveNodePackages: boolean;
 };
 
 export type SetFlagProps = {

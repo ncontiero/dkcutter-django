@@ -35,7 +35,8 @@ const context: Context = {
   useCelery: toBoolean("{{ 'celery' in dkcutter.additionalTools }}"),
   automatedDepsUpdater:
     "{{ dkcutter.automatedDepsUpdater }}" as AutomatedDepsUpdater,
-  installFrontendDeps: toBoolean("{{ dkcutter.installFrontendDeps }}"),
+  installDependencies: toBoolean("{{ dkcutter.installDependencies }}"),
+  haveNodePackages: toBoolean("{{ dkcutter._haveNodePackages }}"),
 };
 
 const projectRootDir = path.resolve(".");
@@ -343,10 +344,7 @@ async function main() {
     }
   }
 
-  if (
-    context.frontendPipeline !== "None" ||
-    context.additionalTools.includes("reactEmail")
-  ) {
+  if (context.haveNodePackages) {
     const pkgVersion = await getPkgManagerVersion(context.pkgManager);
     if (pkgVersion) {
       await updatePackageJson({

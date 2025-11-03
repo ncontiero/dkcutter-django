@@ -140,11 +140,11 @@
     ],
     "promptMessage": "What {{ colors.blue('Automated Dependency Updater')}} do you want to use?"
   },
-  "installFrontendDeps": {
+  "installDependencies": {
     "value": true,
-    "promptMessage": "Do you want to install the frontend dependencies now?",
-    "disabled": "{{ frontendPipeline == 'None' and 'reactEmail' not in additionalTools }}"
+    "promptMessage": "Do you want to install dependencies?"
   },
   "_pkgManager": "{{ pkgManagerToUse }}",
-  "_pkgRun": "{{ _pkgManager }}{% if not _pkgManager in ['pnpm', 'yarn'] %} run{% endif %}"
+  "_pkgRun": "{{ _pkgManager }}{% if not _pkgManager in ['pnpm', 'yarn'] %} run{% endif %}",
+  "_haveNodePackages": "{{ frontendPipeline != 'None' or 'reactEmail' in additionalTools }}"
 }

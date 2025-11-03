@@ -60,25 +60,25 @@ ls
 
 If you want to start faster, you can use the following options:
 
-| Flag                                  | Description                                                                               |
-| ---------------------------------     | ----------------------------------------------------------------------------------------- |
-| `--projectName <string>`              | Your project's human-readable name.                                                       |
-| `--projectSlug <string>`              | Your project's slug without dashes or spaces.                                             |
-| `--description <string>`              | Describes your project.                                                                   |
-| `--authorName <string>`               | The author name.                                                                          |
-| `--domainName <string>`               | The domain name you plan to use for your project once it goes live.                       |
-| `--email <string>`                    | The email address you want to identify yourself in the project.                           |
-| `--postgresqlVersion <string>`        | Select a PostgreSQL version to use.                                                       |
-| `--cloudProvider <string>`            | Select a cloud provider for static & media files.                                         |
-| `--restFramework <string>`            | Select a REST API framework.                                                              |
-| `--mailService <string>`              | Select an email service that Django-Anymail provides.                                     |
-| `--frontendPipeline <string>`         | Select a pipeline to compile and optimize frontend assets (JS, CSS, …).                   |
-| `--frontendPipelineLang <string>`     | Select the language used by the Frontend Pipeline.                                        |
-| `--additionalTools <string>`          | Select additional tools to use.                                                           |
-| `--useTailwindInReactEmail <boolean>` | Select if you want to use TailwindCSS in React Email.                                     |
-| `--pkgManagerToUse <string>`          | Select the package manager for the Frontend Pipeline.                                     |
-| `--automatedDepsUpdater <string>`     | Choose Automated Dependency Updater. [See for more info][options-url].                    |
-| `--installFrontendDeps <boolean>`     | Install Frontend dependencies.                                                            |
+| Flag                                  | Description                                                             |
+| ------------------------------------- | ----------------------------------------------------------------------- |
+| `--projectName <string>`              | Your project's human-readable name.                                     |
+| `--projectSlug <string>`              | Your project's slug without dashes or spaces.                           |
+| `--description <string>`              | Describes your project.                                                 |
+| `--authorName <string>`               | The author name.                                                        |
+| `--domainName <string>`               | The domain name you plan to use for your project once it goes live.     |
+| `--email <string>`                    | The email address you want to identify yourself in the project.         |
+| `--postgresqlVersion <string>`        | Select a PostgreSQL version to use.                                     |
+| `--cloudProvider <string>`            | Select a cloud provider for static & media files.                       |
+| `--restFramework <string>`            | Select a REST API framework.                                            |
+| `--mailService <string>`              | Select an email service that Django-Anymail provides.                   |
+| `--frontendPipeline <string>`         | Select a pipeline to compile and optimize frontend assets (JS, CSS, …). |
+| `--frontendPipelineLang <string>`     | Select the language used by the Frontend Pipeline.                      |
+| `--additionalTools <string>`          | Select additional tools to use.                                         |
+| `--useTailwindInReactEmail <boolean>` | Select if you want to use TailwindCSS in React Email.                   |
+| `--pkgManagerToUse <string>`          | Select the package manager for the Frontend Pipeline.                   |
+| `--automatedDepsUpdater <string>`     | Choose Automated Dependency Updater. [See for more info][options-url].  |
+| `--installDependencies <boolean>`     | Select if you want the dependencies to be installed.                    |
 
 [See for more information about options][options-url].
 

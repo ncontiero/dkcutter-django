@@ -51,10 +51,7 @@ async function installFrontendDependencies(
   nodeDockerImagePath: string,
   projectDir: string,
 ) {
-  if (
-    context.frontendPipeline === "None" &&
-    !context.additionalTools.includes("reactEmail")
-  ) {
+  if (!context.haveNodePackages || !context.installDependencies) {
     return; // No action needed
   }
 
@@ -119,11 +116,15 @@ async function installFrontendDependencies(
 async function installPythonDependencies(
   uvImageTag: string,
   uvDockerImagePath: string,
+  syncDependencies: boolean = false,
 ) {
   logger.info("Installing Python dependencies...");
 
   let command = "uv";
-  const baseArgs = ["add", "--no-sync"];
+  const baseArgs = ["add"];
+  if (!syncDependencies) {
+    baseArgs.push("--no-sync");
+  }
 
   const useLocalPackageManager = await isPackageManagerAvailable("uv");
 
@@ -194,7 +195,7 @@ export async function setupDependencies(
   try {
     spinner.stopAndPersist();
 
-    if (context.installFrontendDeps) {
+    if (context.haveNodePackages && context.installDependencies) {
       await installFrontendDependencies(
         context,
         DOCKER_TAGS.node,
@@ -203,7 +204,11 @@ export async function setupDependencies(
       );
     }
 
-    await installPythonDependencies(DOCKER_TAGS.uv, DOCKER_FILES.uv);
+    await installPythonDependencies(
+      DOCKER_TAGS.uv,
+      DOCKER_FILES.uv,
+      context.installDependencies,
+    );
 
     spinner.start();
     // Cleanup
