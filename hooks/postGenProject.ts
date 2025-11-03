@@ -151,11 +151,6 @@ function removeStaticCSSAndJS() {
   removeFiles([path.join(staticPath, "css"), path.join(staticPath, "js")]);
 }
 
-function removeTailwindFiles() {
-  const tailwindFiles = ["tailwind.config.js"];
-  removeFiles(tailwindFiles);
-}
-
 function removeTypescriptFiles() {
   removeFiles(["tsconfig.json"]);
 }
@@ -284,8 +279,9 @@ function handleFrontendPipelineAndTools(
   }
 
   if (!tools.includes("tailwindcss")) {
-    removeTailwindFiles();
-    removeDevDeps.push("tailwindcss");
+    removeDevDeps.push("tailwindcss", "@tailwindcss/postcss");
+  } else {
+    removeDevDeps.push("autoprefixer", "postcss-preset-env");
   }
 
   if (tools.includes("reactEmail")) {
@@ -479,7 +475,6 @@ async function main() {
     removeRspackFiles();
     removeWebpackFiles();
     removeSrcFolder();
-    removeTailwindFiles();
     removePostcssFiles();
     if (!context.additionalTools.includes("reactEmail")) {
       removeTypescriptFiles();
