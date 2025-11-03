@@ -57,7 +57,7 @@ cd {{dkcutter.projectSlug}}
 uv run celery -A config.celery_app worker -l info
 ```
 
-Please note: For Celery's import magic to work, it is important where the celery commands are run. If you are in the same folder with *manage.py*, you should be right.
+Please note: For Celery's import magic to work, it is important where the celery commands are run. If you are in the same folder with _manage.py_, you should be right.
 
 To run [periodic tasks](https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html), you'll need to start the celery beat scheduler service. You can start it as a standalone process:
 

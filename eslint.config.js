@@ -9,9 +9,11 @@ const FILES_TO_IGNORE = [
   "docker-compose.local.yml",
   "docker-compose.production.yml",
   "pyproject.toml",
-  "postcss.config.cjs",
+  "postcss.config.mjs",
   "prod.config.mjs",
   "prod.config.ts",
+  "{{dkcutter.projectSlug}}/**/*.html",
+  "{{dkcutter.projectSlug}}/src/index.css",
 ];
 
 function ignoreFiles(files) {
