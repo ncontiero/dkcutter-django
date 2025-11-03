@@ -1,6 +1,6 @@
 {% if dkcutter._haveNodePackages -%}
 {%- if dkcutter.pkgManager == "bun" -%}
-FROM docker.io/oven/bun:1.2.23-slim AS client-base
+FROM docker.io/oven/bun:1.3.1-slim AS client-base
 {%- else -%}
 FROM docker.io/node:24.11.0-bookworm-slim AS client-base
 {%- endif %}
@@ -71,7 +71,7 @@ ENV DJANGO_GCP_STORAGE_BUCKET_NAME=${DJANGO_GCP_STORAGE_BUCKET_NAME}
 {%- endif %}
 
 COPY --from=client-deps /app/node_modules /app/node_modules
-{% if "reactEmail" in dkcutter.additionalTools and dkcutter.pkgManager not in ["npm", "yarn", "bun"] -%}
+{% if "reactEmail" in dkcutter.additionalTools and dkcutter.pkgManager in ["pnpm", "bun"] -%}
 COPY --from=client-deps /app/emails/node_modules /app/emails/node_modules
 {%- endif %}
 COPY . /app

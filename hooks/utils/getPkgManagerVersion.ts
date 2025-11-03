@@ -6,7 +6,7 @@ const pkgManagersDefaultVersions: Record<PackageManager, string> = {
   npm: "npm@11.6.1",
   pnpm: "pnpm@10.20.0",
   yarn: "yarn@4.10.3",
-  bun: "bun@1.2.22",
+  bun: "bun@1.3.1",
 };
 
 export async function getPkgManagerVersion(packageManager: PackageManager) {
