@@ -8,6 +8,7 @@ export type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
 export type Context = {
   projectSlug: string;
   pkgManager: PackageManager;
+  pkgRun: string;
   cloudProvider: string;
   restFramework: string;
   frontendPipeline: FrontendPipeline;
@@ -17,4 +18,12 @@ export type Context = {
   useCelery: boolean;
   automatedDepsUpdater: AutomatedDepsUpdater;
   installFrontendDeps: boolean;
+};
+
+export type SetFlagProps = {
+  filePath: string;
+  flag: string;
+  length?: number;
+  value?: string;
+  formatted?: string;
 };

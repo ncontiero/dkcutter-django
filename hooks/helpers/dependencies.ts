@@ -2,42 +2,31 @@ import type { Context } from "../utils/types";
 
 import os from "node:os";
 import path from "node:path";
-import { execa, ExecaError } from "execa";
+import { execa } from "execa";
 import fs from "fs-extra";
 import ora from "ora";
 
 import { colorize, logger } from "../utils/logger";
-
-async function runCommand(
-  command: string,
-  args: string[],
-  failureMessage: string,
-) {
-  try {
-    await execa(command, args);
-  } catch (error) {
-    logger.error(`${failureMessage}`);
-
-    if (error instanceof ExecaError) {
-      // Log the captured output only when an error occurs.
-      if (error.stdout) {
-        logger.error(`--- STDOUT ---\n${error.stdout}`);
-      }
-      if (error.stderr) {
-        logger.error(`--- STDERR ---\n${error.stderr}`);
-      }
-    }
-
-    throw new Error(failureMessage);
-  }
-}
+import { runCommand } from "./runCommand";
 
 async function tryBuildDockerImage(
   tag: string,
   dockerfilePath: string,
 ): Promise<boolean> {
   try {
-    await execa("docker", ["build", "--load", "-t", tag, "-f", dockerfilePath, "."]);
+    const buildSpinner = await runCommand("docker", [
+      "build",
+      "--load",
+      "-t",
+      tag,
+      "-f",
+      dockerfilePath,
+      ".",
+    ]);
+
+    (buildSpinner ?? ora()).succeed(
+      colorize("success", "Docker image built successfully."),
+    );
     return true;
   } catch (error) {
     logger.error(`Failed to build Docker image ${tag}: ${error}`);
@@ -60,6 +49,7 @@ async function installFrontendDependencies(
   context: Context,
   nodeImageTag: string,
   nodeDockerImagePath: string,
+  projectDir: string,
 ) {
   if (
     context.frontendPipeline === "None" &&
@@ -67,6 +57,8 @@ async function installFrontendDependencies(
   ) {
     return; // No action needed
   }
+
+  logger.info("Installing frontend dependencies...");
 
   let command: string = context.pkgManager;
   let args = ["install"];
@@ -76,7 +68,7 @@ async function installFrontendDependencies(
   );
 
   if (!useLocalPackageManager) {
-    logger.info(
+    logger.warn(
       `'${context.pkgManager}' not found locally. Attempting to use Docker as a fallback.`,
     );
 
@@ -106,10 +98,18 @@ async function installFrontendDependencies(
         `Could not build Docker image for Node.js. Falling back to local '${context.pkgManager}'.`,
       );
     }
+  } else if (context.pkgManager === "yarn") {
+    await fs.writeFile(path.join(projectDir, "yarn.lock"), "", {
+      encoding: "utf-8",
+    });
   }
 
   try {
-    await runCommand(command, args, "Failed to install frontend dependencies");
+    const installSpinner = await runCommand(command, args, projectDir);
+
+    (installSpinner ?? ora()).succeed(
+      colorize("success", "Frontend dependencies installed successfully.\n"),
+    );
   } catch {
     // For frontend, we warn but don't exit the process
     logger.warn("Skipping frontend dependency installation due to an error.");
@@ -120,35 +120,54 @@ async function installPythonDependencies(
   uvImageTag: string,
   uvDockerImagePath: string,
 ) {
+  logger.info("Installing Python dependencies...");
+
   let command = "uv";
   const baseArgs = ["add", "--no-sync"];
 
-  const builtSuccessfully = await tryBuildDockerImage(
-    uvImageTag,
-    uvDockerImagePath,
-  );
+  const useLocalPackageManager = await isPackageManagerAvailable("uv");
 
-  if (builtSuccessfully) {
-    command = "docker";
-    baseArgs.unshift("run", "--rm", "-v", ".:/app", uvImageTag, "uv");
-  } else {
+  if (!useLocalPackageManager) {
     logger.warn(
-      "Could not build Docker image for uv. Falling back to local 'uv'.",
+      "'uv' not found locally. Attempting to use Docker as a fallback.",
     );
+
+    const builtSuccessfully = await tryBuildDockerImage(
+      uvImageTag,
+      uvDockerImagePath,
+    );
+
+    if (builtSuccessfully) {
+      command = "docker";
+      baseArgs.unshift("run", "--rm", "-v", ".:/app", uvImageTag, "uv");
+    } else {
+      logger.warn(
+        "Could not build Docker image for uv. Falling back to local 'uv'.",
+      );
+    }
   }
 
   // Install production dependencies
-  await runCommand(
-    command,
-    [...baseArgs, "-r", "requirements/production.txt"],
-    "Failed to install production dependencies",
+  const installProdSpinner = await runCommand(command, [
+    ...baseArgs,
+    "-r",
+    "requirements/production.txt",
+  ]);
+
+  (installProdSpinner ?? ora()).succeed(
+    colorize("success", "Production dependencies installed successfully."),
   );
 
   // Install local (development) dependencies
-  await runCommand(
-    command,
-    [...baseArgs, "--dev", "-r", "requirements/local.txt"],
-    "Failed to install local dependencies",
+  const installDevSpinner = await runCommand(command, [
+    ...baseArgs,
+    "--dev",
+    "-r",
+    "requirements/local.txt",
+  ]);
+
+  (installDevSpinner ?? ora()).succeed(
+    colorize("success", "Local dependencies installed successfully.\n"),
   );
 }
 
@@ -157,7 +176,7 @@ export async function setupDependencies(
   projectRootDir: string,
 ) {
   const spinner = ora(
-    colorize("info", "Installing dependencies, this might take a while..."),
+    colorize("info", "Installing dependencies, this might take a while...\n"),
   ).start();
 
   const composeFolder = path.join(projectRootDir, "compose", "local", "runner");
@@ -173,16 +192,20 @@ export async function setupDependencies(
   };
 
   try {
+    spinner.stopAndPersist();
+
     if (context.installFrontendDeps) {
       await installFrontendDependencies(
         context,
         DOCKER_TAGS.node,
         DOCKER_FILES.node,
+        projectRootDir,
       );
     }
 
     await installPythonDependencies(DOCKER_TAGS.uv, DOCKER_FILES.uv);
 
+    spinner.start();
     // Cleanup
     await fs.remove(path.join(projectRootDir, "requirements"));
     await fs.remove(composeFolder);
@@ -191,9 +214,7 @@ export async function setupDependencies(
       colorize("success", "Dependencies installed successfully."),
     );
   } catch {
-    spinner.fail(
-      colorize("error", "Failed to install dependencies. See logs above."),
-    );
+    spinner.fail(colorize("error", "Failed to install dependencies."));
     process.exit(1);
   }
 }
