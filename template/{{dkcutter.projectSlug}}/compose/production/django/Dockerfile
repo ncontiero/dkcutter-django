@@ -1,4 +1,4 @@
-{% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] or "reactEmail" in dkcutter.additionalTools -%}
+{% if dkcutter._haveNodePackages -%}
 {%- if dkcutter.pkgManager == "bun" -%}
 FROM docker.io/oven/bun:1.2.23-slim AS client-base
 {%- else -%}
@@ -116,7 +116,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --locked --no-install-project --no-dev
 
-{% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] or "reactEmail" in dkcutter.additionalTools -%}
+{% if dkcutter._haveNodePackages -%}
 COPY --from=client-build ${APP_HOME} ${APP_HOME}
 {%- else -%}
 COPY . ${APP_HOME}
