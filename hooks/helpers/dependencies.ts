@@ -30,22 +30,15 @@ async function tryBuildDockerImage(
   dockerfilePath: string,
 ): Promise<boolean> {
   try {
-    const buildSpinner = await runCommand("docker", [
-      "build",
-      "--load",
-      "-t",
-      tag,
-      "-f",
-      dockerfilePath,
-      ".",
-    ]);
+    await runCommand({
+      cmd: "docker",
+      args: ["build", "--load", "-t", tag, "-f", dockerfilePath, "."],
+      successText: `Docker image ${tag} built successfully.`,
+      failText: (error) => `Failed to build Docker image ${tag}:\n${error}`,
+    });
 
-    buildSpinner.succeed(
-      colorize("success", "Docker image built successfully."),
-    );
     return true;
-  } catch (error) {
-    logger.error(`Failed to build Docker image ${tag}: ${error}`);
+  } catch {
     return false;
   }
 }
@@ -107,14 +100,16 @@ async function installFrontendDependencies(
   }
 
   try {
-    const installSpinner = await runCommand(command, args, projectDir);
-
-    installSpinner.succeed(
-      colorize("success", "Frontend dependencies installed successfully.\n"),
-    );
+    await runCommand({
+      cmd: command,
+      args,
+      projectDir,
+      successText: "Frontend dependencies installed successfully.\n",
+      failText: (error) =>
+        `Skipping frontend dependency installation due to an error:\n${error}`,
+    });
   } catch {
     // For frontend, we warn but don't exit the process
-    logger.warn("Skipping frontend dependency installation due to an error.");
   }
 }
 
@@ -149,27 +144,21 @@ async function installPythonDependencies(
   }
 
   // Install production dependencies
-  const installProdSpinner = await runCommand(command, [
-    ...baseArgs,
-    "-r",
-    "requirements/production.txt",
-  ]);
-
-  installProdSpinner.succeed(
-    colorize("success", "Production dependencies installed successfully."),
-  );
+  await runCommand({
+    cmd: command,
+    args: [...baseArgs, "-r", "requirements/production.txt"],
+    successText: "Production dependencies installed successfully.",
+    failText: (error) =>
+      `Production dependencies installation failed:\n${error}`,
+  });
 
   // Install local (development) dependencies
-  const installDevSpinner = await runCommand(command, [
-    ...baseArgs,
-    "--dev",
-    "-r",
-    "requirements/local.txt",
-  ]);
-
-  installDevSpinner.succeed(
-    colorize("success", "Local dependencies installed successfully.\n"),
-  );
+  await runCommand({
+    cmd: command,
+    args: [...baseArgs, "--dev", "-r", "requirements/local.txt"],
+    successText: "Local dependencies installed successfully.\n",
+    failText: (error) => `Local dependencies installation failed:\n${error}`,
+  });
 }
 
 async function syncPythonDependencies(uvImageTag: string) {
@@ -190,18 +179,15 @@ async function syncPythonDependencies(uvImageTag: string) {
 
   try {
     // Sync dependencies
-    const syncSpinner = await runCommand(command, args);
-    syncSpinner.succeed(
-      colorize("success", "Python dependencies synced successfully.\n"),
-    );
-  } catch (error) {
-    logger.warn("Skipping Python dependency sync due to an error.");
-    logger.error(
-      `Python dependency sync failed: ${error instanceof Error ? error.message : String(error)}`,
-    );
-    if (error instanceof Error && error.stack) {
-      logger.error(error.stack);
-    }
+    await runCommand({
+      cmd: command,
+      args,
+      successText: "Python dependencies synced successfully.\n",
+      failText: (error) =>
+        `Skipping Python dependency sync due to an error:\n${error}`,
+    });
+  } catch {
+    // For sync Python dependencies, we warn but don't exit the process
   }
 }
 

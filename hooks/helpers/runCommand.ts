@@ -1,39 +1,39 @@
 import { type StdoutStderrOption, execa } from "execa";
-import ora, { type Ora } from "ora";
+import { oraPromise } from "ora";
+import { colorize } from "../utils/logger";
 
-export async function execWithSpinner(
-  cmd: string,
-  args: string[] = [],
-  stdout: StdoutStderrOption = "pipe",
-  onDataHandle?: (spinner: Ora) => (data: Buffer) => void,
-  projectDir?: string,
-) {
-  const spinner = ora(`Running ${cmd} ${args.join(" ")}...`).start();
-  const subprocess = execa(cmd, args, { cwd: projectDir, stdout });
-
-  await new Promise<void>((resolve, reject) => {
-    if (onDataHandle) {
-      subprocess.stdout?.on("data", onDataHandle(spinner));
-    }
-
-    subprocess.on("error", (e) => reject(e));
-    subprocess.on("close", () => resolve());
-  });
-
-  return spinner;
+interface RunCommandProps {
+  cmd: string;
+  args: string[];
+  projectDir?: string;
+  stdout?: StdoutStderrOption;
+  successText?: string;
+  failText?: string | ((error: Error) => string);
 }
 
-export function runCommand(
-  cmd: string,
-  args: string[] = [],
-  projectDir?: string,
-): Promise<Ora> {
-  return execWithSpinner(
-    cmd,
-    args,
-    // cmd === "bun" ? "ignore" : "pipe",
-    "pipe",
-    undefined,
-    projectDir,
-  );
+export function runCommand({
+  cmd,
+  args = [],
+  projectDir,
+  stdout = "pipe",
+  successText,
+  failText,
+}: RunCommandProps) {
+  const cmdWithArgs = `${cmd} ${args.join(" ")}`;
+  return oraPromise(execa(cmd, args, { cwd: projectDir, stdout }), {
+    text: `Running ${cmdWithArgs}...`,
+    successText: colorize(
+      "success",
+      successText || `${cmdWithArgs} completed successfully.`,
+    ),
+    failText: (error) =>
+      colorize(
+        "error",
+        failText
+          ? typeof failText === "function"
+            ? failText(error)
+            : failText
+          : error.message,
+      ),
+  });
 }
