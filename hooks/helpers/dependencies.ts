@@ -40,7 +40,7 @@ async function tryBuildDockerImage(
       ".",
     ]);
 
-    (buildSpinner ?? ora()).succeed(
+    buildSpinner.succeed(
       colorize("success", "Docker image built successfully."),
     );
     return true;
@@ -109,7 +109,7 @@ async function installFrontendDependencies(
   try {
     const installSpinner = await runCommand(command, args, projectDir);
 
-    (installSpinner ?? ora()).succeed(
+    installSpinner.succeed(
       colorize("success", "Frontend dependencies installed successfully.\n"),
     );
   } catch {
@@ -155,7 +155,7 @@ async function installPythonDependencies(
     "requirements/production.txt",
   ]);
 
-  (installProdSpinner ?? ora()).succeed(
+  installProdSpinner.succeed(
     colorize("success", "Production dependencies installed successfully."),
   );
 
@@ -167,7 +167,7 @@ async function installPythonDependencies(
     "requirements/local.txt",
   ]);
 
-  (installDevSpinner ?? ora()).succeed(
+  installDevSpinner.succeed(
     colorize("success", "Local dependencies installed successfully.\n"),
   );
 }
@@ -191,7 +191,7 @@ async function syncPythonDependencies(uvImageTag: string) {
   try {
     // Sync dependencies
     const syncSpinner = await runCommand(command, args);
-    (syncSpinner ?? ora()).succeed(
+    syncSpinner.succeed(
       colorize("success", "Python dependencies synced successfully.\n"),
     );
   } catch (error) {

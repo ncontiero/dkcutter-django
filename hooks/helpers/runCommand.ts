@@ -27,7 +27,7 @@ export function runCommand(
   cmd: string,
   args: string[] = [],
   projectDir?: string,
-): Promise<Ora | null> {
+): Promise<Ora> {
   return execWithSpinner(
     cmd,
     args,
