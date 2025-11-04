@@ -9,6 +9,22 @@ import ora from "ora";
 import { colorize, logger } from "../utils/logger";
 import { runCommand } from "./runCommand";
 
+function buildVolumeArg() {
+  const absoluteAppPath = path.resolve(process.cwd());
+  return `${absoluteAppPath}:/app`;
+}
+
+async function isPackageManagerAvailable(pkgManager: string) {
+  try {
+    const { exitCode } = await execa(pkgManager, ["--version"], {
+      reject: false,
+    });
+    return exitCode === 0;
+  } catch {
+    return false;
+  }
+}
+
 async function tryBuildDockerImage(
   tag: string,
   dockerfilePath: string,
@@ -30,17 +46,6 @@ async function tryBuildDockerImage(
     return true;
   } catch (error) {
     logger.error(`Failed to build Docker image ${tag}: ${error}`);
-    return false;
-  }
-}
-
-async function isPackageManagerAvailable(pkgManager: string) {
-  try {
-    const { exitCode } = await execa(pkgManager, ["--version"], {
-      reject: false,
-    });
-    return exitCode === 0;
-  } catch {
     return false;
   }
 }
@@ -84,7 +89,7 @@ async function installFrontendDependencies(
         "run",
         "--rm",
         "-v",
-        ".:/app",
+        buildVolumeArg(),
         ...userArgs,
         nodeImageTag,
         context.pkgManager,
@@ -123,7 +128,6 @@ async function installPythonDependencies(
   const baseArgs = ["add", "--no-sync"];
 
   const useLocalPackageManager = await isPackageManagerAvailable("uv");
-
   if (!useLocalPackageManager) {
     logger.warn(
       "'uv' not found locally. Attempting to use Docker as a fallback.",
@@ -136,7 +140,7 @@ async function installPythonDependencies(
 
     if (builtSuccessfully) {
       command = "docker";
-      baseArgs.unshift("run", "--rm", "-v", ".:/app", uvImageTag, "uv");
+      baseArgs.unshift("run", "--rm", "-v", buildVolumeArg(), uvImageTag, "uv");
     } else {
       logger.warn(
         "Could not build Docker image for uv. Falling back to local 'uv'.",
@@ -181,7 +185,7 @@ async function syncPythonDependencies(uvImageTag: string) {
     );
 
     command = "docker";
-    args.unshift("run", "--rm", "-v", ".:/app", uvImageTag, "uv");
+    args.unshift("run", "--rm", "-v", buildVolumeArg(), uvImageTag, "uv");
   }
 
   try {
