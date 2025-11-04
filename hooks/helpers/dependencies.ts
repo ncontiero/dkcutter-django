@@ -116,15 +116,11 @@ async function installFrontendDependencies(
 async function installPythonDependencies(
   uvImageTag: string,
   uvDockerImagePath: string,
-  syncDependencies: boolean = false,
 ) {
   logger.info("Installing Python dependencies...");
 
   let command = "uv";
-  const baseArgs = ["add"];
-  if (!syncDependencies) {
-    baseArgs.push("--no-sync");
-  }
+  const baseArgs = ["add", "--no-sync"];
 
   const useLocalPackageManager = await isPackageManagerAvailable("uv");
 
@@ -172,6 +168,39 @@ async function installPythonDependencies(
   );
 }
 
+async function syncPythonDependencies(uvImageTag: string) {
+  logger.info("Syncing Python dependencies...");
+
+  let command = "uv";
+  const args = ["sync"];
+
+  const useLocalPackageManager = await isPackageManagerAvailable("uv");
+  if (!useLocalPackageManager) {
+    logger.warn(
+      "'uv' not found locally. Attempting to use Docker as a fallback.",
+    );
+
+    command = "docker";
+    args.unshift("run", "--rm", "-v", ".:/app", uvImageTag, "uv");
+  }
+
+  try {
+    // Sync dependencies
+    const syncSpinner = await runCommand(command, args);
+    (syncSpinner ?? ora()).succeed(
+      colorize("success", "Python dependencies synced successfully.\n"),
+    );
+  } catch (error) {
+    logger.warn("Skipping Python dependency sync due to an error.");
+    logger.error(
+      `Python dependency sync failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    if (error instanceof Error && error.stack) {
+      logger.error(error.stack);
+    }
+  }
+}
+
 export async function setupDependencies(
   context: Context,
   projectRootDir: string,
@@ -204,11 +233,10 @@ export async function setupDependencies(
       );
     }
 
-    await installPythonDependencies(
-      DOCKER_TAGS.uv,
-      DOCKER_FILES.uv,
-      context.installDependencies,
-    );
+    await installPythonDependencies(DOCKER_TAGS.uv, DOCKER_FILES.uv);
+    if (context.installDependencies) {
+      await syncPythonDependencies(DOCKER_TAGS.uv);
+    }
 
     spinner.start();
     // Cleanup
