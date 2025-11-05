@@ -1,10 +1,10 @@
 export default {
   plugins: {
-    {% if "tailwindcss" in dkcutter.additionalTools %}
+    {%- if "tailwindcss" in dkcutter.additionalTools %}
     "@tailwindcss/postcss": {},
-    {% else %}
+    {%- else %}
     "postcss-preset-env": {},
     autoprefixer: {},
-    {% endif %}
+    {%- endif %}
   },
 };
