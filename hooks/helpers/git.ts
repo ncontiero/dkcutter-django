@@ -1,11 +1,11 @@
 import path from "node:path";
-import { bold, green, red, redBright } from "colorette";
+import { bold } from "colorette";
 import { execa } from "execa";
 import fs from "fs-extra";
-import ora from "ora";
+import { oraPromise } from "ora";
 import prompts from "prompts";
 
-import { logger } from "../utils/logger";
+import { colorize, logger } from "../utils/logger";
 
 export async function isGitInstalled(dir: string) {
   try {
@@ -67,86 +67,77 @@ async function getDefaultBranch() {
  * @param projectDir The directory of the project.
  * @returns Whether or not the git repo was initialized.
  */
-export async function initializeGit(projectDir: string): Promise<boolean> {
-  logger.info("Initializing Git...");
+export function initializeGit(projectDir: string): Promise<boolean> {
+  return oraPromise(
+    async (spinner) => {
+      if (!(await isGitInstalled(projectDir))) {
+        throw new Error("Git is not installed.");
+      }
 
-  if (!(await isGitInstalled(projectDir))) {
-    logger.warn("Git is not installed. Skipping Git initialization.");
-    return false;
-  }
+      const isRoot = await isRootGitRepo(projectDir);
+      const isInside = await isInsideGitRepo(projectDir);
+      const dirName = path.parse(projectDir).name; // skip full path for logging
 
-  const spinner = ora("Creating a new git repo...\n").start();
+      if (isInside && isRoot) {
+        // Dir is a root git repo
+        spinner.stop();
+        const { overwriteGit } = await prompts({
+          type: "confirm",
+          name: "overwriteGit",
+          message: `${colorize("error", "Warning:")} Git is already initialized in "${dirName}". Initializing a new git repository would delete the previous history. Would you like to continue anyways?`,
+        });
 
-  const isRoot = await isRootGitRepo(projectDir);
-  const isInside = await isInsideGitRepo(projectDir);
-  const dirName = path.parse(projectDir).name; // skip full path for logging
+        if (!overwriteGit) {
+          throw new Error("Git initialization aborted.");
+        }
+        // Deleting the .git folder
+        await fs.remove(path.join(projectDir, ".git"));
+      } else if (isInside && !isRoot) {
+        // Dir is inside a git worktree
+        spinner.stop();
+        const { initializeChildGitRepo } = await prompts({
+          type: "confirm",
+          name: "initializeChildGitRepo",
+          message: `${colorize("error", "Warning:")} "${dirName}" is already in a git worktree. Would you still like to initialize a new git repository in this directory?`,
+        });
+        if (!initializeChildGitRepo) {
+          throw new Error("Git initialization aborted.");
+        }
+      }
 
-  if (isInside && isRoot) {
-    // Dir is a root git repo
-    spinner.stop();
-    const { overwriteGit } = await prompts({
-      type: "confirm",
-      name: "overwriteGit",
-      message: `${bold(
-        redBright("Warning:"),
-      )} Git is already initialized in "${dirName}". Initializing a new git repository would delete the previous history. Would you like to continue anyways?`,
-    });
+      // We're good to go, initializing the git repo
+      const branchName = await getDefaultBranch();
 
-    if (!overwriteGit) {
-      spinner.info("Skipping Git initialization.");
-      return false;
-    }
-    // Deleting the .git folder
-    await fs.remove(path.join(projectDir, ".git"));
-  } else if (isInside && !isRoot) {
-    // Dir is inside a git worktree
-    spinner.stop();
-    const { initializeChildGitRepo } = await prompts({
-      type: "confirm",
-      name: "initializeChildGitRepo",
-      message: `${bold(
-        redBright("Warning:"),
-      )} "${dirName}" is already in a git worktree. Would you still like to initialize a new git repository in this directory?`,
-    });
-    if (!initializeChildGitRepo) {
-      spinner.info("Skipping Git initialization.");
-      return false;
-    }
-  }
+      // --initial-branch flag was added in git v2.28.0
+      const { major, minor } = await getGitVersion();
+      if (major < 2 || (major === 2 && minor < 28)) {
+        await execa("git", ["init"], { cwd: projectDir });
+        // symbolic-ref is used here due to refs/heads/master not existing
+        // It is only created after the first commit
+        // https://superuser.com/a/1419674
+        await execa(
+          "git",
+          ["symbolic-ref", "HEAD", `refs/heads/${branchName}`],
+          { cwd: projectDir },
+        );
+      } else {
+        await execa("git", ["init", `--initial-branch=${branchName}`], {
+          cwd: projectDir,
+        });
+      }
 
-  // We're good to go, initializing the git repo
-  try {
-    const branchName = await getDefaultBranch();
-
-    // --initial-branch flag was added in git v2.28.0
-    const { major, minor } = await getGitVersion();
-    if (major < 2 || (major === 2 && minor < 28)) {
-      await execa("git", ["init"], { cwd: projectDir });
-      // symbolic-ref is used here due to refs/heads/master not existing
-      // It is only created after the first commit
-      // https://superuser.com/a/1419674
-      await execa("git", ["symbolic-ref", "HEAD", `refs/heads/${branchName}`], {
-        cwd: projectDir,
-      });
-    } else {
-      await execa("git", ["init", `--initial-branch=${branchName}`], {
-        cwd: projectDir,
-      });
-    }
-    spinner.succeed(
-      `${green("Successfully initialized")} ${bold(green("git"))}\n`,
-    );
-  } catch {
-    // Safeguard, should be unreachable
-    spinner.fail(
-      `${bold(
-        red("Failed:"),
-      )} could not initialize git. Update git to the latest version!\n`,
-    );
-    return false;
-  }
-
-  return true;
+      return true;
+    },
+    {
+      text: "Initializing Git...",
+      successText: colorize(
+        "success",
+        `${bold("git")} initialized successfully.`,
+      ),
+      failText: (error) =>
+        colorize("error", `Failed to initialize Git: ${error.message}`),
+    },
+  );
 }
 
 export async function stageAndCommit(projectDir: string, message: string) {
@@ -163,7 +154,7 @@ export async function stageAndCommit(projectDir: string, message: string) {
     // Dir is inside a git worktree
     logger.warn(
       `${bold(
-        redBright("Warning:"),
+        "Warning:",
       )} "${dirName}" is already in a git worktree. Skipping Git commit.`,
     );
     return;

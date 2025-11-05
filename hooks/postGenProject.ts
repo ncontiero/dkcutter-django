@@ -437,19 +437,23 @@ async function main() {
   await removeFiles(filesToRemove);
 
   await setupDependencies(context, projectRootDir);
-  logger.break();
-
   if (context.initializeGit) {
-    const repoInitialized = await initializeGit(projectRootDir);
-    if (repoInitialized) {
-      await stageAndCommit(
-        projectRootDir,
-        `feat: initial commit from ${TEMPLATE_REPO}`,
-      );
+    try {
+      const repoInitialized = await initializeGit(projectRootDir);
+      if (repoInitialized) {
+        await stageAndCommit(
+          projectRootDir,
+          `feat: initial commit from ${TEMPLATE_REPO}`,
+        );
+      }
+    } catch {
+      // We don't want to fail the entire process if git is not initialized.
+      // This is just a convenience feature, and the user can always
+      // initialize git later.
     }
-    logger.break();
   }
 
+  logger.break();
   await logNextSteps({
     ctx: context,
     pkgManager: context.pkgManager,
