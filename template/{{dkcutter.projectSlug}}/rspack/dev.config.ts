@@ -1,4 +1,3 @@
-import type { Configuration } from "webpack-dev-server";
 import { merge } from "webpack-merge";
 import { commonConfig } from "./common.config";
 
@@ -25,4 +24,4 @@ export default merge(commonConfig, {
     hot: false,
     liveReload: true,
   },
-}) as Configuration;
+});
