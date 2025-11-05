@@ -17,7 +17,7 @@ export type Context = {
   useTailwindInReactEmail: boolean;
   useCelery: boolean;
   automatedDepsUpdater: AutomatedDepsUpdater;
-  installDependencies: boolean;
+  installFrontendDeps: boolean;
   haveNodePackages: boolean;
 };
 

@@ -14,13 +14,10 @@ export async function logNextSteps({
   projectDir,
   pkgManager,
 }: LogNextStepsOptions) {
-  const commands = [`cd ${ctx.projectSlug}`];
+  const commands = [`cd ${ctx.projectSlug}`, "uv sync"];
 
-  if (!ctx.installDependencies) {
-    commands.push("uv sync");
-    if (ctx.haveNodePackages) {
-      commands.push(`${pkgManager} install`);
-    }
+  if (!ctx.installFrontendDeps && ctx.haveNodePackages) {
+    commands.push(`${pkgManager} install`);
   }
 
   const isGitRepo =

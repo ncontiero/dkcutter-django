@@ -49,7 +49,7 @@ async function installFrontendDependencies(
   nodeDockerImagePath: string,
   projectDir: string,
 ) {
-  if (!context.haveNodePackages || !context.installDependencies) {
+  if (!context.haveNodePackages || !context.installFrontendDeps) {
     return; // No action needed
   }
 
@@ -161,36 +161,6 @@ async function installPythonDependencies(
   });
 }
 
-async function syncPythonDependencies(uvImageTag: string) {
-  logger.info("Syncing Python dependencies...");
-
-  let command = "uv";
-  const args = ["sync"];
-
-  const useLocalPackageManager = await isPackageManagerAvailable("uv");
-  if (!useLocalPackageManager) {
-    logger.warn(
-      "'uv' not found locally. Attempting to use Docker as a fallback.",
-    );
-
-    command = "docker";
-    args.unshift("run", "--rm", "-v", buildVolumeArg(), uvImageTag, "uv");
-  }
-
-  try {
-    // Sync dependencies
-    await runCommand({
-      cmd: command,
-      args,
-      successText: "Python dependencies synced successfully.\n",
-      failText: (error) =>
-        `Skipping Python dependency sync due to an error:\n${error}`,
-    });
-  } catch {
-    // For sync Python dependencies, we warn but don't exit the process
-  }
-}
-
 export async function setupDependencies(
   context: Context,
   projectRootDir: string,
@@ -214,7 +184,7 @@ export async function setupDependencies(
   try {
     spinner.stopAndPersist();
 
-    if (context.haveNodePackages && context.installDependencies) {
+    if (context.haveNodePackages && context.installFrontendDeps) {
       await installFrontendDependencies(
         context,
         DOCKER_TAGS.node,
@@ -224,9 +194,6 @@ export async function setupDependencies(
     }
 
     await installPythonDependencies(DOCKER_TAGS.uv, DOCKER_FILES.uv);
-    if (context.installDependencies) {
-      await syncPythonDependencies(DOCKER_TAGS.uv);
-    }
 
     spinner.start();
     // Cleanup

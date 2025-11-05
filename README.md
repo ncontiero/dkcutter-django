@@ -78,7 +78,7 @@ If you want to start faster, you can use the following options:
 | `--useTailwindInReactEmail <boolean>` | Select if you want to use TailwindCSS in React Email.                   |
 | `--pkgManagerToUse <string>`          | Select the package manager for the Frontend Pipeline.                   |
 | `--automatedDepsUpdater <string>`     | Choose Automated Dependency Updater. [See for more info][options-url].  |
-| `--installDependencies <boolean>`     | Select if you want the dependencies to be installed.                    |
+| `--installFrontendDeps <boolean>`     | Select if you want to install frontend dependencies.                    |
 
 [See for more information about options][options-url].
 

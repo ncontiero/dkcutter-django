@@ -35,7 +35,7 @@ const context: Context = {
   useCelery: toBoolean("{{ 'celery' in dkcutter.additionalTools }}"),
   automatedDepsUpdater:
     "{{ dkcutter.automatedDepsUpdater }}" as AutomatedDepsUpdater,
-  installDependencies: toBoolean("{{ dkcutter.installDependencies }}"),
+  installFrontendDeps: toBoolean("{{ dkcutter.installFrontendDeps }}"),
   haveNodePackages: toBoolean("{{ dkcutter._haveNodePackages }}"),
 };
 
