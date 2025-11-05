@@ -62,13 +62,17 @@ async function getDefaultBranch() {
   }
 }
 
-// This initializes the Git-repository for the project
-export async function initializeGit(projectDir: string) {
+/**
+ *This initializes the Git-repository for the project
+ * @param projectDir The directory of the project.
+ * @returns Whether or not the git repo was initialized.
+ */
+export async function initializeGit(projectDir: string): Promise<boolean> {
   logger.info("Initializing Git...");
 
   if (!(await isGitInstalled(projectDir))) {
     logger.warn("Git is not installed. Skipping Git initialization.");
-    return;
+    return false;
   }
 
   const spinner = ora("Creating a new git repo...\n").start();
@@ -90,7 +94,7 @@ export async function initializeGit(projectDir: string) {
 
     if (!overwriteGit) {
       spinner.info("Skipping Git initialization.");
-      return;
+      return false;
     }
     // Deleting the .git folder
     await fs.remove(path.join(projectDir, ".git"));
@@ -106,7 +110,7 @@ export async function initializeGit(projectDir: string) {
     });
     if (!initializeChildGitRepo) {
       spinner.info("Skipping Git initialization.");
-      return;
+      return false;
     }
   }
 
@@ -129,9 +133,8 @@ export async function initializeGit(projectDir: string) {
         cwd: projectDir,
       });
     }
-    await execa("git", ["add", "."], { cwd: projectDir });
     spinner.succeed(
-      `${green("Successfully initialized and staged")} ${bold(green("git"))}\n`,
+      `${green("Successfully initialized")} ${bold(green("git"))}\n`,
     );
   } catch {
     // Safeguard, should be unreachable
@@ -140,7 +143,10 @@ export async function initializeGit(projectDir: string) {
         red("Failed:"),
       )} could not initialize git. Update git to the latest version!\n`,
     );
+    return false;
   }
+
+  return true;
 }
 
 export async function stageAndCommit(projectDir: string, message: string) {

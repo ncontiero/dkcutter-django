@@ -20,16 +20,15 @@ export async function logNextSteps({
     commands.push(`${pkgManager} install`);
   }
 
-  const isGitRepo =
-    (await isInsideGitRepo(projectDir)) || (await isRootGitRepo(projectDir));
-  if (!isGitRepo) {
-    commands.push(`git init`);
+  if (!ctx.initializeGit) {
+    const isGitRepo =
+      (await isInsideGitRepo(projectDir)) || (await isRootGitRepo(projectDir));
+    if (!isGitRepo) {
+      commands.push(`git init`);
+    }
+    commands.push("git add .", `git commit -m "initial commit"`);
   }
-  commands.push(
-    `git add .`,
-    `git commit -m "initial commit"`,
-    "docker compose -f docker-compose.local.yml up",
-  );
 
+  commands.push("docker compose -f docker-compose.local.yml up");
   logger.info(`Next steps:\n  ${commands.join("\n  ")}`);
 }

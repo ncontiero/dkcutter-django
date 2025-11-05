@@ -79,6 +79,7 @@ If you want to start faster, you can use the following options:
 | `--pkgManagerToUse <string>`          | Select the package manager for the Frontend Pipeline.                   |
 | `--automatedDepsUpdater <string>`     | Choose Automated Dependency Updater. [See for more info][options-url].  |
 | `--installFrontendDeps <boolean>`     | Select if you want to install frontend dependencies.                    |
+| `--initializeGit <boolean>`           | Select if you want to initialize a Git repository.                      |
 
 [See for more information about options][options-url].
 

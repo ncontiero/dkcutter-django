@@ -77,3 +77,5 @@ This page describes all the template options that will be prompted by the [dkcut
   - [Github Dependabot](https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file)
 
 - **Install Dependencies**: Install dependencies after generating the project. This requires that you have the selected Node.js package manager and [uv](https://docs.astral.sh/uv/getting-started/installation/), or Docker installed on your machine.
+
+- **Initialize Git**: Initialize a Git repository after generating the project.

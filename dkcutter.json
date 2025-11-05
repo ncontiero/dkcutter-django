@@ -145,6 +145,10 @@
     "promptMessage": "Do you want to install the frontend dependencies now?",
     "disabled": "{{ frontendPipeline == 'None' and 'reactEmail' not in additionalTools }}"
   },
+  "initializeGit": {
+    "value": true,
+    "promptMessage": "Do you want to initialize a git repository now?"
+  },
   "_pkgManager": "{{ pkgManagerToUse }}",
   "_pkgRun": "{{ _pkgManager }}{% if not _pkgManager in ['pnpm', 'yarn'] %} run{% endif %}",
   "_haveNodePackages": "{{ frontendPipeline != 'None' or 'reactEmail' in additionalTools }}"

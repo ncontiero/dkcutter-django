@@ -11,6 +11,7 @@ import path from "node:path";
 import fs from "fs-extra";
 
 import { setupDependencies } from "./helpers/dependencies";
+import { initializeGit, stageAndCommit } from "./helpers/git";
 import { logNextSteps } from "./helpers/logNextSteps";
 import { toBoolean } from "./utils/coerce";
 import { appendToGitignore, removeFiles } from "./utils/files";
@@ -36,8 +37,11 @@ const context: Context = {
   automatedDepsUpdater:
     "{{ dkcutter.automatedDepsUpdater }}" as AutomatedDepsUpdater,
   installFrontendDeps: toBoolean("{{ dkcutter.installFrontendDeps }}"),
+  initializeGit: toBoolean("{{ dkcutter.initializeGit }}"),
   haveNodePackages: toBoolean("{{ dkcutter._haveNodePackages }}"),
 };
+
+const TEMPLATE_REPO = "ncontiero/dkcutter-django";
 
 const projectRootDir = path.resolve(".");
 const projectDir = path.resolve(context.projectSlug);
@@ -434,6 +438,18 @@ async function main() {
 
   await setupDependencies(context, projectRootDir);
   logger.break();
+
+  if (context.initializeGit) {
+    const repoInitialized = await initializeGit(projectRootDir);
+    if (repoInitialized) {
+      await stageAndCommit(
+        projectRootDir,
+        `feat: initial commit from ${TEMPLATE_REPO}`,
+      );
+    }
+    logger.break();
+  }
+
   await logNextSteps({
     ctx: context,
     pkgManager: context.pkgManager,

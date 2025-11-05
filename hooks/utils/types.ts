@@ -18,6 +18,7 @@ export type Context = {
   useCelery: boolean;
   automatedDepsUpdater: AutomatedDepsUpdater;
   installFrontendDeps: boolean;
+  initializeGit: boolean;
   haveNodePackages: boolean;
 };
 
