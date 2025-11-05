@@ -26,7 +26,7 @@ cd .cache/docker
 sudo rm -rf my_awesome_project
 
 # create the project using the default settings in dkcutter.json
-pnpm generate -o .cache/docker -y -f "$@"
+pnpm generate -o .cache/docker -y -f "$@" --initializeGit false
 cd my_awesome_project
 
 # make sure all images build
