@@ -151,5 +151,5 @@
   },
   "_pkgManager": "{{ pkgManagerToUse }}",
   "_pkgRun": "{{ _pkgManager }}{% if not _pkgManager in ['pnpm', 'yarn'] %} run{% endif %}",
-  "_haveNodePackages": "{{ frontendPipeline != 'None' or 'reactEmail' in additionalTools }}"
+  "_haveNodePackages": "{{ true if frontendPipeline != 'None' or 'reactEmail' in additionalTools }}"
 }
