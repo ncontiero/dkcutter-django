@@ -12,17 +12,17 @@ const BROWSER_TARGETS = [
 ];
 
 const BASE_PATH = path.join(__dirname, "../");
-const SBILY_PATH = path.join(BASE_PATH, "{{ dkcutter.projectSlug }}");
+const PROJECT_PATH = path.join(BASE_PATH, "{{ dkcutter.projectSlug }}");
 
 export const commonConfig = defineConfig({
   target: "web",
   context: BASE_PATH,
   entry: {
-    main: path.resolve(SBILY_PATH, "src/index.ts"),
-    vendors: path.resolve(SBILY_PATH, "src/vendors.ts"),
+    main: path.resolve(PROJECT_PATH, "src/index.ts"),
+    vendors: path.resolve(PROJECT_PATH, "src/vendors.ts"),
   },
   output: {
-    path: path.resolve(SBILY_PATH, "static/bundles/"),
+    path: path.resolve(PROJECT_PATH, "static/bundles/"),
     publicPath: "/static/bundles/",
     filename: "js/[name]-[fullhash].js",
     chunkFilename: "js/[name]-[hash].js",
@@ -69,7 +69,7 @@ export const commonConfig = defineConfig({
     modules: ["node_modules"],
     extensions: ["...", ".ts", ".tsx"],
     alias: {
-      "@": path.resolve(SBILY_PATH, "src"),
+      "@": path.resolve(PROJECT_PATH, "src"),
     },
   },
   experiments: {
