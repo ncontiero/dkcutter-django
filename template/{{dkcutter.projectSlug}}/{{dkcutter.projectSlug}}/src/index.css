@@ -1,9 +1,20 @@
 {% if dkcutter.useTailwind -%}
 @import "tailwindcss";
 
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
 @layer base {
   body {
-    @apply flex justify-center items-center flex-col mt-4;
+    @apply relative;
   }
 }
 
@@ -20,11 +31,20 @@
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 1rem;
+  position: relative;
+}
+
+.page-container {
+  text-align: center;
+  margin-inline: auto;
+  margin-block: 2.5rem; /* 40px */
+  padding-inline: 2rem; /* 32px */
+  @media (width >= 40rem /* 640px */) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
 }
 
 .page-title {

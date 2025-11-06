@@ -41,8 +41,10 @@
     {% endblock javascript %}
   </head>
   <body>
-    {% block content %}
-    {% endblock content %}
+    <div class="{% endraw %}{{ 'text-center container my-10' if dkcutter.useTailwind else 'page-container' }}{% raw %}">
+      {% block content %}
+      {% endblock content %}
+    </div>
     {% block inline_javascript %}
       <!-- Script tags with only code, no src (defer by default). -->
       <!-- To run with a "defer" so that you run inline code: -->
