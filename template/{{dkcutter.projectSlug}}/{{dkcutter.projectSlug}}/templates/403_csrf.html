@@ -4,8 +4,8 @@
   Forbidden (403)
 {% endblock title %}
 {% block content %}
-  <h1 class="title">Forbidden (403)</h1>
-  <p class="description">
+  <h1 class="{% endraw %}{{ dkcutter.pageTitleClass }}{% raw %}">Forbidden (403)</h1>
+  <p class="{% endraw %}{{ dkcutter.pageErrorDescriptionClass }}{% raw %}">
     {% if exception %}
       {{ exception }}
     {% else %}

@@ -4,9 +4,9 @@
   Server Error
 {% endblock title %}
 {% block content %}
-  <h1 class="title">Ooops!!! 500</h1>
-  <h3 class="sub-title">Looks like something went wrong!</h3>
-  <p class="description">
+  <h1 class="{% endraw %}{{ dkcutter.pageTitleClass }}{% raw %}">Ooops!!! 500</h1>
+  <h3 class="{% endraw %}{{ 'text-2xl' if dkcutter.useTailwind else 'page-error-sub-title' }}{% raw %}">Looks like something went wrong!</h3>
+  <p class="{% endraw %}{{ dkcutter.pageErrorDescriptionClass }}{% raw %}">
     We track these errors automatically, but if the problem persists feel free to
     contact us. In the meantime, try refreshing.
   </p>

@@ -19,6 +19,10 @@ import { logger } from "./utils/logger";
 // {{ dkcutter.add("usePgadmin", "{% if 'pgadmin' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useTailwind", "{{ true if 'tailwindcss' in dkcutter.additionalTools }}") }}
 
+// Add this values in context to avoid repetitions
+// {{ dkcutter.add("pageTitleClass", "{{ 'text-4xl underline font-bold my-4' if dkcutter.useTailwind else 'page-title' }}") }}
+// {{ dkcutter.add("pageErrorDescriptionClass", "{{ 'text-lg' if dkcutter.useTailwind else 'page-error-description' }}") }}
+
 const ctx = {
   frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,
   useReactEmail: toBoolean("{{ 'reactEmail' in dkcutter.additionalTools }}"),

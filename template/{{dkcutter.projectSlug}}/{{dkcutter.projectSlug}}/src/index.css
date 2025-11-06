@@ -7,18 +7,6 @@
   }
 }
 
-@layer components {
-  .title {
-    @apply text-4xl underline font-bold my-4;
-  }
-  .sub-title {
-    @apply text-2xl;
-  }
-  .description {
-    @apply text-lg;
-  }
-}
-
 {% else -%}
 *,
 *::after,
@@ -39,18 +27,18 @@ body {
   margin-top: 1rem;
 }
 
-.title {
+.page-title {
   font-size: 2.25rem; /* 36px */
   line-height: 2.5rem; /* 40px */
   font-weight: 700;
   text-decoration-line: underline;
   margin: 1rem 0;
 }
-.sub-title {
+.page-error-sub-title {
   font-size: 1.5rem; /* 24px */
   line-height: 2rem; /* 32px */
 }
-.description {
+.page-error-description {
   font-size: 1.125rem; /* 18px */
   line-height: 1.75rem; /* 28px */
 }
