@@ -42,6 +42,11 @@ body {
   font-size: 1.125rem; /* 18px */
   line-height: 1.75rem; /* 28px */
 }
+.page-500-description {
+  max-width: 36rem; /* 576px */
+  margin-top: 0.5rem; /* 8px */
+  margin-inline: auto;
+}
 
 {% endif -%}
 
