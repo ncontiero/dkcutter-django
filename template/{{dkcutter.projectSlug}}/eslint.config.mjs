@@ -16,7 +16,9 @@ export default ncontiero(
     files: ["emails/**"],
     rules: {
       "import/no-default-export": "off",
+      {%- if dkcutter.useTailwind %}
       "tailwindcss/enforce-consistent-line-wrapping": "off",
+      {%- endif %}
     },
   },
 );

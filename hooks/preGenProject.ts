@@ -17,6 +17,7 @@ import { logger } from "./utils/logger";
 // {{ dkcutter.add("useSentry", "{% if 'sentry' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useWhitenoise", "{% if 'whitenoise' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("usePgadmin", "{% if 'pgadmin' in dkcutter.additionalTools %}true{% endif %}") }}
+// {{ dkcutter.add("useTailwind", "{{ true if 'tailwindcss' in dkcutter.additionalTools }}") }}
 
 const ctx = {
   frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,

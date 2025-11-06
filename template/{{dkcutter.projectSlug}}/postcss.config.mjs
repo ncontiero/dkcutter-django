@@ -1,6 +1,6 @@
 export default {
   plugins: {
-    {%- if "tailwindcss" in dkcutter.additionalTools %}
+    {%- if dkcutter.useTailwind %}
     "@tailwindcss/postcss": {},
     {%- else %}
     "postcss-preset-env": {},
