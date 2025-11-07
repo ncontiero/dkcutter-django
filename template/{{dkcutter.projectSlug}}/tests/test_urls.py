@@ -10,4 +10,4 @@ def test_home(admin_client):
     response = admin_client.get(url)
     assert response.status_code == HTTPStatus.OK
     assert "pages/home.html" in [t.name for t in response.templates]
-    assert "Hello World" in response.content.decode()
+    assert "Welcome to {{ dkcutter.projectName }}!" in response.content.decode()
