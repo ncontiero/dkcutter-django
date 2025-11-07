@@ -15,7 +15,7 @@ flower==2.0.1  # https://github.com/mher/flower
 
 # Django
 # ------------------------------------------------------------------------------
-django==5.2.7  # https://www.djangoproject.com/
+django==5.2.8  # https://www.djangoproject.com/
 django-cleanup==9.0.0  # https://github.com/un1t/django-cleanup
 dj-database-url==3.0.1  # https://github.com/jazzband/dj-database-url
 django-redis==6.0.0  # https://github.com/jazzband/django-redis
@@ -32,5 +32,5 @@ orjson==3.11.4  # https://github.com/ijl/orjson
 django-cors-headers==4.9.0  # https://github.com/adamchainz/django-cors-headers
 {%- endif %}
 {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
-django-webpack-loader==3.2.1  # https://github.com/django-webpack/django-webpack-loader
+django-webpack-loader==3.2.2  # https://github.com/django-webpack/django-webpack-loader
 {%- endif %}
