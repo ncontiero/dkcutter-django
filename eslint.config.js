@@ -10,6 +10,7 @@ const FILES_TO_IGNORE = [
   "docker-compose.production.yml",
   "pyproject.toml",
   "postcss.config.mjs",
+  "eslint.config.mjs",
   "prod.config.mjs",
   "prod.config.ts",
   "{{dkcutter.projectSlug}}/**/*.html",
@@ -23,6 +24,14 @@ function ignoreFiles(files) {
 export default ncontiero(
   {
     ignores: [".venv", "venv", ...(ignoreFiles(FILES_TO_IGNORE) || [])],
+    javascript: {
+      overrides: {
+        "node/no-unsupported-features/node-builtins": [
+          "error",
+          { allowExperimental: true },
+        ],
+      },
+    },
   },
   {
     files: ["**/emails/**/*.tsx"],
