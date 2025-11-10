@@ -43,6 +43,7 @@
   <body>
     <header class="{% endraw %}{{ 'bg-secondary/60 sticky inset-x-0 top-0 z-9999 h-16 w-full border-b-2 backdrop-blur-sm' if dkcutter.useTailwind else 'header' }}{% raw %}">
       <div class="{% endraw %}{{ 'flex size-full items-center justify-between px-4 sm:container' if dkcutter.useTailwind else 'header-container' }}{% raw %}">
+        {# djlint:off #}
         {% endraw %}{% if dkcutter.useTailwind %}{% raw %}<a
           class="
             focus:ring-ring focus:ring-3 focus:outline-hidden rounded-md p-2 text-xl font-bold duration-200
@@ -52,7 +53,9 @@
         >
           {% endraw %}{{ dkcutter.projectName }}{% raw %}
         </a>{% endraw %}{% else %}{% raw %}<a class="header-logo-link" href="{% url 'home' %}">{% endraw %}{{ dkcutter.projectName }}{% raw %}</a>{% endraw %}{% endif %}{% raw %}
+        {# djlint:on #}
         <div class="{% endraw %}{{ 'flex items-center gap-3' if dkcutter.useTailwind else 'header-content-container' }}{% raw %}">
+          {# djlint:off #}
           <button
             type="button"
             data-theme-toggle
@@ -62,6 +65,7 @@
             <span id="theme-text">Light Mode</span>
             <span class="sr-only">Toggle theme</span>
           </button>
+          {# djlint:on #}
         </div>
       </div>
     </header>
