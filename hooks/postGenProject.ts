@@ -221,6 +221,7 @@ async function handleFrontendPipelineAndTools(
   filesToRemove.push(
     path.join(srcFolder, `index.${filesToRemoveExt}`),
     path.join(srcFolder, `vendors.${filesToRemoveExt}`),
+    path.join(srcFolder, "components", `theme-toggle.${filesToRemoveExt}`),
   );
 
   if (lang === "js") {
