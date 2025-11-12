@@ -39,7 +39,7 @@ export const commonConfig = defineConfig({
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         use: [
           {
             loader: "builtin:swc-loader",

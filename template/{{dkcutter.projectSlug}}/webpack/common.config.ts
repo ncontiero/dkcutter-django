@@ -33,7 +33,7 @@ export const commonConfig: Configuration = {
   module: {
     rules: [
       {
-        test: /\.(t|j)s(x?)$/,
+        test: /\.tsx?$/,
         loader: "babel-loader",
       },
       {
@@ -47,7 +47,7 @@ export const commonConfig: Configuration = {
   },
   resolve: {
     modules: ["node_modules"],
-    extensions: ["...", ".ts", "tsx", "js"],
+    extensions: ["...", ".ts", "tsx"],
     alias: {
       "@": path.resolve(PROJECT_PATH, "src"),
     },

@@ -1,6 +1,6 @@
 import * as path from "node:path";
 import { defineConfig } from "@rspack/cli";
-import { rspack } from "@rspack/core";
+import { type SwcLoaderOptions, rspack } from "@rspack/core";
 import BundleTracker from "webpack-bundle-tracker";
 
 // Target browsers, see: https://github.com/browserslist/browserslist
@@ -39,16 +39,17 @@ export const commonConfig = defineConfig({
   module: {
     rules: [
       {
-        test: /\.[jt]s$/,
+        test: /\.tsx?$/,
         use: [
           {
             loader: "builtin:swc-loader",
             options: {
               jsc: { parser: { syntax: "typescript" } },
               env: { targets: BROWSER_TARGETS },
-            },
+            } satisfies SwcLoaderOptions,
           },
         ],
+        type: "javascript/auto",
       },
       {
         test: /\.css$/,

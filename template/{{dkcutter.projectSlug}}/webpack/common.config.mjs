@@ -34,7 +34,7 @@ export const commonConfig = {
     rules: [
       // we pass the output from babel loader to react-hot loader
       {
-        test: /\.js(x?)$/,
+        test: /\.jsx?$/,
         loader: "babel-loader",
       },
       {
