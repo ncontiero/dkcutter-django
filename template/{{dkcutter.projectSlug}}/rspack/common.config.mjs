@@ -24,6 +24,10 @@ export const commonConfig = defineConfig({
   output: {
     path: path.resolve(PROJECT_PATH, "static/bundles/"),
     publicPath: "/static/bundles/",
+    filename: "js/[name].js",
+    chunkFilename: "js/[name].js",
+    cssFilename: "css/[name].css",
+    assetModuleFilename: "assets/[name][ext]",
     clean: true,
   },
   plugins: [
