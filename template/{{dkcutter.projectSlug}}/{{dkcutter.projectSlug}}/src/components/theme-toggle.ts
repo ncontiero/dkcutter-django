@@ -5,9 +5,7 @@ export function getTheme() {
 }
 
 export function initThemeToggle() {
-  const themeToggle = document.querySelector<HTMLButtonElement>(
-    "[data-theme-toggle]",
-  );
+  const themeToggle = document.querySelector("[data-theme-toggle]");
   if (!themeToggle) return;
   const themeText = themeToggle.querySelector("#theme-text");
 

@@ -21,5 +21,11 @@ export default merge(commonConfig, {
   bail: true,
   output: {
     publicPath: `${staticUrl}bundles/`,
+    filename: "js/[name]-[fullhash].js",
+    chunkFilename: "js/[name]-[hash].js",
+    {%- if dkcutter.frontendPipeline == "Rspack" %}
+    cssFilename: "css/[name]-[contenthash].css",
+    {%- endif %}
+    assetModuleFilename: "assets/[name]-[hash][ext]",
   },
 });
