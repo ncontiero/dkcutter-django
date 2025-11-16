@@ -33,7 +33,7 @@
     "promptMessage": "What is the email address?"
   },
   "postgresqlVersion": {
-    "value": ["17", "16", "15", "14"],
+    "value": ["18", "17", "16", "15", "14"],
     "promptMessage": "What {{ colors.blue('PostgreSQL') }} version would you like to use?"
   },
   "cloudProvider": {

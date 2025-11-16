@@ -1,6 +1,7 @@
 export const PATTERN = /\{\{(\s?dkcutter)\.(.*?)\}\}/;
 
 export const SUPPORTED_COMBINATIONS = [
+  { postgresqlVersion: "18" },
   { postgresqlVersion: "17" },
   { postgresqlVersion: "16" },
   { postgresqlVersion: "15" },

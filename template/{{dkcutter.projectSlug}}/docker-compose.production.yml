@@ -43,7 +43,11 @@ services:
       dockerfile: ./compose/production/postgres/Dockerfile
     image: {{ dkcutter.projectSlug }}_production_postgres
     volumes:
+    {%- if dkcutter.postgresqlVersion|int >= 18 %}
+      - production_postgres_data:/var/lib/postgresql/{{ dkcutter.postgresqlVersion }}/docker
+    {%- else %}
       - production_postgres_data:/var/lib/postgresql/data
+    {%- endif %}
       - production_postgres_data_backups:/backups
     env_file:
       - ./.envs/.production/.postgres

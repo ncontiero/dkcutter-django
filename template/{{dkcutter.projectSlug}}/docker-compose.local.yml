@@ -37,7 +37,11 @@ services:
     image: {{ dkcutter.projectSlug }}_production_postgres
     container_name: {{ dkcutter.projectSlug }}_local_postgres
     volumes:
+    {%- if dkcutter.postgresqlVersion|int >= 18 %}
+      - {{ dkcutter.projectSlug }}_local_postgres_data:/var/lib/postgresql/{{ dkcutter.postgresqlVersion }}/docker
+    {%- else %}
       - {{ dkcutter.projectSlug }}_local_postgres_data:/var/lib/postgresql/data
+    {%- endif %}
       - {{ dkcutter.projectSlug }}_local_postgres_data_backups:/backups
     env_file:
       - ./.envs/.local/.postgres

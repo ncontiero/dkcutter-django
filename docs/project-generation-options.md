@@ -15,6 +15,7 @@ This page describes all the template options that will be prompted by the [dkcut
 - **Email**: The email address you want to identify yourself in the project.
 
 - **PostgreSQL version**: Select a [PostgreSQL](https://www.postgresql.org/docs/) version to use. The choices are:
+  - 18
   - 17
   - 16
   - 15
