@@ -1,6 +1,6 @@
 {% if dkcutter._haveNodePackages -%}
 {%- if dkcutter.pkgManager == "bun" -%}
-FROM docker.io/oven/bun:1.3.2-slim AS client-base
+FROM docker.io/oven/bun:1.3.3-slim AS client-base
 {%- else -%}
 FROM docker.io/node:24.11.1-bookworm-slim AS client-base
 {%- endif %}
