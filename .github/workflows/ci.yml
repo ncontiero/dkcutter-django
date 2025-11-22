@@ -75,9 +75,8 @@ jobs:
             args: --frontendPipeline Rspack --pkgManagerToUse npm
           - name: Rspack with yarn
             args: --frontendPipeline Rspack --pkgManagerToUse yarn
-          # Bun crash: https://github.com/oven-sh/bun/issues/24552
-          # - name: Rspack with bun
-          #   args: --frontendPipeline Rspack --pkgManagerToUse bun
+          - name: Rspack with bun
+            args: --frontendPipeline Rspack --pkgManagerToUse bun
           - name: Rspack with TailwindCSS and Eslint
             args: --frontendPipeline Rspack --additionalTools tailwindcss,eslint
           - name: Rspack with React Email and Eslint
