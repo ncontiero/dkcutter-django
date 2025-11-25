@@ -19,8 +19,8 @@
   "devDependencies": {
     "@ncontiero/eslint-config": "6.5.0",
     "@react-email/components": "^1.0.1",
-    "@rspack/cli": "^1.6.3",
-    "@rspack/core": "^1.6.3",
+    "@rspack/cli": "^1.6.4",
+    "@rspack/core": "^1.6.4",
     "@types/fs-extra": "^11.0.4",
     "@types/prompts": "^2.4.9",
     "@types/react": "^19.2.5",
