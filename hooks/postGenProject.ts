@@ -313,7 +313,7 @@ async function main() {
   setFlagsInSettings();
 
   const gitignorePath = path.resolve(".gitignore");
-  await appendToGitignore(gitignorePath, "\n.env\n.envs/*\n");
+  await appendToGitignore(gitignorePath, "\n.env\n.envs/*\n!.envs/.local/\n");
 
   const filesToRemove = [];
 
