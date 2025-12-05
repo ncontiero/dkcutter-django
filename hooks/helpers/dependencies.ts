@@ -33,6 +33,7 @@ async function tryBuildDockerImage(
     await runCommand({
       cmd: "docker",
       args: ["build", "--load", "-t", tag, "-f", dockerfilePath, "."],
+      env: { DOCKER_BUILDKIT: "1" },
       successText: `Docker image ${tag} built successfully.`,
       failText: (error) => `Failed to build Docker image ${tag}:\n${error}`,
     });

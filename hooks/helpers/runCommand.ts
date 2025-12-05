@@ -9,6 +9,7 @@ interface RunCommandProps {
   stdout?: StdoutStderrOption;
   successText?: string;
   failText?: string | ((error: Error) => string);
+  env?: Partial<Record<string, string>>;
 }
 
 export function runCommand({
@@ -18,9 +19,10 @@ export function runCommand({
   stdout = "pipe",
   successText,
   failText,
+  env = {},
 }: RunCommandProps) {
   const cmdWithArgs = `${cmd} ${args.join(" ")}`;
-  return oraPromise(execa(cmd, args, { cwd: projectDir, stdout }), {
+  return oraPromise(execa(cmd, args, { cwd: projectDir, stdout, env }), {
     text: `Running ${cmdWithArgs}...`,
     successText: colorize(
       "success",
