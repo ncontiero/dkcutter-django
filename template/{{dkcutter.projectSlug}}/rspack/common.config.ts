@@ -11,7 +11,7 @@ const BROWSER_TARGETS = [
   "safari >= 14",
 ];
 
-const BASE_PATH = path.join(__dirname, "../");
+const BASE_PATH = path.join(import.meta.dirname, "../");
 const PROJECT_PATH = path.join(BASE_PATH, "{{ dkcutter.projectSlug }}");
 
 export const commonConfig = defineConfig({
