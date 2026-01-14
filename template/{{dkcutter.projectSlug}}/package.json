@@ -11,8 +11,8 @@
   ],
   "scripts": {},
   "devDependencies": {
-    "@babel/core": "^7.28.5",
-    "@babel/preset-env": "^7.28.5",
+    "@babel/core": "^7.28.6",
+    "@babel/preset-env": "^7.28.6",
     "@babel/preset-typescript": "^7.28.5",
     "@ncontiero/eslint-config": "7.0.0",
     "@rspack/cli": "^1.7.1",
