@@ -52,8 +52,8 @@ importers:
         specifier: ^11.3.3
         version: 11.3.3
       ora:
-        specifier: ^9.0.0
-        version: 9.0.0
+        specifier: ^9.1.0
+        version: 9.1.0
       prompts:
         specifier: ^2.4.2
         version: 2.4.2
@@ -2954,8 +2954,8 @@ packages:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
 
-  ora@9.0.0:
-    resolution: {integrity: sha512-m0pg2zscbYgWbqRR6ABga5c3sZdEon7bSgjnlXC64kxtxLOyjRcbbUkLj7HFyy/FTD+P2xdBWu8snGhYI0jc4A==}
+  ora@9.1.0:
+    resolution: {integrity: sha512-53uuLsXHOAJl5zLrUrzY9/kE+uIFEx7iaH4g2BIJQK4LZjY4LpCCYZVKDWIkL+F01wAaCg93duQ1whnK/AmY1A==}
     engines: {node: '>=20'}
 
   own-keys@1.0.1:
@@ -5397,7 +5397,7 @@ snapshots:
       execa: 9.6.1
       fs-extra: 11.3.3
       nunjucks: 3.2.4(chokidar@3.6.0)
-      ora: 9.0.0
+      ora: 9.1.0
       prompts: 2.4.2
       tsx: 4.21.0
       which: 5.0.0
@@ -7102,7 +7102,7 @@ snapshots:
       type-check: 0.4.0
       word-wrap: 1.2.5
 
-  ora@9.0.0:
+  ora@9.1.0:
     dependencies:
       chalk: 5.6.2
       cli-cursor: 5.0.0
@@ -7112,7 +7112,6 @@ snapshots:
       log-symbols: 7.0.1
       stdin-discarder: 0.2.2
       string-width: 8.1.0
-      strip-ansi: 7.1.2
 
   own-keys@1.0.1:
     dependencies:
