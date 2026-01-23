@@ -16,7 +16,7 @@ importers:
         specifier: 7.0.0
         version: 7.0.0(@typescript-eslint/utils@8.53.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(jiti@2.6.1)(tailwindcss@4.1.18)(typescript@5.9.3)
       '@react-email/components':
-        specifier: ^1.0.5
+        specifier: ^1.0.6
         version: 1.0.6(react-dom@19.2.0(react@19.2.3))(react@19.2.3)
       '@rspack/cli':
         specifier: ^1.7.3
