@@ -1,0 +1,13 @@
+{% raw %}{% load allauth %}
+
+<span class="{% endraw %}{{ 'badge' if not dkcutter.useTailwind }}{% raw %}
+  {% if 'success' in attrs.tags %}badge-success
+  {% elif 'warning' in attrs.tags %}badge-warning
+  {% elif 'secondary' in attrs.tags %}badge-secondary
+  {% elif 'danger' in attrs.tags %}badge-danger
+  {% else %}badge-primary
+  {% endif %}"
+>
+  {% slot %}
+  {% endslot %}
+</span>{% endraw %}

@@ -1,0 +1,19 @@
+{% raw %}{% extends "base.html" %}
+
+{% block title %}
+  {{ user.name|default:user.username }}
+{% endblock title %}
+
+{% block content %}
+  <h1 class="{% endraw %}{{ 'text-xl font-bold' if dkcutter.useTailwind else 'title' }}{% raw %}">{{ user.name|default:user.username }}</h1>
+
+  <form
+    class="{% endraw %}{{ 'flex flex-col border rounded-md p-4 text-start mt-2 mb-4' if dkcutter.useTailwind else 'form' }}{% raw %}"
+    method="post"
+    action="{% url 'users:update' %}"
+  >
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="{% endraw %}{{ 'button ' if not dkcutter.useTailwind }}{% raw %}button-primary">Update</button>
+  </form>
+{% endblock content %}{% endraw %}

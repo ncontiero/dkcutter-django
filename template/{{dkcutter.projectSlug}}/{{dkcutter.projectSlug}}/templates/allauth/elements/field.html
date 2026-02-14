@@ -1,0 +1,68 @@
+{% raw %}{% load allauth %}
+
+<div class="{% endraw %}{{ 'flex flex-col gap-2' if dkcutter.useTailwind else 'field-container' }}{% raw %}">
+  {% if attrs.type == "radio" or attrs.type == "checkbox" %}
+    <div class="{% endraw %}{{ 'flex items-center gap-2' if dkcutter.useTailwind else 'field-checkbox-container' }}{% raw %}">
+      <input
+        {% if attrs.required %}required{% endif %}
+        {% if attrs.disabled %}disabled{% endif %}
+        {% if attrs.readonly %}readonly{% endif %}
+        {% if attrs.checked %}checked{% endif %}
+        {% if attrs.name %}name="{{ attrs.name }}"{% endif %}
+        {% if attrs.id %}id="{{ attrs.id }}"{% endif %}
+        {% if attrs.placeholder %}placeholder="{{ attrs.placeholder }}"{% endif %}
+        {% if attrs.autocomplete %}autocomplete="{{ attrs.autocomplete }}"{% endif %}
+        {% if attrs.value is not None %}value="{{ attrs.value }}"{% endif %}
+        type="{{ attrs.type }}"
+      />
+      <label class="label" for="{{ attrs.id }}">
+        {% slot label %}
+        {% endslot %}
+      </label>
+    </div>
+  {% else %}
+    <label for="{{ attrs.id }}" class="label">
+      {% slot label %}
+      {% endslot %}
+    </label>
+    {% if attrs.type == "textarea" %}
+      <textarea
+        {% if attrs.required %}required{% endif %}
+        {% if attrs.rows %}rows="{{ attrs.rows }}"{% endif %}
+        {% if attrs.disabled %}disabled{% endif %}
+        {% if attrs.readonly %}readonly{% endif %}
+        {% if attrs.checked %}checked{% endif %}
+        {% if attrs.name %}name="{{ attrs.name }}"{% endif %}
+        {% if attrs.id %}id="{{ attrs.id }}"{% endif %}
+        {% if attrs.placeholder %}placeholder="{{ attrs.placeholder }}"{% endif %}
+        class="textarea"
+      >{% slot value %}{% endslot %}</textarea>
+    {% else %}
+      <input
+        {% if attrs.required %}required{% endif %}
+        {% if attrs.disabled %}disabled{% endif %}
+        {% if attrs.readonly %}readonly{% endif %}
+        {% if attrs.checked %}checked{% endif %}
+        {% if attrs.name %}name="{{ attrs.name }}"{% endif %}
+        {% if attrs.id %}id="{{ attrs.id }}"{% endif %}
+        {% if attrs.placeholder %}placeholder="{{ attrs.placeholder }}"{% endif %}
+        {% if attrs.autocomplete %}autocomplete="{{ attrs.autocomplete }}"{% endif %}
+        {% if attrs.value is not None %}value="{{ attrs.value }}"{% endif %}
+        type="{{ attrs.type }}"
+        class="input"
+      />
+    {% endif %}
+  {% endif %}
+
+  {% if attrs.errors %}
+    <div class="{% endraw %}{{ 'alert ' if not dkcutter.useTailwind }}{% raw %}alert-danger" role="alert">
+      <div class="alert-description">{{ attrs.errors }}</div>
+    </div>
+  {% endif %}
+
+  {% if slots.help_text %}
+    <div class="{% endraw %}{{ 'text-sm text-balance leading-relaxed [&>a]:link-primary' if dkcutter.useTailwind else 'field-help-text' }}{% raw %}">
+      {% slot help_text %}{% endslot %}
+    </div>
+  {% endif %}
+</div>{% endraw %}

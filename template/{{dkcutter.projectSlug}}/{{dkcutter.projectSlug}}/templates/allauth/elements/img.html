@@ -1,0 +1,6 @@
+{% raw %}<img
+  src="{{ attrs.src }}"
+  {% if attrs.alt %}alt="{{ attrs.alt }}"{% endif %}
+  {% if 'totp' in attrs.tags %}data-qr="true"{% endif %}
+  class="{% endraw %}{{ 'rounded-md data-[qr="true"]:bg-white data-[qr="true"]:h-96' if dkcutter.useTailwind else 'allauth-img' }}{% raw %}"
+/>{% endraw %}

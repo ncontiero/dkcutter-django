@@ -32,6 +32,10 @@
     "value": "{{ authorName|lower|trim|replace(' ', '-') }}@{{ domainName|lower|trim }}",
     "promptMessage": "What is the email address?"
   },
+  "usernameType": {
+    "value": ["username", "email"],
+    "promptMessage": "What {{ colors.blue('Username Type') }} would you like to use?"
+  },
   "postgresqlVersion": {
     "value": ["18", "17", "16", "15", "14"],
     "promptMessage": "What {{ colors.blue('PostgreSQL') }} version would you like to use?"

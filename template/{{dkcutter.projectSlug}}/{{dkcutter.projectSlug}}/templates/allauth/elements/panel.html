@@ -1,0 +1,15 @@
+{% raw %}{% load allauth %}
+
+<section class="{% endraw %}{{ 'flex flex-col max-w-xl mx-auto border rounded-md p-4 text-start my-4' if dkcutter.useTailwind else 'allauth-section' }}{% raw %}">
+  <h2 class="{% endraw %}{{ 'text-xl font-medium text-center mb-1' if dkcutter.useTailwind else 'allauth-section-title' }}{% raw %}">
+    {% slot title %}
+    {% endslot %}
+  </h2>
+  {% slot body %}
+  {% endslot %}
+  {% if slots.actions %}
+    <ul class="{% endraw %}{{ 'flex items-center justify-center gap-2' if dkcutter.useTailwind else 'allauth-section-actions' }}{% raw %}">
+      {% for action in slots.actions %}<li>{{ action }}</li>{% endfor %}
+    </ul>
+  {% endif %}
+</section>{% endraw %}

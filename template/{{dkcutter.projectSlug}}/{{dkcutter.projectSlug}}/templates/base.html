@@ -55,6 +55,18 @@
         </a>{% endraw %}{% else %}{% raw %}<a class="header-logo-link" href="{% url 'home' %}">{% endraw %}{{ dkcutter.projectName }}{% raw %}</a>{% endraw %}{% endif %}{% raw %}
         {# djlint:on #}
         <div class="{% endraw %}{{ 'flex items-center gap-3' if dkcutter.useTailwind else 'header-content-container' }}{% raw %}">
+          {% if request.user.is_authenticated %}
+            <a href="{% endraw %}{% if dkcutter.usernameType == "email" %}{% raw %}{% url 'users:detail' request.user.pk %}{% endraw %}{% else %}{% raw %}{% url 'users:detail' request.user.username %}{% endraw %}{% endif %}{% raw %}" class="{% endraw %}{{ 'link ' if not dkcutter.useTailwind }}{% raw %}link-primary">My Profile</a>
+            {# URL provided by django-allauth/account/urls.py #}
+            <a href="{% url 'account_logout' %}" class="{% endraw %}{{ 'link ' if not dkcutter.useTailwind }}{% raw %}link-primary">Sign Out</a>
+          {% else %}
+            {% if ACCOUNT_ALLOW_REGISTRATION %}
+              {# URL provided by django-allauth/account/urls.py #}
+              <a href="{% url 'account_signup' %}" class="{% endraw %}{{ 'link ' if not dkcutter.useTailwind }}{% raw %}link-primary">Sign Up</a>
+            {% endif %}
+            {# URL provided by django-allauth/account/urls.py #}
+            <a href="{% url 'account_login' %}" class="{% endraw %}{{ 'link ' if not dkcutter.useTailwind }}{% raw %}link-primary">Sign In</a>
+          {% endif %}
           {# djlint:off #}
           <button
             type="button"
@@ -70,6 +82,21 @@
       </div>
     </header>
     <div class="{% endraw %}{{ 'container my-10 text-center' if dkcutter.useTailwind else 'container page-container' }}{% raw %}">
+      {% if messages %}
+        <div aria-label="Notifications" role="region" tabindex="-1" class="{% endraw %}{{ 'max-w-xl mx-auto mb-4' if dkcutter.useTailwind else 'messages-container' }}{% raw %}">
+          <ol class="{% endraw %}{{ 'flex gap-2 w-full flex-col-reverse' if dkcutter.useTailwind else 'messages-list' }}{% raw %}" tabindex="-1">
+            {% for message in messages %}
+              <li
+                role="alert"
+                tabindex="0"
+                class="{% endraw %}{{ 'p-6 font-medium flex flex-col rounded-md border' if dkcutter.useTailwind else 'message' }}{% raw %} {% if message.tags %}message-{{message.tags}}{% else %}message-primary{% endif %}"
+              >
+                {{ message }}
+              </li>
+            {% endfor %}
+          </ol>
+        </div>
+      {% endif %}
       {% block content %}
       {% endblock content %}
     </div>

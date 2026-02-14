@@ -18,6 +18,7 @@ flower==2.0.1  # https://github.com/mher/flower
 django==5.2.11  # https://www.djangoproject.com/
 django-cleanup==9.0.0  # https://github.com/un1t/django-cleanup
 dj-database-url==3.1.0  # https://github.com/jazzband/dj-database-url
+django-allauth[mfa]==65.14.0  # https://github.com/pennersr/django-allauth
 django-redis==6.0.0  # https://github.com/jazzband/django-redis
 {%- if dkcutter.restFramework == 'DRF' %}
 # Django REST Framework

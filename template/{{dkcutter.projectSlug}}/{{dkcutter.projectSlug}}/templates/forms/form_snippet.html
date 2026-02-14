@@ -1,0 +1,34 @@
+{% raw %}{% if form.non_field_errors %}
+<div class="{% endraw %}{{ 'mb-6 flex flex-col gap-2' if dkcutter.useTailwind else 'form-non-field-errors' }}{% raw %}">
+  {% for error in form.non_field_errors %}
+    <div class="{% endraw %}{{ 'alert ' if not dkcutter.useTailwind }}{% raw %}alert-danger" role="alert">
+      <h5 class="alert-title">Error!</h5>
+      <div class="alert-description">{{ error|escape }}</div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% for field in form %}
+  {% if field.is_hidden %}
+    {{ field }}
+  {% else %}
+    <div class="{% endraw %}{{ 'mb-5 flex flex-col' if dkcutter.useTailwind else 'form-field-container' }}{% raw %}">
+      <div class="{% endraw %}{{ 'flex flex-col gap-1.5 [&>input]:input' if dkcutter.useTailwind else 'form-field' }}{% raw %}">
+        <label class="label" for="{{ field.id_for_label }}">
+          {{ field.label }}{% if not field.field.required %}
+          <span class="{% endraw %}{{ 'text-foreground/60 text-xs font-medium' if dkcutter.useTailwind else 'form-field-optional' }}{% raw %}"> (Optional)</span>{% endif %}
+        </label>
+        {{ field }}
+      </div>
+      {% if field.help_text %}
+      <span id="{{ field.auto_id }}_helptext" class="{% endraw %}{{ 'text-foreground/60 mt-0.5 text-xs' if dkcutter.useTailwind else 'form-field-help-text' }}{% raw %}">
+        {{ field.help_text|safe }}
+      </span>
+      {% endif %}
+      {% for error in field.errors %}
+        <span class="{% endraw %}{{ 'text-danger mt-1 text-sm font-medium' if dkcutter.useTailwind else 'form-field-error' }}{% raw %}">{{ error|escape }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endfor %}{% endraw %}

@@ -60,8 +60,13 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.admin",
+    "django.forms",
 ]
 THIRD_PARTY_APPS = [
+    "allauth",
+    "allauth.account",
+    "allauth.mfa",
+    "allauth.socialaccount",
 {%- if dkcutter.useCelery %}
     "django_celery_beat",
 {%- endif %}
@@ -79,10 +84,25 @@ THIRD_PARTY_APPS = [
     "django_cleanup.apps.CleanupConfig",
 ]
 LOCAL_APPS = [
+    "{{ dkcutter.projectSlug }}.users",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+# AUTHENTICATION
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
+AUTH_USER_MODEL = "users.User"
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
+LOGIN_REDIRECT_URL = "users:redirect"
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-url
+LOGIN_URL = "account_login"
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -96,7 +116,9 @@ PASSWORD_HASHERS = [
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
@@ -119,6 +141,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 # STATIC
@@ -158,10 +181,14 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
+                "{{dkcutter.projectSlug}}.users.context_processors.allauth_settings",
             ],
         },
     },
 ]
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#form-renderer
+FORM_RENDERER = "{{dkcutter.projectSlug}}.forms.renderers.CustomFormRenderer"
 
 # SECURITY
 # ------------------------------------------------------------------------------
@@ -191,6 +218,13 @@ ADMIN_URL = "admin/"
 ADMINS = [("""{{dkcutter.authorName}}""", "{{dkcutter.email}}")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
+# https://cookiecutter-django.readthedocs.io/en/latest/settings.html#other-environment-settings
+# Force the `admin` sign in process to go through the `django-allauth` workflow
+DJANGO_ADMIN_FORCE_ALLAUTH = config(
+    "DJANGO_ADMIN_FORCE_ALLAUTH",
+    default=False,
+    cast=bool,
+)
 
 # LOGGING
 # ------------------------------------------------------------------------------
@@ -260,6 +294,33 @@ CELERY_TASK_SEND_SENT_EVENT = True
 # https://docs.celeryq.dev/en/latest/userguide/configuration.html#worker-hijack-root-logger
 CELERY_WORKER_HIJACK_ROOT_LOGGER = False
 {%- endif %}
+# django-allauth
+# ------------------------------------------------------------------------------
+ACCOUNT_ALLOW_REGISTRATION = config(
+    "DJANGO_ACCOUNT_ALLOW_REGISTRATION",
+    default=True,
+    cast=bool,
+)
+# https://docs.allauth.org/en/latest/account/configuration.html
+ACCOUNT_LOGIN_METHODS = {"{{dkcutter.usernameType}}"}
+# https://docs.allauth.org/en/latest/account/configuration.html
+{%- if dkcutter.usernameType == "username" %}
+ACCOUNT_SIGNUP_FIELDS = ["email*", "username*", "password1*", "password2*"]
+{%- else %}
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
+# https://docs.allauth.org/en/latest/account/configuration.html
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+{%- endif %}
+# https://docs.allauth.org/en/latest/account/configuration.html
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# https://docs.allauth.org/en/latest/account/configuration.html
+ACCOUNT_ADAPTER = "{{dkcutter.projectSlug}}.users.adapters.AccountAdapter"
+# https://docs.allauth.org/en/latest/account/forms.html
+ACCOUNT_FORMS = {"signup": "{{dkcutter.projectSlug}}.users.forms.UserSignupForm"}
+# https://docs.allauth.org/en/latest/socialaccount/configuration.html
+SOCIALACCOUNT_ADAPTER = "{{dkcutter.projectSlug}}.users.adapters.SocialAccountAdapter"
+# https://docs.allauth.org/en/latest/socialaccount/configuration.html
+SOCIALACCOUNT_FORMS = {"signup": "{{dkcutter.projectSlug}}.users.forms.UserSocialSignupForm"}
 {% if dkcutter.restFramework != 'None' %}
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
 CORS_URLS_REGEX = r"^/api/.*$"

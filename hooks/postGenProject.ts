@@ -5,6 +5,7 @@ import type {
   FrontendPipeline,
   FrontendPipelineLang,
   PackageManager,
+  UsernameType,
 } from "./utils/types";
 
 import path from "node:path";
@@ -23,6 +24,7 @@ import { updatePackageJson } from "./utils/updatePackageJson";
 
 const context: Context = {
   projectSlug: "{{ dkcutter.projectSlug }}",
+  usernameType: "{{ dkcutter.usernameType }}" as UsernameType,
   pkgManager: "{{ dkcutter._pkgManager }}" as PackageManager,
   pkgRun: "{{ dkcutter._pkgRun }}",
   cloudProvider: "{{ dkcutter.cloudProvider }}",
@@ -50,6 +52,28 @@ const staticFolder = path.join(projectDir, "static");
 
 const webpackConfigFolder = path.join(projectRootDir, "webpack");
 const rspackConfigFolder = path.join(projectRootDir, "rspack");
+
+function handleUserFiles(): string[] {
+  const filesToRemove: string[] = [];
+  const userApp = path.join(projectDir, "users");
+  const userAppTests = path.join(projectDir, "users", "tests");
+
+  if (context.usernameType === "username") {
+    filesToRemove.push(
+      path.join(userApp, "managers.py"),
+      path.join(userAppTests, "test_managers.py"),
+    );
+  }
+
+  if (!context.useCelery) {
+    filesToRemove.push(
+      path.join(userApp, "tasks.py"),
+      path.join(userAppTests, "test_tasks.py"),
+    );
+  }
+
+  return filesToRemove;
+}
 
 async function handleReactEmailSetup({
   scripts,
@@ -315,7 +339,7 @@ async function main() {
   const gitignorePath = path.resolve(".gitignore");
   await appendToGitignore(gitignorePath, "\n.env\n.envs/*\n!.envs/.local/\n");
 
-  const filesToRemove = [];
+  const filesToRemove = handleUserFiles();
 
   if (context.cloudProvider !== "AWS") {
     filesToRemove.push(path.join("compose", "production", "aws"));

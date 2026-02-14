@@ -14,6 +14,10 @@ This page describes all the template options that will be prompted by the [dkcut
 
 - **Email**: The email address you want to identify yourself in the project.
 
+- **Username Type**: Select whether the user will log in using their **username** or **email**. The choices are:
+  - username
+  - email
+
 - **PostgreSQL version**: Select a [PostgreSQL](https://www.postgresql.org/docs/) version to use. The choices are:
   - 18
   - 17

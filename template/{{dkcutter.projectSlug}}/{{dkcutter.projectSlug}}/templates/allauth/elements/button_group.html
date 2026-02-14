@@ -1,0 +1,6 @@
+{% raw %}{% load allauth %}
+
+<div class="{% endraw %}{{ 'flex items-center justify-center gap-2 mt-4' if dkcutter.useTailwind else 'button-group' }}{% raw %}">
+  {% slot %}
+  {% endslot %}
+</div>{% endraw %}

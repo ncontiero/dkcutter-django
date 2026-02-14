@@ -17,6 +17,8 @@ from .api import api
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path(settings.ADMIN_URL, admin.site.urls),
+    path("users/", include("{{dkcutter.projectSlug}}.users.urls", namespace="users")),
+    path("accounts/", include("allauth.urls")),
 {%- if dkcutter.restFramework == 'DNRF' %}
     # API base url
     path("api/", api.urls),

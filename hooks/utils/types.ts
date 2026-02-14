@@ -1,3 +1,4 @@
+export type UsernameType = "username" | "email";
 export type PackageManager = "npm" | "pnpm" | "yarn" | "bun";
 export type FrontendPipeline = "None" | "Rspack" | "Webpack";
 export type FrontendPipelineLang = "js" | "ts";
@@ -7,6 +8,7 @@ export type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
 
 export type Context = {
   projectSlug: string;
+  usernameType: UsernameType;
   pkgManager: PackageManager;
   pkgRun: string;
   cloudProvider: string;

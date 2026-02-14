@@ -1,0 +1,28 @@
+{% raw %}{% extends "base.html" %}
+
+{% block title %}
+  {{ user.name|default:user.username }}
+{% endblock title %}
+
+{% block content %}
+  <div class="container {% endraw %}{{ 'max-w-xl mx-auto' if dkcutter.useTailwind else 'user-container' }}{% raw %}">
+    <div class="{% endraw %}{{ 'border rounded-md p-4 flex flex-col items-center' if dkcutter.useTailwind else 'user-card' }}{% raw %}">
+      <div class="{% endraw %}{{ 'flex flex-col items-center mb-4' if dkcutter.useTailwind else 'user-card-header' }}{% raw %}">
+        <h1 class="{% endraw %}{{ 'text-xl font-bold' if dkcutter.useTailwind else 'title' }}{% raw %}">{{ user.username }}</h1>
+        {% if user.name %}
+          <h2 class="{% endraw %}{{ 'text-sm font-medium' if dkcutter.useTailwind else 'subtitle' }}{% raw %}">{{ user.name }}</h2>
+        {% endif %}
+      </div>
+      {% if user == request.user %}
+        <!-- Action buttons -->
+        <div class="{% endraw %}{{ 'flex items-center w-full gap-2' if dkcutter.useTailwind else 'form-actions w-full' }}{% raw %}">
+          <a class="{% endraw %}{{ 'button ' if not dkcutter.useTailwind }}{% raw %}button-primary w-full" href="{% url 'users:update' %}" role="button">My Info</a>
+          <a class="{% endraw %}{{ 'button ' if not dkcutter.useTailwind }}{% raw %}button-primary w-full" href="{% url 'account_email' %}" role="button">E-Mail</a>
+          <a class="{% endraw %}{{ 'button ' if not dkcutter.useTailwind }}{% raw %}button-primary w-full" href="{% url 'mfa_index' %}" role="button">MFA</a>
+          <!-- Your Stuff: Custom user template urls -->
+        </div>
+        <!-- End Action buttons -->
+      {% endif %}
+    </div>
+</div>
+{% endblock content %}{% endraw %}
