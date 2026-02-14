@@ -218,7 +218,7 @@ ADMIN_URL = "admin/"
 ADMINS = [("""{{dkcutter.authorName}}""", "{{dkcutter.email}}")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
-# https://cookiecutter-django.readthedocs.io/en/latest/settings.html#other-environment-settings
+# https://github.com/ncontiero/dkcutter-django/blob/main/docs/settings.md#other-environment-settings
 # Force the `admin` sign in process to go through the `django-allauth` workflow
 DJANGO_ADMIN_FORCE_ALLAUTH = config(
     "DJANGO_ADMIN_FORCE_ALLAUTH",

@@ -60,7 +60,7 @@ class TestUserAdmin:
     def _force_allauth(self, settings):
         settings.DJANGO_ADMIN_FORCE_ALLAUTH = True
         # Reload the admin module to apply the setting change
-        import {{ dkcutter.project_slug }}.users.admin as users_admin  # noqa: PLC0415
+        import {{ dkcutter.projectSlug }}.users.admin as users_admin  # noqa: PLC0415
 
         with contextlib.suppress(admin.sites.AlreadyRegistered):
             reload(users_admin)
