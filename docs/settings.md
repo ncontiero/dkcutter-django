@@ -53,3 +53,13 @@ The following table lists settings and their defaults for third-party applicatio
 | BREVO_API_URL                  | n/a                     | n/a                 | <https://api.brevo.com/v3/>        |
 | SPARKPOST_API_KEY              | SPARKPOST_API_KEY       | n/a                 | raises error                       |
 | SPARKPOST_API_URL              | n/a                     | n/a                 | <https://api.sparkpost.com/api/v1> |
+
+## Other Environment Settings
+
+### DJANGO_ACCOUNT_ALLOW_REGISTRATION
+
+Allows you to enable or disable user registration through django-allauth without disabling other characteristics like authentication and account management. (Django Setting: ACCOUNT_ALLOW_REGISTRATION)
+
+### DJANGO_ADMIN_FORCE_ALLAUTH
+
+Force the admin sign in process to go through the django-allauth workflow.
