@@ -77,7 +77,7 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       if (hasEslint) {
         const getWarnings = process.env.GET_WARNINGS === "true";
         const args = getWarnings ? ["--max-warnings", "0"] : [];
-        await execa("pnpm", ["dlx", "eslint", ".", ...args], {
+        await execa("pnpm", ["dlx", "eslint@9", ".", ...args], {
           cwd: target,
         });
       }
