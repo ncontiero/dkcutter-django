@@ -24,7 +24,7 @@ def user_detail(request: HttpRequest, username: str):
 
 @login_required
 def user_update(request: HttpRequest):
-    user = request.user
+    user: User = request.user   # type: ignore[assignment]
     if request.method != "POST":
         form = UpdateUserForm(instance=user, initial={"name": user.name})
         return render(request, "users/user_update.html", {"user": user, "form": form})
