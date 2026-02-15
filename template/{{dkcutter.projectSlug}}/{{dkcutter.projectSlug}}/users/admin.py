@@ -12,7 +12,7 @@ if settings.DJANGO_ADMIN_FORCE_ALLAUTH:
     # Force the `admin` sign in process to go through the `django-allauth` workflow:
     # https://docs.allauth.org/en/latest/common/admin.html#admin
     admin.autodiscover()
-    admin.site.login = secure_admin_login(admin.site.login)
+    admin.site.login = secure_admin_login(admin.site.login) # type: ignore[method-assign]
 
 
 @admin.register(User)

@@ -24,7 +24,7 @@ def user_detail(request: HttpRequest, username: str):
 
 @login_required
 def user_update(request: HttpRequest):
-    user: User = request.user
+    user = request.user
     if request.method != "POST":
         form = UpdateUserForm(instance=user, initial={"name": user.name})
         return render(request, "users/user_update.html", {"user": user, "form": form})
@@ -44,4 +44,4 @@ def user_update(request: HttpRequest):
 
 @login_required
 def user_redirect(request: HttpRequest):
-    return redirect(request.user.get_absolute_url())
+    return redirect(request.user.get_absolute_url()) # type: ignore[union-attr]

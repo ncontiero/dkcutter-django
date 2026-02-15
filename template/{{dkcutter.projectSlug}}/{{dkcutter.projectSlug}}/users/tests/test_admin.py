@@ -62,7 +62,7 @@ class TestUserAdmin:
         # Reload the admin module to apply the setting change
         import {{ dkcutter.projectSlug }}.users.admin as users_admin  # noqa: PLC0415
 
-        with contextlib.suppress(admin.sites.AlreadyRegistered):
+        with contextlib.suppress(admin.sites.AlreadyRegistered): # type: ignore[attr-defined]
             reload(users_admin)
 
     @pytest.mark.django_db
