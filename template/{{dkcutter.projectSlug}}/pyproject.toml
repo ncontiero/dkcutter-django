@@ -25,6 +25,9 @@ python_files = [
   "tests.py",
   "test_*.py",
 ]
+{%- if dkcutter.frontendPipeline != "None" or "reactEmail" in dkcutter.additionalTools %}
+norecursedirs = ["node_modules"]
+{%- endif %}
 
 # ==== Coverage ====
 [tool.coverage.run]
