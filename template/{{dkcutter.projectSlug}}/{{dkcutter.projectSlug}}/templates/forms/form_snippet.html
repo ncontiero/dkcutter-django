@@ -1,12 +1,13 @@
-{% raw %}{% if form.non_field_errors %}
-<div class="{% endraw %}{{ 'mb-6 flex flex-col gap-2' if dkcutter.useTailwind else 'form-non-field-errors' }}{% raw %}">
-  {% for error in form.non_field_errors %}
-    <div class="{% endraw %}{{ 'alert ' if not dkcutter.useTailwind }}{% raw %}alert-danger" role="alert">
-      <h5 class="alert-title">Error!</h5>
-      <div class="alert-description">{{ error|escape }}</div>
-    </div>
-  {% endfor %}
-</div>
+{% raw %}{% comment %} djlint:off {% endcomment %}
+{% if form.non_field_errors %}
+  <div class="{% endraw %}{{ 'mb-6 flex flex-col gap-2' if dkcutter.useTailwind else 'form-non-field-errors' }}{% raw %}">
+    {% for error in form.non_field_errors %}
+      <div class="{% endraw %}{{ 'alert ' if not dkcutter.useTailwind }}{% raw %}alert-danger" role="alert">
+        <h5 class="alert-title">Error!</h5>
+        <div class="alert-description">{{ error|escape }}</div>
+      </div>
+    {% endfor %}
+  </div>
 {% endif %}
 
 {% for field in form %}

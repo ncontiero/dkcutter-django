@@ -1,5 +1,6 @@
 {% raw %}{% load allauth %}
 
+{% comment %} djlint:off {% endcomment %}
 <section class="{% endraw %}{{ 'flex flex-col max-w-xl mx-auto border rounded-md p-4 text-start my-4' if dkcutter.useTailwind else 'allauth-section' }}{% raw %}">
   <h2 class="{% endraw %}{{ 'text-xl font-medium text-center mb-1' if dkcutter.useTailwind else 'allauth-section-title' }}{% raw %}">
     {% slot title %}

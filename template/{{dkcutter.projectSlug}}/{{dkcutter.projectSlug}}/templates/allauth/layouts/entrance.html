@@ -1,14 +1,15 @@
 {% raw %}{% extends "base.html" %}
+
 {% load i18n %}
 
-{% block css %}{{ block.super }}{% endblock css %}
-
+{% block css %}
+  {{ block.super }}
+{% endblock css %}
 {% block title %}
   {% block head_title %}
     {% trans "Sign In" %}
   {% endblock head_title %}
 {% endblock title %}
-
 {% block body %}
   <div class="{% endraw %}{{ 'flex justify-center py-4' if dkcutter.useTailwind else 'entrance-layout' }}{% raw %}">
     <div class="{% endraw %}{{ 'my-4 p-4' if dkcutter.useTailwind else 'entrance-container' }}{% raw %}">

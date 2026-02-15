@@ -1,4 +1,5 @@
-{% raw %}<img
+{% raw %}{% comment %} djlint:off {% endcomment %}
+<img
   src="{{ attrs.src }}"
   {% if attrs.alt %}alt="{{ attrs.alt }}"{% endif %}
   {% if 'totp' in attrs.tags %}data-qr="true"{% endif %}

@@ -1,5 +1,6 @@
 {% raw %}{% load allauth %}
 
+{% comment %} djlint:off {% endcomment %}
 <div class="{% endraw %}{{ 'flex flex-col gap-2' if dkcutter.useTailwind else 'field-container' }}{% raw %}">
   {% if attrs.type == "radio" or attrs.type == "checkbox" %}
     <div class="{% endraw %}{{ 'flex items-center gap-2' if dkcutter.useTailwind else 'field-checkbox-container' }}{% raw %}">

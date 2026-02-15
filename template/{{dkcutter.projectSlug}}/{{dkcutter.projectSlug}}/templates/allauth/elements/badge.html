@@ -1,5 +1,6 @@
 {% raw %}{% load allauth %}
 
+{% comment %} djlint:off {% endcomment %}
 <span class="{% endraw %}{{ 'badge' if not dkcutter.useTailwind }}{% raw %}
   {% if 'success' in attrs.tags %}badge-success
   {% elif 'warning' in attrs.tags %}badge-warning
