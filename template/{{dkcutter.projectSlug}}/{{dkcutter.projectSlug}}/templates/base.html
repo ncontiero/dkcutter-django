@@ -46,8 +46,8 @@
         {# djlint:off #}
         {% endraw %}{% if dkcutter.useTailwind %}{% raw %}<a
           class="
-            focus:ring-ring focus:ring-3 focus:outline-hidden rounded-md p-2 text-xl font-bold duration-200
-            hover:opacity-70
+            focus:ring-ring rounded-md p-2 text-xl font-bold duration-200 hover:opacity-70 focus:ring-3
+            focus:outline-hidden
           "
           href="{% url 'home' %}"
         >
@@ -57,17 +57,17 @@
         <div class="{% endraw %}{{ 'flex items-center gap-3' if dkcutter.useTailwind else 'header-content-container' }}{% raw %}">
           {% if request.user.is_authenticated %}
             {# djlint:off #}
-            <a href="{% endraw %}{% if dkcutter.usernameType == "email" %}{% raw %}{% url 'users:detail' request.user.pk %}{% endraw %}{% else %}{% raw %}{% url 'users:detail' request.user.username %}{% endraw %}{% endif %}{% raw %}" class="{% endraw %}{{ 'link ' if not dkcutter.useTailwind }}{% raw %}link-primary">My Profile</a>
+            <a class="{% endraw %}{{ 'link ' if not dkcutter.useTailwind }}{% raw %}link-primary" href="{% endraw %}{% if dkcutter.usernameType == "email" %}{% raw %}{% url 'users:detail' request.user.pk %}{% endraw %}{% else %}{% raw %}{% url 'users:detail' request.user.username %}{% endraw %}{% endif %}{% raw %}">My Profile</a>
             {# djlint:on #}
             {# URL provided by django-allauth/account/urls.py #}
-            <a href="{% url 'account_logout' %}" class="{% endraw %}{{ 'link ' if not dkcutter.useTailwind }}{% raw %}link-primary">Sign Out</a>
+            <a class="{% endraw %}{{ 'link ' if not dkcutter.useTailwind }}{% raw %}link-primary" href="{% url 'account_logout' %}">Sign Out</a>
           {% else %}
             {% if ACCOUNT_ALLOW_REGISTRATION %}
               {# URL provided by django-allauth/account/urls.py #}
-              <a href="{% url 'account_signup' %}" class="{% endraw %}{{ 'link ' if not dkcutter.useTailwind }}{% raw %}link-primary">Sign Up</a>
+              <a class="{% endraw %}{{ 'link ' if not dkcutter.useTailwind }}{% raw %}link-primary" href="{% url 'account_signup' %}">Sign Up</a>
             {% endif %}
             {# URL provided by django-allauth/account/urls.py #}
-            <a href="{% url 'account_login' %}" class="{% endraw %}{{ 'link ' if not dkcutter.useTailwind }}{% raw %}link-primary">Sign In</a>
+            <a class="{% endraw %}{{ 'link ' if not dkcutter.useTailwind }}{% raw %}link-primary" href="{% url 'account_login' %}">Sign In</a>
           {% endif %}
           {# djlint:off #}
           <button
@@ -86,13 +86,16 @@
     <div class="{% endraw %}{{ 'container my-10 text-center' if dkcutter.useTailwind else 'container page-container' }}{% raw %}">
       {% if messages %}
         {# djlint:off #}
-        <div aria-label="Notifications" role="region" tabindex="-1" class="{% endraw %}{{ 'max-w-xl mx-auto mb-4' if dkcutter.useTailwind else 'messages-container' }}{% raw %}">
+        <div class="{% endraw %}{{ 'max-w-xl mx-auto mb-4' if dkcutter.useTailwind else 'messages-container' }}{% raw %}" aria-label="Notifications" role="region" tabindex="-1">
           <ol class="{% endraw %}{{ 'flex gap-2 w-full flex-col-reverse' if dkcutter.useTailwind else 'messages-list' }}{% raw %}" tabindex="-1">
             {% for message in messages %}
               <li
+                {% endraw %}{% if dkcutter.useTailwind %}{% raw %}class="
+                  {% if message.tags %}message-{{message.tags}}{% else %}message-primary{% endif %} flex flex-col rounded-md
+                  border p-6 font-medium
+                "{% endraw %}{% else %}{% raw %}class="message {% if message.tags %}message-{{message.tags}}{% else %}message-primary{% endif %}"{% endraw %}{% endif %}{% raw %}
                 role="alert"
                 tabindex="0"
-                class="{% endraw %}{{ 'p-6 font-medium flex flex-col rounded-md border' if dkcutter.useTailwind else 'message' }}{% raw %} {% if message.tags %}message-{{message.tags}}{% else %}message-primary{% endif %}"
               >
                 {{ message }}
               </li>

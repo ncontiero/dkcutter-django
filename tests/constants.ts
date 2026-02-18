@@ -6,6 +6,8 @@ export const SUPPORTED_COMBINATIONS = [
   { postgresqlVersion: "16" },
   { postgresqlVersion: "15" },
   { postgresqlVersion: "14" },
+  { usernameType: "username" },
+  { usernameType: "email" },
   { cloudProvider: "AWS" },
   { cloudProvider: "AWS", additionalTools: "whitenoise" },
   { cloudProvider: "GCP" },
@@ -115,6 +117,7 @@ export const SUPPORTED_COMBINATIONS = [
 ];
 export const UNSUPPORTED_COMBINATIONS = [
   { postgresqlVersion: 5 },
+  { usernameType: "name" },
   { frontendPipeline: "Non" },
   { frontendPipeline: "Rspack", additionalTools: "tailwi" },
   { frontendPipeline: "Rspack", pkgManagerToUse: "run" },

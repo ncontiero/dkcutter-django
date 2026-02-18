@@ -4,11 +4,11 @@
 <form
   method="{{ attrs.method }}"
   {% if attrs.action %}action="{{ attrs.action }}"{% endif %}
-  class="{% endraw %}{{ 'flex flex-col gap-6 max-w-xl mx-auto border rounded-md p-4 text-start mt-2 mb-4' if dkcutter.useTailwind else 'form' }}{% raw %}"
+  class="{% endraw %}{{ 'mx-auto mt-2 mb-4 flex max-w-xl flex-col gap-6 rounded-md border p-4 text-start' if dkcutter.useTailwind else 'form' }}{% raw %}"
 >
   {% slot body %}
   {% endslot %}
-  <div class="{% endraw %}{{ 'flex items-center gap-2 [&>button]:w-full' if dkcutter.useTailwind else 'form-actions' }}{% raw %}">
+  <div class="{% endraw %}{{ '[&>button]:w-full flex items-center gap-2' if dkcutter.useTailwind else 'form-actions' }}{% raw %}">
     {% slot actions %}
     {% endslot %}
   </div>
