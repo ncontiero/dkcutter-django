@@ -22,7 +22,7 @@
       </label>
     </div>
   {% else %}
-    <label for="{{ attrs.id }}" class="label">
+    <label class="label" for="{{ attrs.id }}">
       {% slot label %}
       {% endslot %}
     </label>
@@ -62,7 +62,7 @@
   {% endif %}
 
   {% if slots.help_text %}
-    <div class="{% endraw %}{{ '[&>a]:link-primary text-sm text-balance leading-relaxed' if dkcutter.useTailwind else 'field-help-text' }}{% raw %}">
+    <div class="{% endraw %}{% if dkcutter.useTailwind %}{{'[&>a]:link-primary'|safe}} {% endif %}{{ 'text-sm leading-relaxed text-balance' if dkcutter.useTailwind else 'field-help-text' }}{% raw %}">
       {% slot help_text %}{% endslot %}
     </div>
   {% endif %}

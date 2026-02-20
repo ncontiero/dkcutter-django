@@ -8,7 +8,7 @@
 >
   {% slot body %}
   {% endslot %}
-  <div class="{% endraw %}{{ '[&>button]:w-full flex items-center gap-2' if dkcutter.useTailwind else 'form-actions' }}{% raw %}">
+  <div class="{% endraw %}{% if dkcutter.useTailwind %}{{'[&>button]:w-full'|safe}} {% endif %}{{ 'flex items-center gap-2' if dkcutter.useTailwind else 'form-actions' }}{% raw %}">
     {% slot actions %}
     {% endslot %}
   </div>

@@ -1,7 +1,9 @@
 {% raw %}{% load allauth %}
 
 {% comment %} djlint:off {% endcomment %}
-<p class="{% endraw %}{{ '[&>a]:link-primary mx-auto mb-4 max-w-2xl text-center leading-relaxed font-medium tracking-tight text-balance' if dkcutter.useTailwind else 'allauth-p' }}{% raw %}">
+<p {% endraw %}{% if dkcutter.useTailwind %}class="
+  {{'[&>a]:link-primary'|safe}} mx-auto mb-4 max-w-2xl text-center leading-relaxed font-medium tracking-tight text-balance
+"{% else %}class="allauth-p"{% endif %}{% raw %}>
   {% slot %}
   {% endslot %}
 </p>{% endraw %}

@@ -1,8 +1,14 @@
-{% raw %}{% load allauth %}
+{%- if dkcutter.useEslint -%}
+<!-- eslint-disable tailwindcss/enforce-consistent-line-wrapping, tailwindcss/no-duplicate-classes -->
+{% raw %}{% load allauth %}{% endraw %}
+{%- else -%}
+{% raw %}{% load allauth %}{% endraw %}
+{%- endif -%}{% raw %}
 
 {% comment %} djlint:off {% endcomment %}
-<span class="{% endraw %}{{ 'badge' if not dkcutter.useTailwind }}{% raw %}
-  {% if 'success' in attrs.tags %}badge-success
+<span class="{% endraw %}
+  {%- if not dkcutter.useTailwind %}badge{%- endif %}
+  {% raw %}{% if 'success' in attrs.tags %}badge-success
   {% elif 'warning' in attrs.tags %}badge-warning
   {% elif 'secondary' in attrs.tags %}badge-secondary
   {% elif 'danger' in attrs.tags %}badge-danger

@@ -1,7 +1,12 @@
-{% raw %}{% comment %} djlint:off {% endcomment %}
+{%- if dkcutter.useEslint -%}
+<!-- eslint-disable html/require-img-alt -->
+{% raw %}{% comment %} djlint:off {% endcomment %}{% endraw %}
+{%- else -%}
+{% raw %}{% comment %} djlint:off {% endcomment %}{% endraw %}
+{%- endif -%}{% raw %}
 <img
   src="{{ attrs.src }}"
   {% if attrs.alt %}alt="{{ attrs.alt }}"{% endif %}
   {% if 'totp' in attrs.tags %}data-qr="true"{% endif %}
-  class="{% endraw %}{{ 'rounded-md data-[qr=true]:bg-white data-[qr=true]:h-96' if dkcutter.useTailwind else 'allauth-img' }}{% raw %}"
+  class="{% endraw %}{{ 'rounded-md data-[qr=true]:h-96 data-[qr=true]:bg-white' if dkcutter.useTailwind else 'allauth-img' }}{% raw %}"
 />{% endraw %}

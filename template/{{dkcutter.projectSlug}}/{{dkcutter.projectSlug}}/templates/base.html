@@ -4,7 +4,7 @@
 {%- endif %}
 
 {% raw %}<!DOCTYPE html>
-<html lang="en" class="opacity-0">
+<html class="opacity-0" lang="en">
   <head>
     <meta charset="utf-8" />
     <meta content="ie=edge" http-equiv="x-ua-compatible" />
@@ -86,8 +86,8 @@
     <div class="{% endraw %}{{ 'container my-10 text-center' if dkcutter.useTailwind else 'container page-container' }}{% raw %}">
       {% if messages %}
         {# djlint:off #}
-        <div class="{% endraw %}{{ 'max-w-xl mx-auto mb-4' if dkcutter.useTailwind else 'messages-container' }}{% raw %}" aria-label="Notifications" role="region" tabindex="-1">
-          <ol class="{% endraw %}{{ 'flex gap-2 w-full flex-col-reverse' if dkcutter.useTailwind else 'messages-list' }}{% raw %}" tabindex="-1">
+        <div class="{% endraw %}{{ 'mx-auto mb-4 max-w-xl' if dkcutter.useTailwind else 'messages-container' }}{% raw %}" aria-label="Notifications" role="region" tabindex="-1">
+          <ol class="{% endraw %}{{ 'flex w-full flex-col-reverse gap-2' if dkcutter.useTailwind else 'messages-list' }}{% raw %}" tabindex="-1">
             {% for message in messages %}
               <li
                 {% endraw %}{% if dkcutter.useTailwind %}{% raw %}class="

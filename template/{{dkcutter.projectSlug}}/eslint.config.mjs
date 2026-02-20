@@ -21,4 +21,10 @@ export default ncontiero(
       {%- endif %}
     },
   },
+  {
+    files: ["templates/**/*.html"],
+    rules: {
+      "html/indent": "off",
+    },
+  },
 );

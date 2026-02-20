@@ -8,7 +8,7 @@
 {% block content %}
   <h1 class="{% endraw %}{{ 'text-xl font-bold' if dkcutter.useTailwind else 'title' }}{% raw %}">{{ user.name|default:user.username }}</h1>
 
-  <form class="{% endraw %}{{ 'mt-2 mb-4 flex flex-col rounded-md border p-4 text-start' if dkcutter.useTailwind else 'form' }}{% raw %}" method="post" action="{% url 'users:update' %}">
+  <form class="{% endraw %}{{ 'mt-2 mb-4 flex flex-col rounded-md border p-4 text-start' if dkcutter.useTailwind else 'form' }}{% raw %}" action="{% url 'users:update' %}" method="post">
     {% csrf_token %}
     {{ form }}
     <button type="submit" class="{% endraw %}{{ 'button ' if not dkcutter.useTailwind }}{% raw %}button-primary">Update</button>

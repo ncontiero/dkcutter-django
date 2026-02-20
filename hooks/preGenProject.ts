@@ -18,9 +18,10 @@ import { logger } from "./utils/logger";
 // {{ dkcutter.add("useWhitenoise", "{% if 'whitenoise' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("usePgadmin", "{% if 'pgadmin' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useTailwind", "{{ true if 'tailwindcss' in dkcutter.additionalTools }}") }}
+// {{ dkcutter.add("useEslint", "{{ true if 'eslint' in dkcutter.additionalTools }}") }}
 
 // Add this values in context to avoid repetitions
-// {{ dkcutter.add("pageTitleClass", "{{ 'text-4xl underline font-bold my-4' if dkcutter.useTailwind else 'page-title' }}") }}
+// {{ dkcutter.add("pageTitleClass", "{{ 'my-4 text-4xl font-bold underline' if dkcutter.useTailwind else 'page-title' }}") }}
 // {{ dkcutter.add("pageErrorDescriptionClass", "{{ 'text-lg' if dkcutter.useTailwind else 'page-error-description' }}") }}
 
 const ctx = {
