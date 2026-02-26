@@ -3,6 +3,13 @@ import { ncontiero } from "@ncontiero/eslint-config";
 export default ncontiero(
   {
     ignores: ["{{ dkcutter.projectSlug }}/templates/emails/**/*.html"],
+    {%- if dkcutter.useTailwind %}
+    tailwindcss: {
+      cssGlobalPath: "./{{ dkcutter.projectSlug }}/src/index.css",
+    },
+    {%- else %}
+    tailwindcss: false,
+    {%- endif %}
     javascript: {
       overrides: {
         "node/no-unsupported-features/node-builtins": [
@@ -22,7 +29,7 @@ export default ncontiero(
     },
   },
   {
-    files: ["templates/**/*.html"],
+    files: ["**/templates/**/*.html"],
     rules: {
       "html/indent": "off",
     },

@@ -2,13 +2,14 @@
 
 {% comment %} djlint:off {% endcomment %}
 <form
-  method="{{ attrs.method }}"
+  method="{{ attrs.method }}"{% endraw %}{% if dkcutter.useEslint %}
+  // eslint-disable-next-line html/no-extra-spacing-attrs{% endif %}{% raw %}
   {% if attrs.action %}action="{{ attrs.action }}"{% endif %}
   class="{% endraw %}{{ 'mx-auto mt-2 mb-4 flex max-w-xl flex-col gap-6 rounded-md border p-4 text-start' if dkcutter.useTailwind else 'form' }}{% raw %}"
 >
   {% slot body %}
   {% endslot %}
-  <div class="{% endraw %}{% if dkcutter.useTailwind %}{{'[&>button]:w-full'|safe}} {% endif %}{{ 'flex items-center gap-2' if dkcutter.useTailwind else 'form-actions' }}{% raw %}">
+  <div class="{% endraw %}{{ 'flex items-center gap-2 ' if dkcutter.useTailwind else 'form-actions' }}{% if dkcutter.useTailwind %}{{'[&>button]:w-full'|safe}}{% endif %}{% raw %}">
     {% slot actions %}
     {% endslot %}
   </div>

@@ -1,4 +1,9 @@
-{% raw %}{% load allauth %}
+{%- if dkcutter.useEslint -%}
+<!-- eslint-disable html/attrs-newline, html/no-extra-spacing-attrs -->
+{% raw %}{% load allauth %}{% endraw %}
+{%- else -%}
+{% raw %}{% load allauth %}{% endraw %}
+{%- endif -%}{% raw %}
 
 {% comment %} djlint:off {% endcomment %}
 <div class="{% endraw %}{{ 'flex flex-col gap-2' if dkcutter.useTailwind else 'field-container' }}{% raw %}">

@@ -1,4 +1,4 @@
-{%- if dkcutter.useEslint -%}
+{%- if dkcutter.useEslint and dkcutter.useTailwind -%}
 <!-- eslint-disable tailwindcss/enforce-consistent-line-wrapping, tailwindcss/no-duplicate-classes -->
 {% raw %}{% load allauth %}{% endraw %}
 {%- else -%}

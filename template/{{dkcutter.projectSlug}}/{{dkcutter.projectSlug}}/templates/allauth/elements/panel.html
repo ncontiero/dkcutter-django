@@ -10,7 +10,9 @@
   {% endslot %}
   {% if slots.actions %}
     <ul class="{% endraw %}{{ 'flex items-center justify-center gap-2' if dkcutter.useTailwind else 'allauth-section-actions' }}{% raw %}">
-      {% for action in slots.actions %}<li>{{ action }}</li>{% endfor %}
+      {% for action in slots.actions %}
+        <li>{{ action }}</li>
+      {% endfor %}
     </ul>
   {% endif %}
 </section>{% endraw %}
