@@ -13,7 +13,7 @@ dependencies = [
   "jinja2==3.1.6",
   "ruff==0.15.4",
   "tox==4.46.3",
-  "tox-uv==1.33.0",
+  "tox-uv==1.33.1",
 ]
 
 [tool.djlint]
