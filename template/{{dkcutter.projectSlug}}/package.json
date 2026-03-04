@@ -21,7 +21,7 @@
     "autoprefixer": "^10.4.27",
     "babel-loader": "^10.0.0",
     "css-loader": "^7.1.4",
-    "css-minimizer-webpack-plugin": "^7.0.4",
+    "css-minimizer-webpack-plugin": "^8.0.0",
     "eslint": "^9.39.3",
     "mini-css-extract-plugin": "^2.10.0",
     "postcss": "^8.5.6",
