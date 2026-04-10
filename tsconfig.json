@@ -5,7 +5,6 @@
     "composite": false,
     "lib": ["ESNext"],
     "module": "ESNext",
-    "moduleResolution": "node",
     "strict": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,

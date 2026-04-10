@@ -20,7 +20,7 @@ export function runCommand({
   successText,
   failText,
   env = {},
-}: RunCommandProps) {
+}: RunCommandProps): ReturnType<typeof oraPromise> {
   const cmdWithArgs = `${cmd} ${args.join(" ")}`;
   return oraPromise(execa(cmd, args, { cwd: projectDir, stdout, env }), {
     text: `Running ${cmdWithArgs}...`,
