@@ -3,11 +3,15 @@ from django.conf import settings
 from rest_framework.routers import DefaultRouter
 from rest_framework.routers import SimpleRouter
 {% elif dkcutter.restFramework == 'DNRF' -%}
+from typing import TYPE_CHECKING
+
 import orjson
 from django.contrib.admin.views.decorators import staff_member_required
-from django.http import HttpRequest
 from ninja import NinjaAPI
 from ninja.parser import Parser
+
+if TYPE_CHECKING:
+    from django.http import HttpRequest
 
 {% endif %}
 

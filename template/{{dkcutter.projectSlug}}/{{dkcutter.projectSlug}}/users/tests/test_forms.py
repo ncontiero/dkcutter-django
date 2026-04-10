@@ -1,9 +1,13 @@
 """Module for all Form Tests."""
 
+from typing import TYPE_CHECKING
+
 from django.utils.translation import gettext_lazy as _
 
 from {{ dkcutter.projectSlug }}.users.forms import UserAdminCreationForm
-from {{ dkcutter.projectSlug }}.users.models import User
+
+if TYPE_CHECKING:
+    from {{ dkcutter.projectSlug }}.users.models import User
 
 
 class TestUserAdminCreationForm:

@@ -1,4 +1,4 @@
-from collections.abc import Sequence
+from typing import TYPE_CHECKING
 from typing import Any
 
 from factory import Faker
@@ -7,6 +7,8 @@ from factory.django import DjangoModelFactory
 
 from {{ dkcutter.projectSlug }}.users.models import User
 
+if TYPE_CHECKING:
+    from collections.abc import Sequence
 
 class UserFactory(DjangoModelFactory[User]):
     {%- if dkcutter.usernameType == "username" %}

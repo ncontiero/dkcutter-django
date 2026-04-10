@@ -1,6 +1,7 @@
+from typing import TYPE_CHECKING
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -8,6 +9,9 @@ from django.utils.translation import gettext_lazy as _
 
 from .forms import UpdateUserForm
 from .models import User
+
+if TYPE_CHECKING:
+    from django.http import HttpRequest
 
 
 @login_required
