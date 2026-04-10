@@ -30,7 +30,7 @@
     "tailwindcss": "4.2.2",
     "terser-webpack-plugin": "^5.4.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "webpack": "^5.106.0",
     "webpack-bundle-tracker": "^3.2.3",
     "webpack-cli": "^7.0.2",
