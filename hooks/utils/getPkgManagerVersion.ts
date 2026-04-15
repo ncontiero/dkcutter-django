@@ -3,10 +3,10 @@ import { execa } from "execa";
 import { logger } from "./logger";
 
 const pkgManagersDefaultVersions: Record<PackageManager, string> = {
-  npm: "npm@11.11.0",
-  pnpm: "pnpm@10.30.3",
-  yarn: "yarn@4.12.0",
-  bun: "bun@1.3.10",
+  npm: "npm@11.12.1",
+  pnpm: "pnpm@10.33.0",
+  yarn: "yarn@4.13.0",
+  bun: "bun@1.3.12",
 };
 
 export async function getPkgManagerVersion(packageManager: PackageManager) {

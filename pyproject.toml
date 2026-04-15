@@ -12,7 +12,7 @@ dependencies = [
   "djlint==1.36.4",
   "jinja2==3.1.6",
   "ruff==0.15.10",
-  "tox==4.52.1",
+  "tox==4.53.0",
   "tox-uv==1.35.1",
 ]
 
