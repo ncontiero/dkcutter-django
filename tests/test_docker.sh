@@ -37,7 +37,7 @@ docker compose -f docker-compose.local.yml run django uv lock
 docker compose -f docker-compose.local.yml build
 
 # run the project's type checks
-$DOCKER_CMD django mypy my_awesome_project
+$DOCKER_CMD django mypy my_awesome_project --no-sqlite-cache
 
 # run the project's tests
 $DOCKER_CMD django pytest -p no:cacheprovider
