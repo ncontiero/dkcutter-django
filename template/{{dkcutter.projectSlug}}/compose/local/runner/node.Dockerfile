@@ -1,7 +1,7 @@
 {% if dkcutter.pkgManager == "bun" -%}
 FROM docker.io/oven/bun:1.3.12-slim
 {% else -%}
-FROM docker.io/node:24.14.1-bookworm-slim
+FROM docker.io/node:24.15.0-bookworm-slim
 {% endif %}
 ARG APP_HOME=/app
 ENV HOME=${APP_HOME}
