@@ -14,7 +14,7 @@
     "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.29.2",
     "@babel/preset-typescript": "^7.28.5",
-    "@ncontiero/eslint-config": "7.1.0",
+    "@ncontiero/eslint-config": "7.2.0",
     "@rspack/cli": "^1.7.11",
     "@rspack/core": "^1.7.11",
     "@tailwindcss/postcss": "4.2.2",
