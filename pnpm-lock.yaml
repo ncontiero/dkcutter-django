@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       dkcutter:
-        specifier: 5.0.6
-        version: 5.0.6(chokidar@3.6.0)(typescript@6.0.3)
+        specifier: 5.0.7
+        version: 5.0.7(chokidar@3.6.0)(typescript@6.0.3)
     devDependencies:
       '@ncontiero/eslint-config':
         specifier: 7.2.0
@@ -1848,8 +1848,8 @@ packages:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  dkcutter@5.0.6:
-    resolution: {integrity: sha512-YmkQ0x8UD4yChhpwE4+dkyutiAQ7/QrWZLL4P0p4//UGAfzK2y3+AWL+KnnmJ2lUPioR0QB+6rSfrwr38iiWHQ==}
+  dkcutter@5.0.7:
+    resolution: {integrity: sha512-wNuUZqJ2NkWWCTJfbkY1sMD1BX5CfhhOWm00Djs9Wlrq6z8NVQ7o+Wuys+ZhMikzJZmIQ+njCN0fGS9f4mL22Q==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -2719,9 +2719,9 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
-  isexe@3.1.5:
-    resolution: {integrity: sha512-6B3tLtFqtQS4ekarvLVMZ+X+VlvQekbe4taUkf/rhVO3d/h0M2rfARm/pXLcPEsjjMsFgrFgSrhQIxcSVrBz8w==}
-    engines: {node: '>=18'}
+  isexe@4.0.0:
+    resolution: {integrity: sha512-FFUtZMpoZ8RqHS3XeXEmHWLA4thH+ZxCv2lOiPIn1Xc7CxrqhWzNSDzD+/chS/zbYezmiwWLdQC09JdQKmthOw==}
+    engines: {node: '>=20'}
 
   iterator.prototype@1.1.5:
     resolution: {integrity: sha512-H0dkQoCa3b2VEeKQBOxFph+JAbcrQdE7KC0UkqwpLmv2EC4P41QXP+rqo9wYodACiG5/WM5s9oDApTU8utwj9g==}
@@ -4019,9 +4019,9 @@ packages:
     engines: {node: '>= 8'}
     hasBin: true
 
-  which@5.0.0:
-    resolution: {integrity: sha512-JEdGzHwwkrbWoGOlIHqQ5gtprKGOenpDHpxE9zVR1bWbOtYRyPPHMe9FaP6x61CmNaTThSkb0DAJte5jD+DmzQ==}
-    engines: {node: ^18.17.0 || >=20.5.0}
+  which@6.0.1:
+    resolution: {integrity: sha512-oGLe46MIrCRqX7ytPUf66EAYvdeMIZYn3WaocqqKZAxrBpkqHfL/qvTyJ/bTk5+AqHCjXmrv3CEWgy368zhRUg==}
+    engines: {node: ^20.17.0 || >=22.9.0}
     hasBin: true
 
   why-is-node-running@2.3.0:
@@ -5836,7 +5836,7 @@ snapshots:
 
   diff-sequences@29.6.3: {}
 
-  dkcutter@5.0.6(chokidar@3.6.0)(typescript@6.0.3):
+  dkcutter@5.0.7(chokidar@3.6.0)(typescript@6.0.3):
     dependencies:
       colorette: 2.0.20
       commander: 14.0.3
@@ -5847,7 +5847,7 @@ snapshots:
       ora: 9.3.0
       prompts: 2.4.2
       tsx: 4.21.0
-      which: 5.0.0
+      which: 6.0.1
       zod: 4.3.6
     transitivePeerDependencies:
       - chokidar
@@ -6935,7 +6935,7 @@ snapshots:
 
   isexe@2.0.0: {}
 
-  isexe@3.1.5: {}
+  isexe@4.0.0: {}
 
   iterator.prototype@1.1.5:
     dependencies:
@@ -8554,9 +8554,9 @@ snapshots:
     dependencies:
       isexe: 2.0.0
 
-  which@5.0.0:
+  which@6.0.1:
     dependencies:
-      isexe: 3.1.5
+      isexe: 4.0.0
 
   why-is-node-running@2.3.0:
     dependencies:
