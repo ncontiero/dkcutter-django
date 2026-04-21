@@ -1,5 +1,5 @@
 {% if dkcutter.pkgManager == "bun" -%}
-FROM docker.io/oven/bun:1.3.12-slim
+FROM docker.io/oven/bun:1.3.13-slim
 {% else -%}
 FROM docker.io/node:24.15.0-bookworm-slim
 {% endif %}
