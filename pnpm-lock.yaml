@@ -52,8 +52,8 @@ importers:
         specifier: ^11.3.4
         version: 11.3.4
       ora:
-        specifier: ^9.3.0
-        version: 9.3.0
+        specifier: ^9.4.0
+        version: 9.4.0
       prompts:
         specifier: ^2.4.2
         version: 2.4.2
@@ -3179,8 +3179,8 @@ packages:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
 
-  ora@9.3.0:
-    resolution: {integrity: sha512-lBX72MWFduWEf7v7uWf5DHp9Jn5BI8bNPGuFgtXMmr2uDz2Gz2749y3am3agSDdkhHPHYmmxEGSKH85ZLGzgXw==}
+  ora@9.4.0:
+    resolution: {integrity: sha512-84cglkRILFxdtA8hAvLNdMrtBpPNBTrQ9/ulg0FA7xLMnD6mifv+enAIeRmvtv+WgdCE+LPGOfQmtJRrVaIVhQ==}
     engines: {node: '>=20'}
 
   own-keys@1.0.1:
@@ -5844,7 +5844,7 @@ snapshots:
       execa: 9.6.1
       fs-extra: 11.3.4
       nunjucks: 3.2.4(chokidar@3.6.0)
-      ora: 9.3.0
+      ora: 9.4.0
       prompts: 2.4.2
       tsx: 4.21.0
       which: 6.0.1
@@ -7577,7 +7577,7 @@ snapshots:
       type-check: 0.4.0
       word-wrap: 1.2.5
 
-  ora@9.3.0:
+  ora@9.4.0:
     dependencies:
       chalk: 5.6.2
       cli-cursor: 5.0.0
