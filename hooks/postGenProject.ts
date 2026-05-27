@@ -142,16 +142,17 @@ async function handleFrontendPipelineAndTools(
       "css-loader",
       "css-minimizer-webpack-plugin",
       "mini-css-extract-plugin",
-      "terser-webpack-plugin",
+      "minimizer-webpack-plugin",
       "webpack",
       "webpack-cli",
       "webpack-dev-server",
+      "webpack-merge",
     );
     removeKeys.push("babel");
     filesToRemove.push(webpackConfigFolder);
   };
   const removeRspack = () => {
-    removeDevDeps.push("@rspack/cli", "@rspack/core");
+    removeDevDeps.push("@rspack/cli", "@rspack/core", "rspack-merge");
     filesToRemove.push(rspackConfigFolder);
   };
   const removeStaticFiles = () => {
@@ -201,7 +202,6 @@ async function handleFrontendPipelineAndTools(
       "postcss-loader",
       "postcss-preset-env",
       "webpack-bundle-tracker",
-      "webpack-merge",
     );
     removeKeys.push("browserslist");
     filesToRemove.push("postcss.config.mjs");

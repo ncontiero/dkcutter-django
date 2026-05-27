@@ -1,4 +1,4 @@
-import { merge } from "webpack-merge";
+import { merge } from "rspack-merge";
 import { commonConfig } from "./common.config";
 
 export default merge(commonConfig, {
