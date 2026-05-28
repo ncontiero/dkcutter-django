@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     // Compiler target and supported features
-    "target": "ES2020",
-    "lib": ["DOM", "ES2020", "DOM.Iterable"],
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "useDefineForClassFields": true,
 
     // Module system configuration
@@ -27,7 +27,7 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "include": ["{{dkcutter.projectSlug}}/src"],
+  "include": ["{{dkcutter.projectSlug}}/src", "{{ 'rspack' if dkcutter.frontendPipeline == 'Rspack' else 'webpack' }}"],
   "exclude": ["node_modules"],
   "ts-node": {
     "compilerOptions": {
