@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "lint:fix": "pnpm lint --fix",
     "check": "pnpm lint && pnpm typecheck",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:strict": "GET_WARNINGS=true pnpm test"
   },
   "dependencies": {
     "dkcutter": "5.0.7"
@@ -25,7 +26,7 @@
     "@types/react": "^19.2.15",
     "clsx": "^2.1.1",
     "colorette": "^2.0.20",
-    "eslint": "^9.39.4",
+    "eslint": "^10.4.0",
     "execa": "^9.6.1",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.5",

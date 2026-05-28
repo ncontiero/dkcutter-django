@@ -1,5 +1,5 @@
 {%- if dkcutter.useEslint -%}
-<!-- eslint-disable html/attrs-newline, html/no-extra-spacing-attrs -->
+<!-- eslint-disable html/attrs-newline, html/no-extra-spacing-tags -->
 {% raw %}{% load allauth %}{% endraw %}
 {%- else -%}
 {% raw %}{% load allauth %}{% endraw %}
@@ -67,7 +67,7 @@
   {% endif %}
 
   {% if slots.help_text %}
-    <div class="{% endraw %}{% if dkcutter.useTailwind %}{{'[&>a]:link-primary'|safe}} {% endif %}{{ 'text-sm leading-relaxed text-balance' if dkcutter.useTailwind else 'field-help-text' }}{% raw %}">
+    <div class="{% endraw %}{{ 'text-sm/relaxed text-balance [&>a]:link-primary'|safe if dkcutter.useTailwind else 'field-help-text' }}{% raw %}">
       {% slot help_text %}{% endslot %}
     </div>
   {% endif %}

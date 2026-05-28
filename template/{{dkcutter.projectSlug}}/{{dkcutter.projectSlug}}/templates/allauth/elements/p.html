@@ -2,7 +2,7 @@
 
 {% comment %} djlint:off {% endcomment %}
 <p {% endraw %}{% if dkcutter.useTailwind %}class="
-  {{'[&>a]:link-primary'|safe}} mx-auto mb-4 max-w-2xl text-center leading-relaxed font-medium tracking-tight text-balance
+  mx-auto mb-4 max-w-2xl text-center leading-relaxed font-medium tracking-tight text-balance {{'[&>a]:link-primary'|safe}}
 "{% else %}class="allauth-p"{% endif %}{% raw %}>
   {% slot %}
   {% endslot %}
