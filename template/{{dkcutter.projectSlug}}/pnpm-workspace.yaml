@@ -1,2 +1,11 @@
-packages:
+{%- if "reactEmail" in dkcutter.additionalTools %}packages:
   - emails
+
+{% endif -%}
+
+allowBuilds:
+{%- if "reactEmail" in dkcutter.additionalTools %}
+  esbuild: true
+  sharp: true
+{%- endif %}
+  unrs-resolver: true

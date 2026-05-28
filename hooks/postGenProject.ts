@@ -216,7 +216,7 @@ async function handleFrontendPipelineAndTools(
   if (tools.includes("reactEmail")) {
     scripts = await handleReactEmailSetup({ scripts });
   } else {
-    filesToRemove.push("pnpm-workspace.yaml", "emails");
+    filesToRemove.push("emails");
     removeKeys.push("workspaces");
   }
 
@@ -366,7 +366,6 @@ async function main() {
         "eslint.config.mjs",
         ".nvmrc",
         ".yarnrc.yml",
-        "pnpm-workspace.yaml",
         "emails",
         path.join("compose", "local", "node"),
       );
