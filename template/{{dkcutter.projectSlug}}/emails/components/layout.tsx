@@ -1,11 +1,5 @@
 import type { PropsWithChildren } from "react";
-import {
-  Body,
-  Container,
-  Heading,
-  Html,
-  Preview,
-} from "@react-email/components";
+import { Body, Container, Heading, Html, Preview } from "react-email";
 import { Footer } from "./footer";
 import { Header } from "./header";
 import { Text } from "./text";
