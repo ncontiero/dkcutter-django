@@ -6,7 +6,7 @@ export type AdditionalTool = "reactEmail" | "tailwindcss" | "eslint";
 export type AdditionalTools = AdditionalTool[];
 export type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
 
-export type Context = {
+export interface Context {
   projectSlug: string;
   usernameType: UsernameType;
   pkgManager: PackageManager;
@@ -22,12 +22,12 @@ export type Context = {
   installFrontendDeps: boolean;
   initializeGit: boolean;
   haveNodePackages: boolean;
-};
+}
 
-export type SetFlagProps = {
+export interface SetFlagProps {
   filePath: string;
   flag: string;
   length?: number;
   value?: string;
   formatted?: string;
-};
+}
