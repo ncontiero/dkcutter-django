@@ -17,7 +17,7 @@
     "dkcutter": "5.0.7"
   },
   "devDependencies": {
-    "@ncontiero/eslint-config": "7.2.0",
+    "@ncontiero/eslint-config": "8.2.1",
     "@rspack/cli": "^2.0.4",
     "@rspack/core": "^2.0.4",
     "@types/fs-extra": "^11.0.4",
