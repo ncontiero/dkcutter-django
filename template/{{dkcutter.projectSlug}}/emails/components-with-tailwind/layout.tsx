@@ -9,7 +9,7 @@ import {
   pixelBasedPreset,
   Preview,
   Tailwind,
-} from "@react-email/components";
+} from "react-email";
 import { Footer } from "./footer";
 import { Header } from "./header";
 import { Text } from "./text";
@@ -48,7 +48,11 @@ export function Layout({ title, previewText, children }: LayoutProps) {
         <Preview>{previewText}</Preview>
 
         <Body className="bg-background m-auto font-sans">
-          <Container className="md:border-border mx-auto my-10 max-w-[600px] rounded-[6px] border border-solid border-transparent p-5">
+          <Container
+            className="
+              md:border-border mx-auto my-10 max-w-[600px] rounded-[6px] border border-solid border-transparent p-5
+            "
+          >
             <Header />
 
             {title ? (

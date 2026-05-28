@@ -1,4 +1,4 @@
-import { Heading, Hr, Section } from "@react-email/components";
+import { Heading, Hr, Section } from "react-email";
 
 export function Header() {
   const projectName = "{{ dkcutter.projectName }}";
