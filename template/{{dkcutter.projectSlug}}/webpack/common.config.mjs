@@ -1,7 +1,7 @@
 import path from "node:path";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import TerserPlugin from "terser-webpack-plugin";
+import MinimizerPlugin from "minimizer-webpack-plugin";
 import BundleTracker from "webpack-bundle-tracker";
 
 const BASE_PATH = path.join(import.meta.dirname, "../");
@@ -44,7 +44,7 @@ export const commonConfig = {
     ],
   },
   optimization: {
-    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
+    minimizer: [new MinimizerPlugin(), new CssMinimizerPlugin()],
   },
   resolve: {
     modules: ["node_modules"],

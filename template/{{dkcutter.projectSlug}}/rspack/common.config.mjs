@@ -3,14 +3,6 @@ import { defineConfig } from "@rspack/cli";
 import { rspack } from "@rspack/core";
 import BundleTracker from "webpack-bundle-tracker";
 
-// Target browsers, see: https://github.com/browserslist/browserslist
-const BROWSER_TARGETS = [
-  "chrome >= 87",
-  "edge >= 88",
-  "firefox >= 78",
-  "safari >= 14",
-];
-
 const BASE_PATH = path.join(import.meta.dirname, "../");
 const PROJECT_PATH = path.join(BASE_PATH, "{{ dkcutter.projectSlug }}");
 
@@ -45,7 +37,6 @@ export const commonConfig = defineConfig({
             loader: "builtin:swc-loader",
             options: {
               jsc: { parser: { syntax: "ecmascript" } },
-              env: { targets: BROWSER_TARGETS },
             },
           },
         ],
@@ -60,9 +51,7 @@ export const commonConfig = defineConfig({
   optimization: {
     minimizer: [
       new rspack.SwcJsMinimizerRspackPlugin(),
-      new rspack.LightningCssMinimizerRspackPlugin({
-        minimizerOptions: { targets: BROWSER_TARGETS },
-      }),
+      new rspack.LightningCssMinimizerRspackPlugin(),
     ],
   },
   resolve: {

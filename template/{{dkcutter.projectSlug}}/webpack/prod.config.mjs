@@ -1,4 +1,4 @@
-import { merge } from "webpack-merge";
+import { merge } from "{{ 'rspack-merge' if dkcutter.frontendPipeline == 'Rspack' else 'webpack-merge' }}";
 import { commonConfig } from "./common.config.mjs";
 
 // This variable should mirror the one from config/settings/production.py
