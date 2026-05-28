@@ -8,7 +8,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "generate": "dkcutter .",
-    "lint": "eslint .",
+    "lint": "eslint . -c eslint.config.js",
     "lint:fix": "pnpm lint --fix",
     "check": "pnpm lint && pnpm typecheck",
     "test": "vitest run",
