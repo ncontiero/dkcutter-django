@@ -1,8 +1,8 @@
 import type { FrontendPipeline } from "./utils/types";
 
+import { logger } from "dkcutter/utils";
 import { z } from "zod";
 import { toBoolean } from "./utils/coerce";
-import { logger } from "./utils/logger";
 
 // The content of this string is evaluated by Jinja, and plays an important role.
 // It updates the dkcutter context to trim leading and trailing spaces

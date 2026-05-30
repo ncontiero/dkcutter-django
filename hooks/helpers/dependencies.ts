@@ -1,12 +1,10 @@
 import type { Context } from "../utils/types";
 
+import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { execa } from "execa";
-import fs from "fs-extra";
-import ora from "ora";
-
-import { colorize, logger } from "../utils/logger";
+import { colorize, logger, remove, spinner } from "dkcutter/utils";
+import { x } from "tinyexec";
 import { runCommand } from "./runCommand";
 
 function buildVolumeArg() {
@@ -16,9 +14,7 @@ function buildVolumeArg() {
 
 async function isPackageManagerAvailable(pkgManager: string) {
   try {
-    const { exitCode } = await execa(pkgManager, ["--version"], {
-      reject: false,
-    });
+    const { exitCode } = await x(pkgManager, ["--version"]);
     return exitCode === 0;
   } catch {
     return false;
@@ -166,9 +162,10 @@ export async function setupDependencies(
   context: Context,
   projectRootDir: string,
 ) {
-  const spinner = ora(
-    colorize("info", "Installing dependencies, this might take a while...\n"),
-  ).start();
+  spinner.setText(
+    colorize("info", "Installing dependencies, this might take a while..."),
+  );
+  !spinner.running && spinner.start();
 
   const composeFolder = path.join(projectRootDir, "compose", "local", "runner");
 
@@ -183,7 +180,7 @@ export async function setupDependencies(
   };
 
   try {
-    spinner.stopAndPersist();
+    spinner.stop();
 
     if (context.haveNodePackages && context.installFrontendDeps) {
       await installFrontendDependencies(
@@ -198,8 +195,8 @@ export async function setupDependencies(
 
     spinner.start();
     // Cleanup
-    await fs.remove(path.join(projectRootDir, "requirements"));
-    await fs.remove(composeFolder);
+    await remove(path.join(projectRootDir, "requirements"));
+    await remove(composeFolder);
 
     spinner.succeed(
       colorize("success", "Dependencies installed successfully."),

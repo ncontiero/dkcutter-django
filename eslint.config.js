@@ -3,6 +3,7 @@ import { ncontiero } from "@ncontiero/eslint-config";
 const TEMPLATE_GLOB = "template/**/";
 const FILES_TO_IGNORE = [
   // Parser error
+  "pnpm-workspace.yaml",
   "dependabot.yml",
   "ci.yml",
   "traefik.yml",

@@ -1,6 +1,5 @@
 import type { Context, PackageManager } from "../utils/types";
-
-import { logger } from "../utils/logger";
+import { logger } from "dkcutter/utils";
 import { isInsideGitRepo, isRootGitRepo } from "./git";
 
 interface LogNextStepsOptions {

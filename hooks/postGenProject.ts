@@ -9,17 +9,14 @@ import type {
 } from "./utils/types";
 
 import path from "node:path";
-import fs from "fs-extra";
-
+import { generateRandomString, logger, remove, rename } from "dkcutter/utils";
 import { setupDependencies } from "./helpers/dependencies";
 import { initializeGit, stageAndCommit } from "./helpers/git";
 import { logNextSteps } from "./helpers/logNextSteps";
 import { toBoolean } from "./utils/coerce";
 import { appendToGitignore, removeFiles } from "./utils/files";
 import { getPkgManagerVersion } from "./utils/getPkgManagerVersion";
-import { logger } from "./utils/logger";
 import { setFlag } from "./utils/setFlag";
-import { generateRandomString } from "./utils/string";
 import { updatePackageJson } from "./utils/updatePackageJson";
 
 const context: Context = {
@@ -113,11 +110,11 @@ async function handleReactEmailSetup({
     "components-with-tailwind",
   );
   if (context.useTailwindInReactEmail) {
-    await fs.remove(emailsComponents);
-    await fs.move(emailsComponentsTailwind, emailsComponents);
+    await remove(emailsComponents);
+    await rename(emailsComponentsTailwind, emailsComponents);
   } else {
-    await fs.remove(emailsComponentsTailwind);
-    await fs.remove(path.join(emailsFolder, "utils"));
+    await remove(emailsComponentsTailwind);
+    await remove(path.join(emailsFolder, "utils"));
   }
 
   return scripts;
@@ -173,7 +170,7 @@ async function handleFrontendPipelineAndTools(
     const filesToMove = ["prod.config.mjs", "prod.config.ts"];
     await Promise.all(
       filesToMove.map((file) =>
-        fs.move(
+        rename(
           path.join(path.resolve("webpack"), file),
           path.join(path.resolve("rspack"), file),
         ),
@@ -352,10 +349,9 @@ async function main() {
       "postcss.config.mjs",
     );
 
-    await fs.move(
+    await rename(
       path.join(srcFolder, "index.css"),
       path.join(staticFolder, "css", "index.css"),
-      { overwrite: true },
     );
     filesToRemove.push(srcFolder);
 

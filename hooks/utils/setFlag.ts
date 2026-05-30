@@ -1,6 +1,6 @@
 import type { SetFlagProps } from "./types";
-import fs from "fs-extra";
-import { generateRandomString } from "./string";
+import fs from "node:fs/promises";
+import { generateRandomString } from "dkcutter/utils";
 
 export async function setFlag({
   filePath,

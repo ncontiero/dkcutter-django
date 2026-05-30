@@ -1,6 +1,6 @@
 import type { PackageManager } from "./types";
-import { execa } from "execa";
-import { logger } from "./logger";
+import { logger } from "dkcutter/utils";
+import { x } from "tinyexec";
 
 const pkgManagersDefaultVersions: Record<PackageManager, string> = {
   npm: "npm@11.16.0",
@@ -11,8 +11,9 @@ const pkgManagersDefaultVersions: Record<PackageManager, string> = {
 
 export async function getPkgManagerVersion(packageManager: PackageManager) {
   try {
-    const { stdout } = await execa(packageManager, ["-v"]);
-    return `${packageManager}@${stdout}`;
+    const { stdout } = await x(packageManager, ["-v"], { throwOnError: true });
+    const version = stdout.toString().trim();
+    return `${packageManager}@${version}`;
   } catch {
     logger.warn(
       `Failed to get version for package manager ${packageManager}, using default version instead.`,
