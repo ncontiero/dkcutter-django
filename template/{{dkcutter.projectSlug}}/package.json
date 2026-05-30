@@ -28,7 +28,7 @@
     "postcss": "^8.5.15",
     "postcss-loader": "^8.2.1",
     "postcss-preset-env": "^11.3.0",
-    "rspack-merge": "^0.1.1",
+    "rspack-merge": "^1.0.0",
     "tailwindcss": "4.3.0",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
