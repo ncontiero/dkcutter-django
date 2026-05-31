@@ -1,8 +1,8 @@
 {% if dkcutter._haveNodePackages -%}
 {%- if dkcutter.pkgManager == "bun" -%}
-FROM docker.io/oven/bun:1.3.14-slim AS client-base
+FROM docker.io/oven/bun:1.3.14-slim@sha256:d56a2534ffd262e92c12fd3249d3924d296d97086da773f821d7d0477435ea04 AS client-base
 {%- else -%}
-FROM docker.io/node:24.16.0-bookworm-slim AS client-base
+FROM docker.io/node:24.16.0-bookworm-slim@sha256:242549cd46785b480c832479a730f4f2a20865d61ea2e404fdb2a5c3d3b73ecf AS client-base
 {%- endif %}
 
 WORKDIR /app
@@ -95,7 +95,7 @@ COPY --from=client-builder /app/{{ dkcutter.projectSlug }}/templates/emails /app
 
 {% endif -%}
 # define an alias for the specific python version used in this file.
-FROM ghcr.io/astral-sh/uv:python3.14-bookworm-slim AS python-build-stage
+FROM ghcr.io/astral-sh/uv:python3.14-bookworm-slim@sha256:7cf77f594be8042dab6daa9fe326f90962252268b4f120a7f5dccce4d947e6c1 AS python-build-stage
 
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PYTHON_DOWNLOADS=0
 
@@ -128,7 +128,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked --no-dev
 
 # Python 'run' stage
-FROM python:3.14-slim-bookworm AS python-run-stage
+FROM python:3.14-slim-bookworm@sha256:a9bee15510a364124aa24692899d269835683b883de42f7ebec8c293cf679ccb AS python-run-stage
 
 ARG APP_HOME=/app
 
