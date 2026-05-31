@@ -1,9 +1,8 @@
 import { resolve } from "node:path";
-import { execa } from "execa";
+import { emptyDir, pathExists, remove } from "dkcutter/utils";
 import fg from "fast-glob";
-import fs from "fs-extra";
+import { x } from "tinyexec";
 import { afterAll, beforeAll, it as vitestIt } from "vitest";
-
 import {
   INVALID_SLUGS,
   SUPPORTED_COMBINATIONS,
@@ -17,10 +16,10 @@ const isWindows = process.platform === "win32";
 const TIMEOUT = isWindows ? 300_000 : 150_000;
 
 beforeAll(async () => {
-  await fs.emptyDir(TEST_OUTPUT);
+  await emptyDir(TEST_OUTPUT);
 });
 afterAll(async () => {
-  await fs.rm(TEST_OUTPUT, { recursive: true, force: true });
+  await remove(TEST_OUTPUT);
 }, 50_000);
 
 const it = vitestIt.extend<{
@@ -42,8 +41,9 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       const target = resolve(TEST_OUTPUT, name);
 
       // Generate the project
-      await execa("pnpm", ["generate", "-o", TEST_OUTPUT, ...args, "-y"], {
-        cwd: TEST_OUTPUT,
+      await x("pnpm", ["generate", "-o", TEST_OUTPUT, ...args, "-y"], {
+        nodeOptions: { cwd: TEST_OUTPUT },
+        throwOnError: true,
       });
 
       // Check that the project was generated
@@ -51,34 +51,43 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       checkPaths(paths);
 
       // Check that the project is linted
-      await execa("ruff", ["check", "."], { cwd: target });
-      await execa("ruff", ["format", "."], { cwd: target });
+      await x("ruff", ["check", "."], {
+        nodeOptions: { cwd: target },
+        throwOnError: true,
+      });
+      await x("ruff", ["format", "."], {
+        nodeOptions: { cwd: target },
+        throwOnError: true,
+      });
 
       // django-upgrade
       const files = await fg.glob("**/*.py", { cwd: target });
-      await execa("django-upgrade", ["--target-version", "5.2", ...files], {
-        cwd: target,
+      await x("django-upgrade", ["--target-version", "5.2", ...files], {
+        nodeOptions: { cwd: target },
+        throwOnError: true,
       });
 
       // djLint
       const autofixableRules = "H014,T001";
       // TODO: remove T002 when fixed https://github.com/djlint/djLint/issues/687
       const ignoredRules = "H006,H030,H031,T002";
-      await execa(
+      await x(
         "djlint",
         ["--lint", "--ignore", `${autofixableRules},${ignoredRules}`, "."],
-        { cwd: target },
+        { nodeOptions: { cwd: target }, throwOnError: true },
       );
-      await execa("djlint", ["--check", "."], { cwd: target });
+      await x("djlint", ["--check", "."], {
+        nodeOptions: { cwd: target },
+        throwOnError: true,
+      });
 
-      const hasEslint = await fs.pathExists(
-        resolve(target, "eslint.config.mjs"),
-      );
+      const hasEslint = await pathExists(resolve(target, "eslint.config.mjs"));
       if (hasEslint) {
         const getWarnings = process.env.GET_WARNINGS === "true";
         const args = getWarnings ? ["--max-warnings", "0"] : [];
-        await execa("pnpm", ["dlx", "eslint@10", ".", ...args], {
-          cwd: target,
+        await x("pnpm", ["dlx", "eslint@10", ".", ...args], {
+          nodeOptions: { cwd: target },
+          throwOnError: true,
         });
       }
 
@@ -98,10 +107,10 @@ function runUnsupportedOptionsTest(
     testName,
     async ({ expect, invalidSlugs, unsupportedOptions }) => {
       // Generate the project and check that it fails
-      const { exitCode } = await execa(
+      const { exitCode } = await x(
         "pnpm",
         ["generate", "-o", TEST_OUTPUT, ...args, "-y"],
-        { cwd: TEST_OUTPUT, reject: false },
+        { nodeOptions: { cwd: TEST_OUTPUT } },
       );
       expect(exitCode).not.toBe(0);
       if (exitCode === 0) return;

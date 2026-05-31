@@ -1,5 +1,5 @@
+import fs from "node:fs/promises";
 import path from "node:path";
-import fs from "fs-extra";
 import { EXCLUDED_DIRS, PATTERN } from "./constants";
 
 /**

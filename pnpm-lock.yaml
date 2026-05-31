@@ -17,6 +17,9 @@ importers:
       '@rspack/core':
         specifier: ^2.0.5
         version: 2.0.5
+      '@types/node':
+        specifier: ^25.9.1
+        version: 25.9.1
       '@types/prompts':
         specifier: ^2.4.9
         version: 2.4.9
