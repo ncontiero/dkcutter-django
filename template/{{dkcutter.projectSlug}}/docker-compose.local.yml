@@ -48,7 +48,7 @@ services:
   {%- if dkcutter.useMailpit %}
 
   mailpit:
-    image: docker.io/axllent/mailpit:latest
+    image: docker.io/axllent/mailpit:latest@sha256:3bd7c2f2696deb35a4780d152b404dceec99cb041b942c0877b3b22384714f85
     container_name: {{ dkcutter.projectSlug }}_local_mailpit
     ports:
       - "8025:8025"
@@ -57,7 +57,7 @@ services:
   {%- if dkcutter.useCelery %}
 
   redis:
-    image: docker.io/redis:8
+    image: docker.io/redis:8@sha256:aa049e689e141a4358ad1d4562dc49c88a89fbab711fd8fcc33f684c80b26301
     container_name: {{ dkcutter.projectSlug }}_local_redis
     volumes:
       - {{ dkcutter.projectSlug }}_local_redis_data:/data
@@ -124,7 +124,7 @@ services:
   {%- if dkcutter.usePgadmin %}
 
   pg_admin:
-    image: docker.io/dpage/pgadmin4
+    image: docker.io/dpage/pgadmin4@sha256:cefc4cc6b7d9d71a9e81e76fb9d7e14038ab5661b539a190eea1b63fa612589a
     container_name: {{ dkcutter.projectSlug }}_local_pgadmin
     environment:
       - PGADMIN_DEFAULT_EMAIL=postgres@email.com
