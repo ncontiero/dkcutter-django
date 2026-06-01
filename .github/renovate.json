@@ -5,7 +5,9 @@
     "**/node_modules/**",
     "**/bower_components/**",
     "**/vendor/**",
-    "template/**/pnpm-workspace.yaml"
+    "template/**/pnpm-workspace.yaml",
+    "template/**/pyproject.toml",
+    "template/**/uv.lock"
   ],
   "packageRules": [
     {
