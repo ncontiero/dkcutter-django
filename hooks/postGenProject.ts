@@ -77,8 +77,8 @@ async function handleReactEmailSetup({
 }: {
   scripts: Record<string, string>;
 }) {
-  const buildScript = scripts.build;
-  const devScript = scripts.dev;
+  const buildScript = scripts.build ?? "";
+  const devScript = scripts.dev ?? "";
 
   const emailCMD: string[] = [context.pkgManager];
   const workspace = `@${context.projectSlug}/emails`;

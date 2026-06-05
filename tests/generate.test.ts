@@ -33,8 +33,7 @@ const it = vitestIt.extend<{
 });
 
 function runProjectCheckTest(combination: { [key: string]: any }) {
-  const { args, testName } = constructArgs(combination);
-  const name = args[1];
+  const { args, testName, name } = constructArgs(combination);
   it.concurrent(
     testName,
     async ({ supportedOptions }) => {
@@ -101,8 +100,7 @@ function runUnsupportedOptionsTest(
   combination: { [key: string]: any },
   testOption: "slug" | "options" = "options",
 ) {
-  const { args, testName } = constructArgs(combination);
-  const name = args[1];
+  const { args, testName, name } = constructArgs(combination);
   it.concurrent(
     testName,
     async ({ expect, invalidSlugs, unsupportedOptions }) => {

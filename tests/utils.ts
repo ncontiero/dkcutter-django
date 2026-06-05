@@ -51,10 +51,10 @@ export function constructArgs(combination: { [key: string]: any }) {
   }
   name = name.slice(0, -1);
   const projectName = name.toLowerCase().replaceAll(",", "_");
-  args.unshift(
-    "--projectName",
-    projectName.slice(0, 16).concat(Math.random().toString().slice(2, 8)),
-  );
+  const projectNameWithRandomSuffix = projectName
+    .slice(0, 16)
+    .concat(Math.random().toString().slice(2, 8));
+  args.unshift("--projectName", projectNameWithRandomSuffix);
   args.push("--installFrontendDeps", "false", "--initializeGit", "false");
-  return { args, testName: projectName };
+  return { args, testName: projectName, name: projectNameWithRandomSuffix };
 }
