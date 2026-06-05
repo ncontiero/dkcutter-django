@@ -64,7 +64,7 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       const files = await Array.fromAsync(
         pythonFilesGlob.scan({ cwd: target }),
       );
-      await x("django-upgrade", ["--target-version", "5.2", ...files], {
+      await x("django-upgrade", ["--target-version", "6.0", ...files], {
         nodeOptions: { cwd: target },
         throwOnError: true,
       });
