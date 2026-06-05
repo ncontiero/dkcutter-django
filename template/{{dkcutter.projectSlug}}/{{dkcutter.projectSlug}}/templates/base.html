@@ -31,7 +31,7 @@
     {%- if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
     {% raw %}{% render_bundle "main" "js" attrs="defer" %}{% endraw %}
     {%- else %}
-    {% raw %}<script defer src="{% static 'js/project.js' %}" type="module"></script>{% endraw %}
+    {% raw %}<script type="module" defer src="{% static 'js/project.js' %}"></script>{% endraw %}
     {%- endif %}{% raw %}
     {% block css %}
       <!-- Your stuff: Third-party CSS libraries go here -->

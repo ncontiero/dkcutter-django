@@ -12,7 +12,8 @@
     "lint:fix": "bun run lint --fix",
     "check": "bun run lint && bun run typecheck",
     "test": "bun --bun vitest run",
-    "test:strict": "GET_WARNINGS=true bun run test"
+    "test:typecheck": "RUN_TYPE_CHECK=true bun run test",
+    "test:strict-eslint": "GET_WARNINGS=true bun run test"
   },
   "devDependencies": {
     "@ncontiero/eslint-config": "8.2.1",
@@ -23,6 +24,7 @@
     "eslint": "10.4.1",
     "prompts": "2.4.2",
     "tinyexec": "1.2.4",
+    "tinyglobby": "0.2.17",
     "typescript": "6.0.3",
     "vitest": "4.1.8",
     "zod": "4.4.3"

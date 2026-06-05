@@ -49,7 +49,11 @@ jobs:
         run: bun install
       - name: Install Python dependencies
         run: uv sync --locked
+      - name: Run tests with type checking
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: RUN_TYPE_CHECK=true uv run tox
       - name: Run tests
+        if: ${{ matrix.os != 'ubuntu-latest' }}
         run: uv run tox
 
   docker:

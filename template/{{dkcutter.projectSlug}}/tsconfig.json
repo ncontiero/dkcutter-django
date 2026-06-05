@@ -14,6 +14,7 @@
 
     // Import settings
     "resolveJsonModule": true,
+    "types": ["{{ 'bun' if dkcutter._pkgManager == 'bun' else 'node' }}"],
     "allowImportingTsExtensions": true,
 
     // Type checking and compilation settings
@@ -28,10 +29,11 @@
     "skipLibCheck": true
   },
   "include": ["{{dkcutter.projectSlug}}/src", "{{ 'rspack' if dkcutter.frontendPipeline == 'Rspack' else 'webpack' }}"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]{% if dkcutter._pkgManager != 'bun' %},
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"
     }
   }
+  {%- endif%}
 }

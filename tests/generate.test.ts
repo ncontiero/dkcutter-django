@@ -1,7 +1,7 @@
 import { resolve } from "node:path";
-import { Glob } from "bun";
 import { emptyDir, pathExists, remove } from "dkcutter/utils";
 import { x } from "tinyexec";
+import { glob } from "tinyglobby";
 import { afterAll, beforeAll, it as vitestIt } from "vitest";
 import {
   INVALID_SLUGS,
@@ -39,6 +39,8 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
     async ({ supportedOptions }) => {
       const target = resolve(TEST_OUTPUT, name);
 
+      const runTypeCheck = process.env.RUN_TYPE_CHECK === "true";
+
       // Generate the project
       await x("bun", ["run", "generate", "-o", TEST_OUTPUT, ...args, "-y"], {
         nodeOptions: { cwd: TEST_OUTPUT },
@@ -60,10 +62,11 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       });
 
       // django-upgrade
-      const pythonFilesGlob = new Glob("**/*.py");
-      const files = await Array.fromAsync(
-        pythonFilesGlob.scan({ cwd: target }),
-      );
+      const files = await glob("**/*.py", {
+        cwd: target,
+        expandDirectories: false,
+        ignore: ["**/node_modules/**"],
+      });
       await x("django-upgrade", ["--target-version", "6.0", ...files], {
         nodeOptions: { cwd: target },
         throwOnError: true,
@@ -83,12 +86,29 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
         throwOnError: true,
       });
 
+      const hasPackageJson = await pathExists(resolve(target, "package.json"));
+      if (hasPackageJson) {
+        // Install dependencies
+        await x("bun", ["install"], { nodeOptions: { cwd: target } });
+
+        const hasTypescriptConfig = await pathExists(
+          resolve(target, "tsconfig.json"),
+        );
+        // Check types
+        if (hasTypescriptConfig && runTypeCheck) {
+          await x("bun", ["run", "typecheck"], {
+            nodeOptions: { cwd: target, stdio: "inherit" },
+            throwOnError: true,
+          });
+        }
+      }
+
       const hasEslint = await pathExists(resolve(target, "eslint.config.mjs"));
       if (hasEslint) {
         const getWarnings = process.env.GET_WARNINGS === "true";
         const args = getWarnings ? ["--max-warnings", "0"] : [];
         await x("bun", ["run", "lint", ...args], {
-          nodeOptions: { cwd: target },
+          nodeOptions: { cwd: target, stdio: "inherit" },
           throwOnError: true,
         });
       }

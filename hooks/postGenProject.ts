@@ -246,8 +246,13 @@ async function handleFrontendPipelineAndTools(
   );
 
   if (lang === "js") {
-    filesToRemove.push("tsconfig.json");
-    removeDevDeps.push("ts-node", "typescript");
+    filesToRemove.push("tsconfig.json", path.join(srcFolder, "globals.d.ts"));
+    removeDevDeps.push("ts-node", "typescript", "@types/node", "@types/bun");
+  } else if (lang === "ts") {
+    if (context.pkgManager !== "bun") {
+      removeDevDeps.push("@types/bun");
+    }
+    scripts.typecheck = "tsc --noEmit";
   }
 
   await removeFiles(filesToRemove);
