@@ -20,7 +20,7 @@ beforeAll(async () => {
 });
 afterAll(async () => {
   await remove(TEST_OUTPUT);
-}, 50_000);
+}, TIMEOUT);
 
 const it = vitestIt.extend<{
   supportedOptions: string[];
@@ -40,7 +40,7 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       const target = resolve(TEST_OUTPUT, name);
 
       // Generate the project
-      await x("pnpm", ["generate", "-o", TEST_OUTPUT, ...args, "-y"], {
+      await x("bun", ["run", "generate", "-o", TEST_OUTPUT, ...args, "-y"], {
         nodeOptions: { cwd: TEST_OUTPUT },
         throwOnError: true,
       });
@@ -84,7 +84,7 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       if (hasEslint) {
         const getWarnings = process.env.GET_WARNINGS === "true";
         const args = getWarnings ? ["--max-warnings", "0"] : [];
-        await x("pnpm", ["dlx", "eslint@10", ".", ...args], {
+        await x("bun", ["run", "lint", ...args], {
           nodeOptions: { cwd: target },
           throwOnError: true,
         });
@@ -106,8 +106,8 @@ function runUnsupportedOptionsTest(
     async ({ expect, invalidSlugs, unsupportedOptions }) => {
       // Generate the project and check that it fails
       const { exitCode } = await x(
-        "pnpm",
-        ["generate", "-o", TEST_OUTPUT, ...args, "-y"],
+        "bun",
+        ["run", "generate", "-o", TEST_OUTPUT, ...args, "-y"],
         { nodeOptions: { cwd: TEST_OUTPUT } },
       );
       expect(exitCode).not.toBe(0);

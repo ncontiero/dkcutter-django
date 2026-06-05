@@ -18,7 +18,7 @@ const FILES_TO_IGNORE = [
   "{{dkcutter.projectSlug}}/src/index.css",
 ];
 
-function ignoreFiles(files) {
+function ignoreFiles(files: string[]) {
   return files.map((file) => `${TEMPLATE_GLOB}${file}`);
 }
 
