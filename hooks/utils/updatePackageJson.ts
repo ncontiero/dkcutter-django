@@ -1,11 +1,9 @@
-import type { PackageJson } from "type-fest";
-
 import { getPackageInfo, writeJsonFile } from "dkcutter/utils";
 
 interface UpdatePackageJsonProps {
   removeDeps?: string[];
   removeDevDeps?: string[];
-  scripts?: PackageJson["scripts"];
+  scripts?: Record<string, string>;
   keys?: string[];
   modifyKey?: Record<string, string>;
   projectDir: string;

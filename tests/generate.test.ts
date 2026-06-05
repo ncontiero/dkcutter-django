@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
+import { Glob } from "bun";
 import { emptyDir, pathExists, remove } from "dkcutter/utils";
-import fg from "fast-glob";
 import { x } from "tinyexec";
 import { afterAll, beforeAll, it as vitestIt } from "vitest";
 import {
@@ -60,7 +60,10 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       });
 
       // django-upgrade
-      const files = await fg.glob("**/*.py", { cwd: target });
+      const pythonFilesGlob = new Glob("**/*.py");
+      const files = await Array.fromAsync(
+        pythonFilesGlob.scan({ cwd: target }),
+      );
       await x("django-upgrade", ["--target-version", "5.2", ...files], {
         nodeOptions: { cwd: target },
         throwOnError: true,
