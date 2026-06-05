@@ -102,6 +102,13 @@
         "description": "Only possible with {{ colors.blue('Frontend Pipeline') }} and/or {{ colors.blue('React Email') }}."
       },
       {
+        "title": "Add {{ colors.blue('ESLint with Type Information') }}",
+        "value": "eslint-ts",
+        "description": "This option provides better linting capabilities but requires TypeScript. Only possible with {{ colors.blue('Frontend Pipeline') }} and/or {{ colors.blue('React Email') }}.",
+        "disabled": "{{ frontendPipelineLang != 'ts' }}",
+        "helpTextForDisabled": "Disabled because {{ colors.blue('Frontend Pipeline Language') }} is not TypeScript."
+      },
+      {
         "title": "Add {{ colors.blue('Mailpit') }}",
         "value": "mailpit",
         "disabled": "{{ mailService == 'None' }}",

@@ -33,7 +33,6 @@ export default ncontiero(
         ],
       },
     },
-    tailwindcss: false,
   },
   {
     files: ["**/emails/**/*.tsx"],

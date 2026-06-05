@@ -18,7 +18,8 @@ import { toBoolean } from "./utils/coerce";
 // {{ dkcutter.add("useWhitenoise", "{% if 'whitenoise' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("usePgadmin", "{% if 'pgadmin' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useTailwind", "{{ true if 'tailwindcss' in dkcutter.additionalTools }}") }}
-// {{ dkcutter.add("useEslint", "{{ true if 'eslint' in dkcutter.additionalTools }}") }}
+// {{ dkcutter.add("useEslintWithTypeInformation", "{{ 'eslint-ts' in dkcutter.additionalTools }}") }}
+// {{ dkcutter.add("useEslint", "{{ 'eslint' in dkcutter.additionalTools or dkcutter.useEslintWithTypeInformation }}") }}
 
 // Add this values in context to avoid repetitions
 // {{ dkcutter.add("pageTitleClass", "{{ 'my-4 text-4xl font-bold underline' if dkcutter.useTailwind else 'page-title' }}") }}
@@ -27,7 +28,7 @@ import { toBoolean } from "./utils/coerce";
 const ctx = {
   frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,
   useReactEmail: toBoolean("{{ 'reactEmail' in dkcutter.additionalTools }}"),
-  useEslint: toBoolean("{{ 'eslint' in dkcutter.additionalTools }}"),
+  useEslint: toBoolean("{{ dkcutter.useEslint }}"),
   useWhitenoise: toBoolean("{{ 'whitenoise' in dkcutter.additionalTools }}"),
   cloudProvider: "{{ dkcutter.cloudProvider }}",
   mailService: "{{ dkcutter.mailService }}",
