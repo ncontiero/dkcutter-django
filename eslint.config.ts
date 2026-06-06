@@ -14,6 +14,7 @@ const FILES_TO_IGNORE = [
   "eslint.config.mjs",
   "prod.config.mjs",
   "prod.config.ts",
+  "tsconfig.json",
   "{{dkcutter.projectSlug}}/**/*.html",
   "{{dkcutter.projectSlug}}/src/index.css",
 ];
@@ -33,6 +34,7 @@ export default ncontiero(
         ],
       },
     },
+    tailwindcss: false,
   },
   {
     files: ["**/emails/**/*.tsx"],
