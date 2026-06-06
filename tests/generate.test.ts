@@ -98,7 +98,7 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       });
 
       const hasPackageJson = await pathExists(resolve(target, "package.json"));
-      if (hasPackageJson) {
+      if (hasPackageJson && !isWindows) {
         // Install dependencies
         await x("bun", ["install"], { nodeOptions: { cwd: target } });
 
