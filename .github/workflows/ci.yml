@@ -68,7 +68,7 @@ jobs:
           - name: Celery & DNRF
             args: --useCelery --restFramework DNRF
           - name: Rspack with pnpm
-            args: --frontendPipeline Rspack
+            args: --frontendPipeline Rspack --pkgManagerToUse pnpm
           - name: Rspack with npm
             args: --frontendPipeline Rspack --pkgManagerToUse npm
           - name: Rspack with yarn
@@ -82,15 +82,15 @@ jobs:
           - name: Rspack with TypeScript, TailwindCSS and Eslint
             args: --frontendPipeline Rspack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
           - name: Webpack
-            args: --frontendPipeline Webpack
+            args: --frontendPipeline Webpack --pkgManagerToUse pnpm
           - name: Webpack with TailwindCSS and Eslint
-            args: --frontendPipeline Webpack --additionalTools tailwindcss,eslint
+            args: --frontendPipeline Webpack --additionalTools tailwindcss,eslint --pkgManagerToUse pnpm
           - name: Webpack with React Email and Eslint
-            args: --frontendPipeline Webpack --additionalTools reactEmail,eslint
+            args: --frontendPipeline Webpack --additionalTools reactEmail,eslint --pkgManagerToUse pnpm
           - name: Webpack with TypeScript, TailwindCSS and Eslint
-            args: --frontendPipeline Webpack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
+            args: --frontendPipeline Webpack --frontendPipelineLang ts --additionalTools tailwindcss,eslint --pkgManagerToUse pnpm
           - name: React Email with pnpm
-            args: --additionalTools reactEmail
+            args: --additionalTools reactEmail --pkgManagerToUse pnpm
           - name: React Email with npm
             args: --additionalTools reactEmail --pkgManagerToUse npm
           - name: React Email with yarn
