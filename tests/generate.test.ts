@@ -33,13 +33,24 @@ const it = vitestIt.extend<{
 });
 
 function runProjectCheckTest(combination: { [key: string]: any }) {
+  const runTypeCheck = process.env.RUN_TYPE_CHECK === "true";
+  if (
+    "additionalTools" in combination &&
+    combination.additionalTools.includes("eslint") &&
+    combination.frontendPipelineLang === "ts" &&
+    runTypeCheck
+  ) {
+    combination.additionalTools = combination.additionalTools.replace(
+      "eslint",
+      "eslint-ts",
+    );
+  }
+
   const { args, testName, name } = constructArgs(combination);
   it.concurrent(
     testName,
     async ({ supportedOptions }) => {
       const target = resolve(TEST_OUTPUT, name);
-
-      const runTypeCheck = process.env.RUN_TYPE_CHECK === "true";
 
       // Generate the project
       await x("bun", ["run", "generate", "-o", TEST_OUTPUT, ...args, "-y"], {
