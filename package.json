@@ -2,7 +2,7 @@
   "name": "dkcutter-django",
   "type": "module",
   "packageManager": "bun@1.3.14",
-  "description": "DKCutter Django is a framework for jumpstarting production-ready Django projects quickly.",
+  "description": "DKCutter Django is a robust template for jumpstarting production-ready Django projects quickly with modern tooling.",
   "author": "Nicolas Contiero <https://github.com/ncontiero>",
   "license": "MIT",
   "scripts": {

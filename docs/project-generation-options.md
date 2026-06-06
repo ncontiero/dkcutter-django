@@ -62,6 +62,7 @@ This page describes all the template options that will be prompted by the [dkcut
   - [React Email](https://react.email/)
   - [TailwindCSS](https://tailwindcss.com/)
   - [ESLint](https://eslint.org/)
+  - [ESLint with Type Information](https://typescript-eslint.io/getting-started/typed-linting)
   - [Mailpit](https://github.com/axllent/mailpit)
   - [Celery](https://github.com/celery/celery)
   - [Sentry](https://github.com/getsentry/sentry)
