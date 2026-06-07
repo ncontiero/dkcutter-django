@@ -4,7 +4,7 @@ import { cn } from "../utils/cn";
 export function Text({ className, ...props }: TextProps) {
   return (
     <ReactEmailText
-      className={cn("text-foreground text-base", className)}
+      className={cn("text-base text-foreground", className)}
       {...props}
     />
   );
