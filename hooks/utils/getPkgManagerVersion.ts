@@ -4,8 +4,8 @@ import { x } from "tinyexec";
 
 const pkgManagersDefaultVersions: Record<PackageManager, string> = {
   npm: "npm@11.16.0",
-  pnpm: "pnpm@11.3.0",
-  yarn: "yarn@4.15.0",
+  pnpm: "pnpm@11.5.1",
+  yarn: "yarn@4.16.0",
   bun: "bun@1.3.14",
 };
 
