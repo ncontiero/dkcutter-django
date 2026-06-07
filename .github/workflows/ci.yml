@@ -81,14 +81,16 @@ jobs:
             args: --frontendPipeline Rspack --additionalTools reactEmail,eslint
           - name: Rspack with TypeScript, TailwindCSS and Eslint
             args: --frontendPipeline Rspack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
-          - name: Webpack
+          - name: Webpack with bun
+            args: --frontendPipeline Webpack --pkgManagerToUse bun
+          - name: Webpack with pnpm
             args: --frontendPipeline Webpack --pkgManagerToUse pnpm
           - name: Webpack with TailwindCSS and Eslint
-            args: --frontendPipeline Webpack --additionalTools tailwindcss,eslint --pkgManagerToUse pnpm
+            args: --frontendPipeline Webpack --additionalTools tailwindcss,eslint
           - name: Webpack with React Email and Eslint
-            args: --frontendPipeline Webpack --additionalTools reactEmail,eslint --pkgManagerToUse pnpm
+            args: --frontendPipeline Webpack --additionalTools reactEmail,eslint
           - name: Webpack with TypeScript, TailwindCSS and Eslint
-            args: --frontendPipeline Webpack --frontendPipelineLang ts --additionalTools tailwindcss,eslint --pkgManagerToUse pnpm
+            args: --frontendPipeline Webpack --frontendPipelineLang ts --additionalTools tailwindcss,eslint
           - name: React Email with pnpm
             args: --additionalTools reactEmail --pkgManagerToUse pnpm
           - name: React Email with npm

@@ -1,8 +1,5 @@
-{% if dkcutter.pkgManager == "bun" -%}
-FROM docker.io/oven/bun:1.3.14-slim@sha256:d56a2534ffd262e92c12fd3249d3924d296d97086da773f821d7d0477435ea04
-{% else -%}
 FROM docker.io/node:24.16.0-bookworm-slim@sha256:242549cd46785b480c832479a730f4f2a20865d61ea2e404fdb2a5c3d3b73ecf
-{% endif %}
+
 ARG APP_HOME=/app
 WORKDIR ${APP_HOME}
 
@@ -35,6 +32,10 @@ COPY ./emails/package.json ${APP_HOME}/emails/
 
 RUN yarn install
 {% elif dkcutter.pkgManager == "bun" -%}
+COPY --from=docker.io/oven/bun:1.3.14-slim@sha256:d56a2534ffd262e92c12fd3249d3924d296d97086da773f821d7d0477435ea04 \
+  /usr/local/bin/bun \
+  /usr/local/bin/bun
+
 COPY ./package.json ./bun.lock* ${APP_HOME}
 {% if "reactEmail" in dkcutter.additionalTools -%}
 COPY ./emails/package.json ${APP_HOME}/emails/
