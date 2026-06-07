@@ -1,6 +1,6 @@
 import type { Configuration } from "webpack-dev-server";
 import { merge } from "webpack-merge";
-import { commonConfig } from "./common.config";
+import { commonConfig } from "./common.config.ts";
 
 export default merge(commonConfig, {
   mode: "development",
