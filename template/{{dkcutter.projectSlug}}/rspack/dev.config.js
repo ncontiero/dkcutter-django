@@ -1,5 +1,5 @@
 import { merge } from "rspack-merge";
-import { commonConfig } from "./common.config.mjs";
+import { commonConfig } from "./common.config.js";
 
 export default merge(commonConfig, {
   mode: "development",

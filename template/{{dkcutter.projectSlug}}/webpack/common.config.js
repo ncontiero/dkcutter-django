@@ -1,5 +1,4 @@
 import path from "node:path";
-import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import MinimizerPlugin from "minimizer-webpack-plugin";
 import BundleTracker from "webpack-bundle-tracker";
@@ -32,10 +31,20 @@ export const commonConfig = {
   ],
   module: {
     rules: [
-      // we pass the output from babel loader to react-hot loader
       {
-        test: /\.jsx?$/,
-        loader: "babel-loader",
+        test: /\.(?:js|jsx)$/,
+        use: {
+          loader: "swc-loader",
+          /** @type {import('@swc/core').Options} */
+          options: {
+            jsc: {
+              parser: {
+                syntax: "ecmascript",
+                jsx: true,
+              },
+            },
+          },
+        },
       },
       {
         test: /\.css$/,
@@ -44,11 +53,23 @@ export const commonConfig = {
     ],
   },
   optimization: {
-    minimizer: [new MinimizerPlugin(), new CssMinimizerPlugin()],
+    minimizer: [
+      new MinimizerPlugin({
+        minify: MinimizerPlugin.swcMinify,
+        /** @type {import('@swc/core').JsMinifyOptions} */
+        minimizerOptions: {},
+      }),
+      new MinimizerPlugin({
+        test: /\.css(\?.*)?$/i,
+        minify: MinimizerPlugin.lightningCssMinify,
+        /** @type {import('lightningcss').TransformOptions} */
+        minimizerOptions: {},
+      }),
+    ],
   },
   resolve: {
     modules: ["node_modules"],
-    extensions: ["...", ".js", "jsx"],
+    extensions: [".js", ".jsx", ".json", ".wasm"],
     alias: {
       "@": path.resolve(PROJECT_PATH, "src"),
     },

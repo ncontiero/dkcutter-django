@@ -132,24 +132,26 @@ async function handleFrontendPipelineAndTools(
 
   const removeWebpack = () => {
     removeDevDeps.push(
-      "@babel/core",
-      "@babel/preset-env",
-      "@babel/preset-typescript",
-      "babel-loader",
+      "@swc/core",
       "css-loader",
-      "css-minimizer-webpack-plugin",
+      "lightningcss",
       "mini-css-extract-plugin",
       "minimizer-webpack-plugin",
+      "swc-loader",
       "webpack",
       "webpack-cli",
       "webpack-dev-server",
       "webpack-merge",
     );
-    removeKeys.push("babel");
     filesToRemove.push(webpackConfigFolder);
   };
   const removeRspack = () => {
-    removeDevDeps.push("@rspack/cli", "@rspack/core", "rspack-merge");
+    removeDevDeps.push(
+      "@rspack/cli",
+      "@rspack/core",
+      "@rspack/dev-server",
+      "rspack-merge",
+    );
     filesToRemove.push(rspackConfigFolder);
   };
   const removeStaticFiles = () => {
@@ -159,15 +161,13 @@ async function handleFrontendPipelineAndTools(
     );
   };
 
-  const configFilesExt = lang === "js" ? "mjs" : "ts";
-
   if (choice === "Rspack") {
     scripts = {
-      build: `rspack build -c rspack/prod.config.${configFilesExt}`,
-      dev: `rspack serve -c rspack/dev.config.${configFilesExt}`,
+      build: `rspack build -c rspack/prod.config.${lang}`,
+      dev: `rspack serve -c rspack/dev.config.${lang}`,
     };
 
-    const filesToMove = ["prod.config.mjs", "prod.config.ts"];
+    const filesToMove = ["prod.config.js", "prod.config.ts"];
     await Promise.all(
       filesToMove.map((file) =>
         rename(
@@ -181,13 +181,10 @@ async function handleFrontendPipelineAndTools(
     removeStaticFiles();
   } else if (choice === "Webpack") {
     scripts = {
-      build: `webpack --config webpack/prod.config.${configFilesExt}`,
-      dev: `webpack serve --config webpack/dev.config.${configFilesExt}`,
+      build: `webpack --config webpack/prod.config.${lang}`,
+      dev: `webpack serve --config webpack/dev.config.${lang}`,
     };
 
-    if (lang === "js") {
-      removeDevDeps.push("@babel/preset-typescript");
-    }
     removeRspack();
     removeStaticFiles();
   } else {
@@ -201,7 +198,7 @@ async function handleFrontendPipelineAndTools(
       "webpack-bundle-tracker",
     );
     removeKeys.push("browserslist");
-    filesToRemove.push("postcss.config.mjs");
+    filesToRemove.push("postcss.config.js");
   }
 
   if (!tools.includes("tailwindcss")) {
@@ -221,15 +218,15 @@ async function handleFrontendPipelineAndTools(
     scripts.lint = "eslint .";
     scripts["lint:fix"] = "eslint . --fix";
   } else {
-    filesToRemove.push("eslint.config.mjs");
+    filesToRemove.push("eslint.config.js");
     removeDevDeps.push("@ncontiero/eslint-config", "eslint");
   }
 
-  const configFilesToRemoveExt = lang === "ts" ? "mjs" : "ts";
+  const filesToRemoveExt = lang === "ts" ? "js" : "ts";
   const configFilesToRemove = [
-    `common.config.${configFilesToRemoveExt}`,
-    `dev.config.${configFilesToRemoveExt}`,
-    `prod.config.${configFilesToRemoveExt}`,
+    `common.config.${filesToRemoveExt}`,
+    `dev.config.${filesToRemoveExt}`,
+    `prod.config.${filesToRemoveExt}`,
   ];
   configFilesToRemove.forEach((file) => {
     filesToRemove.push(
@@ -238,7 +235,6 @@ async function handleFrontendPipelineAndTools(
     );
   });
 
-  const filesToRemoveExt = lang === "ts" ? "js" : "ts";
   filesToRemove.push(
     path.join(srcFolder, `index.${filesToRemoveExt}`),
     path.join(srcFolder, `vendors.${filesToRemoveExt}`),
@@ -247,7 +243,7 @@ async function handleFrontendPipelineAndTools(
 
   if (lang === "js") {
     filesToRemove.push("tsconfig.json", path.join(srcFolder, "globals.d.ts"));
-    removeDevDeps.push("ts-node", "typescript", "@types/node", "@types/bun");
+    removeDevDeps.push("typescript", "@types/node", "@types/bun");
   } else if (lang === "ts") {
     if (context.pkgManager !== "bun") {
       removeDevDeps.push("@types/bun");
@@ -351,7 +347,7 @@ async function main() {
     filesToRemove.push(
       rspackConfigFolder,
       webpackConfigFolder,
-      "postcss.config.mjs",
+      "postcss.config.js",
     );
 
     await rename(
@@ -364,7 +360,7 @@ async function main() {
       filesToRemove.push(
         "package.json",
         "tsconfig.json",
-        "eslint.config.mjs",
+        "eslint.config.js",
         ".nvmrc",
         ".yarnrc.yml",
         "emails",

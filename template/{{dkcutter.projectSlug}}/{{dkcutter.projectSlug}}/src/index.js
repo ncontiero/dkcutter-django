@@ -1,5 +1,5 @@
 import "./index.css";
-import { initThemeToggle } from "./components/theme-toggle";
+import { initThemeToggle } from "./components/theme-toggle.js";
 
 const initializeApp = () => {
   setTimeout(() => {

@@ -29,11 +29,5 @@
     "skipLibCheck": true
   },
   "include": ["{{dkcutter.projectSlug}}/src", "{{ 'rspack' if dkcutter.frontendPipeline == 'Rspack' else 'webpack' }}"],
-  "exclude": ["node_modules"]{% if dkcutter._pkgManager != 'bun' %},
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  }
-  {%- endif%}
+  "exclude": ["node_modules"],
 }

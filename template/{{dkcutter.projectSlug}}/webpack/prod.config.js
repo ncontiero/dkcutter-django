@@ -1,5 +1,5 @@
 import { merge } from "{{ 'rspack-merge' if dkcutter.frontendPipeline == 'Rspack' else 'webpack-merge' }}";
-import { commonConfig } from "./common.config.mjs";
+import { commonConfig } from "./common.config.js";
 
 // This variable should mirror the one from config/settings/production.py
 {%- if not dkcutter.useWhitenoise %}
