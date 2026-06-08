@@ -9,7 +9,7 @@
         "@types/bun": "1.3.14",
         "@types/prompts": "2.4.9",
         "colorette": "2.0.20",
-        "dkcutter": "6.0.1",
+        "dkcutter": "6.0.2",
         "eslint": "10.4.1",
         "prompts": "2.4.2",
         "tinyexec": "1.2.4",
@@ -447,7 +447,7 @@
 
     "diff-sequences": ["diff-sequences@29.6.3", "", {}, "sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q=="],
 
-    "dkcutter": ["dkcutter@6.0.1", "", { "dependencies": { "colorette": "^2.0.20", "commander": "^15.0.0", "lilconfig": "^3.1.3", "nunjucks": "^3.2.4", "picospinner": "^3.0.0", "prompts": "^2.4.2", "tinyexec": "^1.2.4", "tsx": "^4.22.4", "zod": "^4.4.3" }, "bin": { "dkcutter": "./dist/cli.mjs" } }, "sha512-zViCiGRDvXB8DQnhwKkG0r7D88yjseYX7F4adVHQZBXuyF/5/6frlbNNLOJVif6BupbMqLCoSwtw0DfTBNsJ9Q=="],
+    "dkcutter": ["dkcutter@6.0.2", "", { "dependencies": { "colorette": "^2.0.20", "commander": "^15.0.0", "lilconfig": "^3.1.3", "nunjucks": "^3.2.4", "picospinner": "^3.0.0", "prompts": "^2.4.2", "tinyexec": "^1.2.4", "tsx": "^4.22.4", "zod": "^4.4.3" }, "bin": { "dkcutter": "./dist/cli.mjs" } }, "sha512-kN2YDfzXjgQ4k/cdOqI8UWFmRaZYm0cn8rJyBJCpYk6HBI1RSIAVyxlHNS7YVp0+dcNef7ewGT4s0a0yGTf9eg=="],
 
     "dunder-proto": ["dunder-proto@1.0.1", "", { "dependencies": { "call-bind-apply-helpers": "^1.0.1", "es-errors": "^1.3.0", "gopd": "^1.2.0" } }, "sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A=="],
 
