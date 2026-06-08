@@ -25,7 +25,7 @@ python_files = [
   "tests.py",
   "test_*.py",
 ]
-{%- if dkcutter.frontendPipeline != "None" or "reactEmail" in dkcutter.additionalTools %}
+{%- if dkcutter.frontendPipeline != "None" or dkcutter.useReactEmail %}
 norecursedirs = [ "node_modules" ]
 {%- endif %}
 

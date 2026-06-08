@@ -1,4 +1,4 @@
-{%- if "reactEmail" in dkcutter.additionalTools %}packages:
+{%- if dkcutter.useReactEmail %}packages:
   - emails
 
 {% endif -%}
@@ -7,7 +7,7 @@ allowBuilds:
 {%- if dkcutter.frontendPipeline == "Webpack" %}
   "@swc/core": true
 {%- endif %}
-{%- if "reactEmail" in dkcutter.additionalTools %}
+{%- if dkcutter.useReactEmail %}
   esbuild: true
   sharp: true
 {%- endif %}

@@ -12,6 +12,7 @@ import { toBoolean } from "./utils/coerce";
 
 // And this add values in context for ease in conditions.
 // {{ dkcutter.update("pkgManager", dkcutter._pkgManager) }}
+// {{ dkcutter.add("useReactEmail", "{{ 'reactEmail' in dkcutter.additionalTools }}") }}
 // {{ dkcutter.add("useMailpit", "{% if 'mailpit' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useCelery", "{% if 'celery' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useSentry", "{% if 'sentry' in dkcutter.additionalTools %}true{% endif %}") }}
@@ -27,7 +28,7 @@ import { toBoolean } from "./utils/coerce";
 
 const ctx = {
   frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,
-  useReactEmail: toBoolean("{{ 'reactEmail' in dkcutter.additionalTools }}"),
+  useReactEmail: toBoolean("{{ dkcutter.useReactEmail }}"),
   useEslint: toBoolean("{{ dkcutter.useEslint }}"),
   useWhitenoise: toBoolean("{{ 'whitenoise' in dkcutter.additionalTools }}"),
   cloudProvider: "{{ dkcutter.cloudProvider }}",

@@ -7,7 +7,7 @@ WORKDIR /app
 FROM client-base AS client-deps
 
 COPY ./package.json ./package-lock.json* ./
-{%- if "reactEmail" in dkcutter.additionalTools %}
+{%- if dkcutter.useReactEmail %}
 COPY ./emails/package.json ./emails/
 {%- endif %}
 
@@ -21,7 +21,7 @@ RUN corepack enable
 FROM client-base AS client-deps
 
 COPY ./package.json ./pnpm-lock.yaml* ./pnpm-workspace.yaml* ./
-{%- if "reactEmail" in dkcutter.additionalTools %}
+{%- if dkcutter.useReactEmail %}
 COPY ./emails/package.json ./emails/
 {%- endif %}
 
@@ -32,7 +32,7 @@ RUN corepack enable
 FROM client-base AS client-deps
 
 COPY ./package.json ./.yarnrc.yml ./yarn.lock* ./
-{%- if "reactEmail" in dkcutter.additionalTools %}
+{%- if dkcutter.useReactEmail %}
 COPY ./emails/package.json ./emails/
 {%- endif %}
 
@@ -45,7 +45,7 @@ COPY --from=docker.io/oven/bun:1.3.14-slim@sha256:d56a2534ffd262e92c12fd3249d392
   /usr/local/bin/bun
 
 COPY ./package.json ./bun.lock* ./
-{%- if "reactEmail" in dkcutter.additionalTools %}
+{%- if dkcutter.useReactEmail %}
 COPY ./emails/package.json ./emails/
 {%- endif %}
 
@@ -73,14 +73,14 @@ ENV DJANGO_GCP_STORAGE_BUCKET_NAME=${DJANGO_GCP_STORAGE_BUCKET_NAME}
 COPY --from=client-deps /usr/local/bin/bun /usr/local/bin/bun
 {%- endif %}
 COPY --from=client-deps /app/node_modules /app/node_modules
-{% if "reactEmail" in dkcutter.additionalTools and dkcutter.pkgManager in ["pnpm", "bun"] -%}
+{% if dkcutter.useReactEmail and dkcutter.pkgManager in ["pnpm", "bun"] -%}
 COPY --from=client-deps /app/emails/node_modules /app/emails/node_modules
 {%- endif %}
 COPY . /app
 {% if dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
 RUN {{ dkcutter._pkgRun }} build
 {%- endif %}
-{%- if "reactEmail" in dkcutter.additionalTools %}
+{%- if dkcutter.useReactEmail %}
 RUN {{ dkcutter._pkgRun }} build:email
 {%- endif %}
 
@@ -91,7 +91,7 @@ COPY . /app
 COPY --from=client-builder /app/webpack-stats.json /app/webpack-stats.json
 COPY --from=client-builder /app/{{ dkcutter.projectSlug }}/static/bundles /app/{{ dkcutter.projectSlug }}/static/bundles
 {%- endif %}
-{%- if "reactEmail" in dkcutter.additionalTools %}
+{%- if dkcutter.useReactEmail %}
 COPY --from=client-builder /app/{{ dkcutter.projectSlug }}/templates/emails /app/{{ dkcutter.projectSlug }}/templates/emails
 {%- endif %}
 
