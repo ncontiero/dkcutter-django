@@ -16,7 +16,7 @@ import { toBoolean } from "./utils/coerce";
 // {{ dkcutter.add("useTailwind", "{{ 'tailwindcss' in dkcutter.additionalTools }}") }}
 // {{ dkcutter.add("useEslintWithTypeInformation", "{{ 'eslint-ts' in dkcutter.additionalTools }}") }}
 // {{ dkcutter.add("useEslint", "{{ 'eslint' in dkcutter.additionalTools or dkcutter.useEslintWithTypeInformation }}") }}
-// {{ dkcutter.add("useMailpit", "{% if 'mailpit' in dkcutter.additionalTools %}true{% endif %}") }}
+// {{ dkcutter.add("useMailpit", "{{ 'mailpit' in dkcutter.additionalTools }}") }}
 // {{ dkcutter.add("useCelery", "{% if 'celery' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useSentry", "{% if 'sentry' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useWhitenoise", "{% if 'whitenoise' in dkcutter.additionalTools %}true{% endif %}") }}
@@ -33,7 +33,7 @@ const ctx = {
   useWhitenoise: toBoolean("{{ 'whitenoise' in dkcutter.additionalTools }}"),
   cloudProvider: "{{ dkcutter.cloudProvider }}",
   mailService: "{{ dkcutter.mailService }}",
-  useMailpit: toBoolean("{{ 'mailpit' in dkcutter.additionalTools }}"),
+  useMailpit: toBoolean("{{ dkcutter.useMailpit }}"),
 };
 
 export function validateProject() {
