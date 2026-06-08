@@ -20,7 +20,7 @@ import { toBoolean } from "./utils/coerce";
 // {{ dkcutter.add("useCelery", "{{ 'celery' in dkcutter.additionalTools }}") }}
 // {{ dkcutter.add("useSentry", "{{ 'sentry' in dkcutter.additionalTools }}") }}
 // {{ dkcutter.add("useWhitenoise", "{{ 'whitenoise' in dkcutter.additionalTools }}") }}
-// {{ dkcutter.add("usePgadmin", "{% if 'pgadmin' in dkcutter.additionalTools %}true{% endif %}") }}
+// {{ dkcutter.add("usePgadmin", "{{ 'pgadmin' in dkcutter.additionalTools }}") }}
 
 // Add this values in context to avoid repetitions
 // {{ dkcutter.add("pageTitleClass", "{{ 'my-4 text-4xl font-bold underline' if dkcutter.useTailwind else 'page-title' }}") }}
