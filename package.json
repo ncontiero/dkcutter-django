@@ -16,11 +16,11 @@
     "test:strict-eslint": "GET_WARNINGS=true bun run test"
   },
   "devDependencies": {
-    "@ncontiero/eslint-config": "8.2.1",
+    "@ncontiero/eslint-config": "8.2.2",
     "@types/bun": "1.3.14",
     "@types/prompts": "2.4.9",
     "colorette": "2.0.20",
-    "dkcutter": "6.0.0",
+    "dkcutter": "6.0.1",
     "eslint": "10.4.1",
     "prompts": "2.4.2",
     "tinyexec": "1.2.4",
