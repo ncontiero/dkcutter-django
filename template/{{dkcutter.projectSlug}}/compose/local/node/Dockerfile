@@ -5,7 +5,7 @@ WORKDIR ${APP_HOME}
 
 {% if dkcutter.pkgManager == "npm" -%}
 COPY ./package.json ./package-lock.json* ${APP_HOME}
-{% if "reactEmail" in dkcutter.additionalTools -%}
+{%- if "reactEmail" in dkcutter.additionalTools %}
 COPY ./emails/package.json ${APP_HOME}/emails/
 {%- endif %}
 
@@ -17,7 +17,7 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
 COPY ./package.json ./pnpm-lock.yaml* ./pnpm-workspace.yaml* ${APP_HOME}
-{% if "reactEmail" in dkcutter.additionalTools -%}
+{%- if "reactEmail" in dkcutter.additionalTools %}
 COPY ./emails/package.json ${APP_HOME}/emails/
 {%- endif %}
 
@@ -26,7 +26,7 @@ RUN pnpm install
 RUN corepack enable
 
 COPY ./package.json ./.yarnrc.yml ./yarn.lock* ${APP_HOME}
-{% if "reactEmail" in dkcutter.additionalTools -%}
+{%- if "reactEmail" in dkcutter.additionalTools %}
 COPY ./emails/package.json ${APP_HOME}/emails/
 {%- endif %}
 
@@ -37,7 +37,7 @@ COPY --from=docker.io/oven/bun:1.3.14-slim@sha256:d56a2534ffd262e92c12fd3249d392
   /usr/local/bin/bun
 
 COPY ./package.json ./bun.lock* ${APP_HOME}
-{% if "reactEmail" in dkcutter.additionalTools -%}
+{%- if "reactEmail" in dkcutter.additionalTools %}
 COPY ./emails/package.json ${APP_HOME}/emails/
 {%- endif %}
 

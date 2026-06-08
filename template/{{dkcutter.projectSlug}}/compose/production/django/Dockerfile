@@ -7,7 +7,7 @@ WORKDIR /app
 FROM client-base AS client-deps
 
 COPY ./package.json ./package-lock.json* ./
-{% if "reactEmail" in dkcutter.additionalTools -%}
+{%- if "reactEmail" in dkcutter.additionalTools %}
 COPY ./emails/package.json ./emails/
 {%- endif %}
 
@@ -21,7 +21,7 @@ RUN corepack enable
 FROM client-base AS client-deps
 
 COPY ./package.json ./pnpm-lock.yaml* ./pnpm-workspace.yaml* ./
-{% if "reactEmail" in dkcutter.additionalTools -%}
+{%- if "reactEmail" in dkcutter.additionalTools %}
 COPY ./emails/package.json ./emails/
 {%- endif %}
 
@@ -32,7 +32,7 @@ RUN corepack enable
 FROM client-base AS client-deps
 
 COPY ./package.json ./.yarnrc.yml ./yarn.lock* ./
-{% if "reactEmail" in dkcutter.additionalTools -%}
+{%- if "reactEmail" in dkcutter.additionalTools %}
 COPY ./emails/package.json ./emails/
 {%- endif %}
 
@@ -45,7 +45,7 @@ COPY --from=docker.io/oven/bun:1.3.14-slim@sha256:d56a2534ffd262e92c12fd3249d392
   /usr/local/bin/bun
 
 COPY ./package.json ./bun.lock* ./
-{% if "reactEmail" in dkcutter.additionalTools -%}
+{%- if "reactEmail" in dkcutter.additionalTools %}
 COPY ./emails/package.json ./emails/
 {%- endif %}
 
