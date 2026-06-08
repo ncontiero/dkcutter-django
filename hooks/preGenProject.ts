@@ -19,7 +19,7 @@ import { toBoolean } from "./utils/coerce";
 // {{ dkcutter.add("useMailpit", "{{ 'mailpit' in dkcutter.additionalTools }}") }}
 // {{ dkcutter.add("useCelery", "{{ 'celery' in dkcutter.additionalTools }}") }}
 // {{ dkcutter.add("useSentry", "{{ 'sentry' in dkcutter.additionalTools }}") }}
-// {{ dkcutter.add("useWhitenoise", "{% if 'whitenoise' in dkcutter.additionalTools %}true{% endif %}") }}
+// {{ dkcutter.add("useWhitenoise", "{{ 'whitenoise' in dkcutter.additionalTools }}") }}
 // {{ dkcutter.add("usePgadmin", "{% if 'pgadmin' in dkcutter.additionalTools %}true{% endif %}") }}
 
 // Add this values in context to avoid repetitions
@@ -30,7 +30,7 @@ const ctx = {
   frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,
   useReactEmail: toBoolean("{{ dkcutter.useReactEmail }}"),
   useEslint: toBoolean("{{ dkcutter.useEslint }}"),
-  useWhitenoise: toBoolean("{{ 'whitenoise' in dkcutter.additionalTools }}"),
+  useWhitenoise: toBoolean("{{ dkcutter.useWhitenoise }}"),
   cloudProvider: "{{ dkcutter.cloudProvider }}",
   mailService: "{{ dkcutter.mailService }}",
   useMailpit: toBoolean("{{ dkcutter.useMailpit }}"),
