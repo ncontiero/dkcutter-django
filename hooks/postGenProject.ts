@@ -31,6 +31,7 @@ const context: Context = {
     "{{ dkcutter.frontendPipelineLang }}" as FrontendPipelineLang,
   additionalTools:
     "{{ dkcutter.additionalTools }}" as unknown as AdditionalTools,
+  useEslint: toBoolean("{{ dkcutter.useEslint }}"),
   useTailwindInReactEmail: toBoolean("{{ dkcutter.useTailwindInReactEmail }}"),
   useCelery: toBoolean("{{ 'celery' in dkcutter.additionalTools }}"),
   automatedDepsUpdater:
@@ -214,7 +215,7 @@ async function handleFrontendPipelineAndTools(
     removeKeys.push("workspaces");
   }
 
-  if (tools.includes("eslint")) {
+  if (context.useEslint) {
     scripts.lint = "eslint .";
     scripts["lint:fix"] = "eslint . --fix";
   } else {

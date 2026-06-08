@@ -101,7 +101,7 @@ if [ -n "$package_manager" ]; then
   fi
 
   # Run the lint script if the ESLint config file is present
-  if [ -f "eslint.config.mjs" ]; then
+  if [ -f "eslint.config.js" ]; then
     $DOCKER_CMD node $package_manager lint
   fi
 else

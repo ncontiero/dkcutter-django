@@ -16,6 +16,7 @@ export interface Context {
   frontendPipeline: FrontendPipeline;
   frontendPipelineLang: FrontendPipelineLang;
   additionalTools: AdditionalTools;
+  useEslint: boolean;
   useTailwindInReactEmail: boolean;
   useCelery: boolean;
   automatedDepsUpdater: AutomatedDepsUpdater;

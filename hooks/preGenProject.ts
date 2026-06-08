@@ -13,14 +13,14 @@ import { toBoolean } from "./utils/coerce";
 // And this add values in context for ease in conditions.
 // {{ dkcutter.update("pkgManager", dkcutter._pkgManager) }}
 // {{ dkcutter.add("useReactEmail", "{{ 'reactEmail' in dkcutter.additionalTools }}") }}
+// {{ dkcutter.add("useTailwind", "{{ 'tailwindcss' in dkcutter.additionalTools }}") }}
+// {{ dkcutter.add("useEslintWithTypeInformation", "{{ 'eslint-ts' in dkcutter.additionalTools }}") }}
+// {{ dkcutter.add("useEslint", "{{ 'eslint' in dkcutter.additionalTools or dkcutter.useEslintWithTypeInformation }}") }}
 // {{ dkcutter.add("useMailpit", "{% if 'mailpit' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useCelery", "{% if 'celery' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useSentry", "{% if 'sentry' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("useWhitenoise", "{% if 'whitenoise' in dkcutter.additionalTools %}true{% endif %}") }}
 // {{ dkcutter.add("usePgadmin", "{% if 'pgadmin' in dkcutter.additionalTools %}true{% endif %}") }}
-// {{ dkcutter.add("useTailwind", "{{ true if 'tailwindcss' in dkcutter.additionalTools }}") }}
-// {{ dkcutter.add("useEslintWithTypeInformation", "{{ 'eslint-ts' in dkcutter.additionalTools }}") }}
-// {{ dkcutter.add("useEslint", "{{ 'eslint' in dkcutter.additionalTools or dkcutter.useEslintWithTypeInformation }}") }}
 
 // Add this values in context to avoid repetitions
 // {{ dkcutter.add("pageTitleClass", "{{ 'my-4 text-4xl font-bold underline' if dkcutter.useTailwind else 'page-title' }}") }}
