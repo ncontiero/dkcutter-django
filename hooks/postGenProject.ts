@@ -33,7 +33,7 @@ const context: Context = {
     "{{ dkcutter.additionalTools }}" as unknown as AdditionalTools,
   useEslint: toBoolean("{{ dkcutter.useEslint }}"),
   useTailwindInReactEmail: toBoolean("{{ dkcutter.useTailwindInReactEmail }}"),
-  useCelery: toBoolean("{{ 'celery' in dkcutter.additionalTools }}"),
+  useCelery: toBoolean("{{ dkcutter.useCelery }}"),
   automatedDepsUpdater:
     "{{ dkcutter.automatedDepsUpdater }}" as AutomatedDepsUpdater,
   installFrontendDeps: toBoolean("{{ dkcutter.installFrontendDeps }}"),
