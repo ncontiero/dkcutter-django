@@ -8,7 +8,7 @@ watchfiles==1.2.0  # https://github.com/samuelcolvin/watchfiles
 # ------------------------------------------------------------------------------
 mypy==2.1.0  # https://github.com/python/mypy
 django-stubs[compatible-mypy]==6.0.5  # https://github.com/typeddjango/django-stubs
-pytest==9.0.3  # https://github.com/pytest-dev/pytest
+pytest==9.1.0  # https://github.com/pytest-dev/pytest
 pytest-sugar==1.1.1  # https://github.com/Teemu/pytest-sugar
 {%- if dkcutter.restFramework == 'DRF' %}
 djangorestframework-stubs==3.17.0  # https://github.com/typeddjango/djangorestframework-stubs
@@ -16,9 +16,9 @@ djangorestframework-stubs==3.17.0  # https://github.com/typeddjango/djangorestfr
 
 # Code quality
 # ------------------------------------------------------------------------------
-ruff==0.15.16  # https://github.com/astral-sh/ruff
+ruff==0.15.17  # https://github.com/astral-sh/ruff
 coverage==7.14.1  # https://github.com/nedbat/coveragepy
-djlint==1.38.1  # https://github.com/Riverside-Healthcare/djLint
+djlint==1.39.2  # https://github.com/Riverside-Healthcare/djLint
 pre-commit==4.6.0  # https://github.com/pre-commit/pre-commit
 
 # Django
