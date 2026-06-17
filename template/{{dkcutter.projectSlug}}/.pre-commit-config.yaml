@@ -17,6 +17,7 @@ repos:
       - id: debug-statements
       - id: check-builtin-literals
       - id: check-case-conflict
+      - id: check-merge-conflict
       - id: check-docstring-first
       - id: detect-private-key
 
@@ -36,7 +37,7 @@ repos:
       # Formatter
       - id: ruff-format
 
-  - repo: https://github.com/Riverside-Healthcare/djLint
+  - repo: https://github.com/djlint/djLint
     rev: v1.38.1
     hooks:
       - id: djlint-reformat-django
