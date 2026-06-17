@@ -48,7 +48,7 @@ services:
   {%- if dkcutter.useMailpit %}
 
   mailpit:
-    image: docker.io/axllent/mailpit:latest@sha256:3bd7c2f2696deb35a4780d152b404dceec99cb041b942c0877b3b22384714f85
+    image: docker.io/axllent/mailpit:latest@sha256:37a38e48e9338cd7e89dfeb487f37b02ebfcd9cb23111bed2d345e79d37d6dd6
     container_name: {{ dkcutter.projectSlug }}_local_mailpit
     ports:
       - "8025:8025"
