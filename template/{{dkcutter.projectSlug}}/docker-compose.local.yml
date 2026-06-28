@@ -48,7 +48,7 @@ services:
   {%- if dkcutter.useMailpit %}
 
   mailpit:
-    image: docker.io/axllent/mailpit:latest@sha256:37a38e48e9338cd7e89dfeb487f37b02ebfcd9cb23111bed2d345e79d37d6dd6
+    image: docker.io/axllent/mailpit:latest@sha256:956d688cbd13dca36c72d8e94c34d6d1cdf4a005aa6aa4ff6edaaac56c34d8df
     container_name: {{ dkcutter.projectSlug }}_local_mailpit
     ports:
       - "8025:8025"
@@ -57,7 +57,7 @@ services:
   {%- if dkcutter.useCelery %}
 
   redis:
-    image: docker.io/redis:8@sha256:0a972391db0b24ec336e35d1bc98b237237e26f82bf5120cf2f6b1688d1df973
+    image: docker.io/redis:8@sha256:2838d5524559494f6f1cd66e97e76b200d64a633a8614200620755ed395daf32
     container_name: {{ dkcutter.projectSlug }}_local_redis
     volumes:
       - {{ dkcutter.projectSlug }}_local_redis_data:/data
