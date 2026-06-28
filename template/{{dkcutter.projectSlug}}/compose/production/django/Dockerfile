@@ -1,5 +1,5 @@
 {% if dkcutter._haveNodePackages -%}
-FROM docker.io/node:24.17.0-bookworm-slim@sha256:c2d5ade763cacfb03fe9cb8e8af5d1be5041ff331921fa26a9b231ca3a4f780a AS client-base
+FROM docker.io/node:24.18.0-bookworm-slim@sha256:b31e7a42fdf8b8aa5f5ed477c72d694301273f1069c5a2f71d53c6482e99a2fc AS client-base
 
 WORKDIR /app
 
