@@ -116,7 +116,7 @@ export const SUPPORTED_COMBINATIONS = [
   { automatedDepsUpdater: "dependabot" },
 ];
 export const UNSUPPORTED_COMBINATIONS = [
-  { postgresqlVersion: 5 },
+  { postgresqlVersion: "5" },
   { usernameType: "name" },
   { frontendPipeline: "Non" },
   { frontendPipeline: "Rspack", additionalTools: "tailwi" },

@@ -39,22 +39,32 @@ export async function checkPaths(paths: string[]) {
   }
 }
 
+export interface Combination {
+  [key: string]: string | boolean | undefined;
+}
+
 /**
  * Construct the args for the project.
  */
-export function constructArgs(combination: { [key: string]: any }) {
+export function constructArgs(combination: Combination, toolToInsert?: string) {
   const args: string[] = [];
   let name = "";
+  if (!("additionalTools" in combination) && toolToInsert) {
+    combination.additionalTools = "";
+  }
   for (const [item, value] of Object.entries(combination)) {
     name += `${item}_${value}_`.replaceAll(" ", "");
-    args.push(`--${item}`, value);
+    let newValue = String(value);
+    if (toolToInsert && item === "additionalTools") {
+      newValue = newValue ? `${newValue},${toolToInsert}` : toolToInsert;
+    }
+    args.push(`--${item}`, newValue);
   }
-  name = name.slice(0, -1);
-  const projectName = name.toLowerCase().replaceAll(",", "_");
-  const projectNameWithRandomSuffix = projectName
-    .slice(0, 16)
-    .concat(Math.random().toString().slice(2, 8));
-  args.unshift("--projectName", projectNameWithRandomSuffix);
+  const testName = name.slice(0, -1).toLowerCase().replaceAll(",", "_");
+  const projectSlug = testName
+    .slice(0, 15)
+    .concat(Math.random().toString().slice(2, 7));
+  args.unshift("--projectSlug", projectSlug);
   args.push("--installFrontendDeps", "false", "--initializeGit", "false");
-  return { args, testName: projectName, name: projectNameWithRandomSuffix };
+  return { args, testName, slug: projectSlug };
 }

@@ -8,7 +8,12 @@ import {
   SUPPORTED_COMBINATIONS,
   UNSUPPORTED_COMBINATIONS,
 } from "./constants";
-import { buildFilesList, checkPaths, constructArgs } from "./utils";
+import {
+  type Combination,
+  buildFilesList,
+  checkPaths,
+  constructArgs,
+} from "./utils";
 
 const TEST_OUTPUT = resolve(".test");
 
@@ -32,25 +37,16 @@ const it = vitestIt.extend<{
   invalidSlugs: [],
 });
 
-function runProjectCheckTest(combination: { [key: string]: any }) {
+function runProjectCheckTest(combination: Combination) {
   const runTypeCheck = process.env.RUN_TYPE_CHECK === "true";
-  if (
-    "additionalTools" in combination &&
-    combination.additionalTools.includes("eslint") &&
-    combination.frontendPipelineLang === "ts" &&
-    runTypeCheck
-  ) {
-    combination.additionalTools = combination.additionalTools.replace(
-      "eslint",
-      "eslint-ts",
-    );
-  }
-
-  const { args, testName, name } = constructArgs(combination);
+  const { args, testName, slug } = constructArgs(
+    combination,
+    runTypeCheck ? "eslint-ts" : undefined,
+  );
   it.concurrent(
     testName,
     async ({ supportedOptions }) => {
-      const target = resolve(TEST_OUTPUT, name);
+      const target = resolve(TEST_OUTPUT, slug);
 
       // Generate the project
       await x("bun", ["run", "generate", "-o", TEST_OUTPUT, ...args, "-y"], {
@@ -64,11 +60,11 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
 
       // Check that the project is linted
       await x("ruff", ["check", "."], {
-        nodeOptions: { cwd: target },
+        nodeOptions: { cwd: target, stdio: "inherit" },
         throwOnError: true,
       });
       await x("ruff", ["format", "."], {
-        nodeOptions: { cwd: target },
+        nodeOptions: { cwd: target, stdio: "inherit" },
         throwOnError: true,
       });
 
@@ -98,23 +94,20 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
       });
 
       const hasPackageJson = await pathExists(resolve(target, "package.json"));
-      if (hasPackageJson && !isWindows) {
+      const hasTypescriptConfig = await pathExists(
+        resolve(target, "tsconfig.json"),
+      );
+      if (hasPackageJson && hasTypescriptConfig && runTypeCheck) {
         // Install dependencies
         await x("bun", ["install"], { nodeOptions: { cwd: target } });
-
-        const hasTypescriptConfig = await pathExists(
-          resolve(target, "tsconfig.json"),
-        );
         // Check types
-        if (hasTypescriptConfig && runTypeCheck) {
-          await x("bun", ["run", "typecheck"], {
-            nodeOptions: { cwd: target, stdio: "inherit" },
-            throwOnError: true,
-          });
-        }
+        await x("bun", ["run", "typecheck"], {
+          nodeOptions: { cwd: target, stdio: "inherit" },
+          throwOnError: true,
+        });
       }
 
-      const hasEslint = await pathExists(resolve(target, "eslint.config.mjs"));
+      const hasEslint = await pathExists(resolve(target, "eslint.config.js"));
       if (hasEslint) {
         const getWarnings = process.env.GET_WARNINGS === "true";
         const args = getWarnings ? ["--max-warnings", "0"] : [];
@@ -124,17 +117,17 @@ function runProjectCheckTest(combination: { [key: string]: any }) {
         });
       }
 
-      supportedOptions.push(name);
+      supportedOptions.push(slug);
     },
     TIMEOUT,
   );
 }
 
 function runUnsupportedOptionsTest(
-  combination: { [key: string]: any },
+  combination: Combination,
   testOption: "slug" | "options" = "options",
 ) {
-  const { args, testName, name } = constructArgs(combination);
+  const { args, testName, slug } = constructArgs(combination);
   it.concurrent(
     testName,
     async ({ expect, invalidSlugs, unsupportedOptions }) => {
@@ -146,8 +139,8 @@ function runUnsupportedOptionsTest(
       );
       expect(exitCode).not.toBe(0);
       if (exitCode === 0) return;
-      if (testOption === "slug") invalidSlugs.push(name);
-      if (testOption === "options") unsupportedOptions.push(name);
+      if (testOption === "slug") invalidSlugs.push(slug);
+      if (testOption === "options") unsupportedOptions.push(slug);
     },
     30_000,
   );
