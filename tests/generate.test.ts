@@ -38,7 +38,8 @@ const it = vitestIt.extend<{
 });
 
 function runProjectCheckTest(combination: Combination) {
-  const runTypeCheck = process.env.RUN_TYPE_CHECK === "true";
+  const hasTypescript = combination.frontendPipelineLang === "ts";
+  const runTypeCheck = process.env.RUN_TYPE_CHECK === "true" && hasTypescript;
   const { args, testName, slug } = constructArgs(
     combination,
     runTypeCheck ? "eslint-ts" : undefined,
