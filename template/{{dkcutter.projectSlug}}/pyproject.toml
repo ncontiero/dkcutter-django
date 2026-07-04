@@ -136,7 +136,8 @@ lint.select = [
 lint.ignore = [
   "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
   "S101",   # Use of assert detected https://docs.astral.sh/ruff/rules/assert/
-  "SIM102"  # sometimes it's better to nest of types for comparison.
+  "SIM102", # sometimes it's better to nest of types for comparison.
+  "COM812"  # The formatter enforces consistent use of trailing commas, making the rule redundant.
 ]
 
 lint.isort.force-single-line = true
