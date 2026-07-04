@@ -1,9 +1,7 @@
 {% raw %}{% load allauth %}
 
 {% comment %} djlint:off {% endcomment %}
-<p {% endraw %}{% if dkcutter.useTailwind %}class="
-  mx-auto mb-4 max-w-2xl text-center leading-relaxed font-medium tracking-tight text-balance {{'[&>a]:link-primary'|safe}}
-"{% else %}class="allauth-p"{% endif %}{% raw %}>
+<p {% endraw %}{% if dkcutter.useTailwind %}class="mx-auto mb-4 max-w-2xl text-center leading-relaxed font-medium tracking-tight text-balance {{'[&>a]:link-primary'|safe}}"{% else %}class="allauth-p"{% endif %}{% raw %}>
   {% slot %}
   {% endslot %}
 </p>{% endraw %}

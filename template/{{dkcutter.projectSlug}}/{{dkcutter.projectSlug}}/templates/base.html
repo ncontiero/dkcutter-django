@@ -46,8 +46,7 @@
         {# djlint:off #}
         {% endraw %}{% if dkcutter.useTailwind %}{% raw %}<a
           class="
-            rounded-md p-2 text-xl font-bold duration-200 hover:opacity-70 focus:ring-3 focus:ring-ring
-            focus:outline-hidden
+            rounded-md p-2 text-xl font-bold duration-200 hover:opacity-70 focus:ring-3 focus:ring-ring focus:outline-hidden
           "
           href="{% url 'home' %}"
         >
@@ -91,8 +90,8 @@
             {% for message in messages %}
               <li
                 {% endraw %}{% if dkcutter.useTailwind %}{% raw %}class="
-                  {% if message.tags %}message-{{message.tags}}{% else %}message-primary{% endif %} flex flex-col
-                  rounded-md border p-6 font-medium
+                  {% if message.tags %}message-{{message.tags}}{% else %}message-primary{% endif %} flex flex-col rounded-md
+                  border p-6 font-medium
                 "{% endraw %}{% else %}{% raw %}class="message {% if message.tags %}message-{{message.tags}}{% else %}message-primary{% endif %}"{% endraw %}{% endif %}{% raw %}
                 role="alert"
                 tabindex="0"
