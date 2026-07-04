@@ -7,6 +7,7 @@ export type AdditionalTools = AdditionalTool[];
 export type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
 
 export interface Context {
+  default: boolean;
   projectSlug: string;
   usernameType: UsernameType;
   pkgManager: PackageManager;

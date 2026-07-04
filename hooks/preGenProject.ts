@@ -60,7 +60,6 @@ export function validateProject() {
       )
       .parse(ctx);
   } catch (error) {
-    logger.break();
     if (error instanceof z.ZodError) {
       logger.error(error.format()._errors.join(",").replaceAll(",", "\n"));
     } else {

@@ -1,5 +1,5 @@
 import type { SpawnOptions } from "node:child_process";
-import { colorize, spinner } from "dkcutter/utils";
+import { colorize, clackSpinner as spinner } from "dkcutter/utils";
 import { x } from "tinyexec";
 
 interface RunCommandProps {
@@ -37,8 +37,7 @@ export async function runCommand({
 }: RunCommandProps) {
   const cmdWithArgs = `${cmd} ${args.join(" ")}`;
 
-  spinner.setText(`Running ${cmdWithArgs}...`);
-  !spinner.running && spinner.start();
+  spinner.start(`Running ${cmdWithArgs}...`);
 
   const { process } = x(cmd, args, {
     nodeOptions: { cwd: projectDir, stdio: stdout, env },
@@ -47,7 +46,7 @@ export async function runCommand({
   await new Promise<void>((resolve, reject) => {
     process?.on("close", (code, signal) => {
       if (code === 0) {
-        spinner.succeed(
+        spinner.stop(
           colorize(
             "success",
             successText || `${cmdWithArgs} completed successfully.`,
@@ -58,13 +57,13 @@ export async function runCommand({
         const error = new Error(
           `Command failed with code ${code} and signal ${signal}`,
         );
-        spinner.fail(failFunction(error, failText));
+        spinner.error(failFunction(error, failText));
         reject(error);
       }
     });
 
     process?.on("error", (error) => {
-      spinner.fail(failFunction(error, failText));
+      spinner.error(failFunction(error, failText));
       reject(error);
     });
   });

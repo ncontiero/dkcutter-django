@@ -1,33 +1,27 @@
-import type { Context, PackageManager } from "../utils/types";
-import { logger } from "dkcutter/utils";
-import { isInsideGitRepo, isRootGitRepo } from "./git";
+import type { Context } from "../utils/types";
+import * as p from "@clack/prompts";
+import { dim } from "ansis";
 
-interface LogNextStepsOptions {
-  ctx: Context;
-  projectDir: string;
-  pkgManager: PackageManager;
-}
+export function logNextSteps(ctx: Context, hasGitInitialized: boolean) {
+  const {
+    projectSlug,
+    installFrontendDeps,
+    haveNodePackages,
+    initializeGit,
+    pkgManager,
+  } = ctx;
+  const commands = [`cd ${projectSlug}`, "uv sync"];
 
-export async function logNextSteps({
-  ctx,
-  projectDir,
-  pkgManager,
-}: LogNextStepsOptions) {
-  const commands = [`cd ${ctx.projectSlug}`, "uv sync"];
-
-  if (!ctx.installFrontendDeps && ctx.haveNodePackages) {
+  if (!installFrontendDeps && haveNodePackages) {
     commands.push(`${pkgManager} install`);
   }
 
-  if (!ctx.initializeGit) {
-    const isGitRepo =
-      (await isInsideGitRepo(projectDir)) || (await isRootGitRepo(projectDir));
-    if (!isGitRepo) {
-      commands.push(`git init`);
-    }
-    commands.push("git add .", `git commit -m "initial commit"`);
+  if (!initializeGit || !hasGitInitialized) {
+    commands.push("git init", "git add .", `git commit -m "initial commit"`);
   }
 
   commands.push("docker compose -f docker-compose.local.yml up");
-  logger.info(`Next steps:\n  ${commands.join("\n  ")}`);
+  p.note(commands.join("\n"), "Next steps", {
+    format: (line: string) => dim(line),
+  });
 }

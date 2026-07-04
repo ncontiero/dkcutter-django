@@ -20,6 +20,7 @@ import { setFlag } from "./utils/setFlag";
 import { updatePackageJson } from "./utils/updatePackageJson";
 
 const context: Context = {
+  default: toBoolean("{{ dkcutter.default }}"),
   projectSlug: "{{ dkcutter.projectSlug }}",
   usernameType: "{{ dkcutter.usernameType }}" as UsernameType,
   pkgManager: "{{ dkcutter._pkgManager }}" as PackageManager,
@@ -385,14 +386,12 @@ async function main() {
     }
 
     if (context.pkgManager === "bun") {
-      logger.break();
       logger.warn(
         "Bun's Node.js compatibility is a work in progress. You might face issues with tools like Webpack or other Node.js tools.",
       );
       logger.warn(
         "If you encounter issues, check Bun's compatibility documentation: https://bun.sh/docs/runtime/nodejs-compat",
       );
-      logger.break();
     }
 
     const yarnFiles = [".yarnrc.yml"];
@@ -459,10 +458,11 @@ async function main() {
   await removeFiles(filesToRemove);
 
   await setupDependencies(context, projectRootDir);
+  let hasGitInitialized = false;
   if (context.initializeGit) {
     try {
-      const repoInitialized = await initializeGit(projectRootDir);
-      if (repoInitialized) {
+      hasGitInitialized = await initializeGit(projectRootDir, context.default);
+      if (hasGitInitialized) {
         await stageAndCommit(
           projectRootDir,
           `feat: initial commit from ${TEMPLATE_REPO}`,
@@ -475,12 +475,7 @@ async function main() {
     }
   }
 
-  logger.break();
-  await logNextSteps({
-    ctx: context,
-    pkgManager: context.pkgManager,
-    projectDir: projectRootDir,
-  });
+  logNextSteps(context, hasGitInitialized);
 }
 
 main().catch((error) => {

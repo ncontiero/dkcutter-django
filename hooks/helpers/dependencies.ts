@@ -3,7 +3,12 @@ import type { Context } from "../utils/types";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { colorize, logger, remove, spinner } from "dkcutter/utils";
+import {
+  colorize,
+  logger,
+  remove,
+  clackSpinner as spinner,
+} from "dkcutter/utils";
 import { x } from "tinyexec";
 import { runCommand } from "./runCommand";
 
@@ -101,7 +106,7 @@ async function installFrontendDependencies(
       cmd: command,
       args,
       projectDir,
-      successText: "Frontend dependencies installed successfully.\n",
+      successText: "Frontend dependencies installed successfully.",
       failText: (error) =>
         `Skipping frontend dependency installation due to an error:\n${error}`,
     });
@@ -153,7 +158,7 @@ async function installPythonDependencies(
   await runCommand({
     cmd: command,
     args: [...baseArgs, "--dev", "-r", "requirements/local.txt"],
-    successText: "Local dependencies installed successfully.\n",
+    successText: "Local dependencies installed successfully.",
     failText: (error) => `Local dependencies installation failed:\n${error}`,
   });
 }
@@ -162,11 +167,6 @@ export async function setupDependencies(
   context: Context,
   projectRootDir: string,
 ) {
-  spinner.setText(
-    colorize("info", "Installing dependencies, this might take a while..."),
-  );
-  !spinner.running && spinner.start();
-
   const composeFolder = path.join(projectRootDir, "compose", "local", "runner");
 
   // Constants for configuration
@@ -180,8 +180,6 @@ export async function setupDependencies(
   };
 
   try {
-    spinner.stop();
-
     if (context.haveNodePackages && context.installFrontendDeps) {
       await installFrontendDependencies(
         context,
@@ -193,16 +191,13 @@ export async function setupDependencies(
 
     await installPythonDependencies(DOCKER_TAGS.uv, DOCKER_FILES.uv);
 
-    spinner.start();
     // Cleanup
     await remove(path.join(projectRootDir, "requirements"));
     await remove(composeFolder);
 
-    spinner.succeed(
-      colorize("success", "Dependencies installed successfully."),
-    );
+    spinner.stop(colorize("success", "Dependencies installed successfully."));
   } catch {
-    spinner.fail(colorize("error", "Failed to install dependencies."));
+    spinner.error(colorize("error", "Failed to install dependencies."));
     process.exit(1);
   }
 }
