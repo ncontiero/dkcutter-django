@@ -183,8 +183,8 @@ async function handleFrontendPipelineAndTools(
     removeStaticFiles();
   } else if (choice === "Webpack") {
     scripts = {
-      build: `webpack --disable-interpret --config webpack/prod.config.${lang}`,
-      dev: `webpack serve --disable-interpret --config webpack/dev.config.${lang}`,
+      build: `webpack --config webpack/prod.config.${lang}`,
+      dev: `webpack serve --config webpack/dev.config.${lang}`,
     };
 
     removeRspack();
