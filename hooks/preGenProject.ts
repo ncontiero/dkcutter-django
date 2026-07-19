@@ -12,6 +12,8 @@ import { toBoolean } from "./utils/coerce";
 
 // And this add values in context for ease in conditions.
 // {{ dkcutter.update("pkgManager", dkcutter._pkgManager) }}
+// {{ dkcutter.add("useTypescript", "{{ dkcutter.frontendPipelineLang == 'ts' }}") }}
+// {{ dkcutter.add("reactEmailExt", "{{ 'tsx' if dkcutter.useTypescript else 'jsx' }}") }}
 // {{ dkcutter.add("useReactEmail", "{{ 'reactEmail' in dkcutter.additionalTools }}") }}
 // {{ dkcutter.add("useTailwind", "{{ 'tailwindcss' in dkcutter.additionalTools }}") }}
 // {{ dkcutter.add("useEslintWithTypeInformation", "{{ 'eslint-ts' in dkcutter.additionalTools }}") }}

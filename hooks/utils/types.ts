@@ -5,6 +5,7 @@ export type FrontendPipelineLang = "js" | "ts";
 export type AdditionalTool = "reactEmail" | "tailwindcss" | "eslint";
 export type AdditionalTools = AdditionalTool[];
 export type AutomatedDepsUpdater = "none" | "renovate" | "dependabot";
+export type ReactEmailExt = "tsx" | "jsx";
 
 export interface Context {
   default: boolean;
@@ -16,6 +17,8 @@ export interface Context {
   restFramework: string;
   frontendPipeline: FrontendPipeline;
   frontendPipelineLang: FrontendPipelineLang;
+  useTypescript: boolean;
+  reactEmailExt: ReactEmailExt;
   additionalTools: AdditionalTools;
   useEslint: boolean;
   useTailwindInReactEmail: boolean;

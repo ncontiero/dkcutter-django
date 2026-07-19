@@ -1,15 +1,22 @@
+{% if dkcutter.useTypescript -%}
 import type { PropsWithChildren } from "react";
+{% endif -%}
 import { Body, Container, Heading, Html, Preview } from "react-email";
 import { Footer } from "./footer";
 import { Header } from "./header";
 import { Text } from "./text";
 
+{%- if dkcutter.useTypescript %}
+
 export interface LayoutProps extends PropsWithChildren {
-  readonly previewText: string;
-  readonly title?: string;
+  previewText: string;
+  title?: string;
 }
 
 export function Layout({ title, previewText, children }: LayoutProps) {
+{%- else %}
+export function Layout({ title, previewText, children }) {
+{%- endif %}
   return (
     <Html>
       <Preview>{previewText}</Preview>

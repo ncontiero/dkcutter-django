@@ -5,6 +5,7 @@ import type {
   FrontendPipeline,
   FrontendPipelineLang,
   PackageManager,
+  ReactEmailExt,
   UsernameType,
 } from "./utils/types";
 
@@ -30,6 +31,8 @@ const context: Context = {
   frontendPipeline: "{{ dkcutter.frontendPipeline }}" as FrontendPipeline,
   frontendPipelineLang:
     "{{ dkcutter.frontendPipelineLang }}" as FrontendPipelineLang,
+  useTypescript: toBoolean("{{ dkcutter.useTypescript }}"),
+  reactEmailExt: "{{ dkcutter.reactEmailExt }}" as ReactEmailExt,
   additionalTools:
     "{{ dkcutter.additionalTools }}" as unknown as AdditionalTools,
   useEslint: toBoolean("{{ dkcutter.useEslint }}"),
@@ -117,6 +120,14 @@ async function handleReactEmailSetup({
   } else {
     await remove(emailsComponentsTailwind);
     await remove(path.join(emailsFolder, "utils"));
+  }
+
+  if (!context.useTypescript) {
+    await remove(path.join(emailsFolder, "tsconfig.json"));
+    updatePackageJson({
+      projectDir: emailsFolder,
+      removeDevDeps: ["@types/react", "@types/react-dom", "typescript"],
+    });
   }
 
   return scripts;

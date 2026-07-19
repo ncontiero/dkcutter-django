@@ -1,0 +1,13 @@
+{% if dkcutter.useTypescript -%}
+import { type TextProps, Text as ReactEmailText } from "react-email";
+
+export function Text(props: TextProps) {
+  return <ReactEmailText {...props} />;
+}
+{% else -%}
+import { Text as ReactEmailText } from "react-email";
+
+export function Text(props) {
+  return <ReactEmailText {...props} />;
+}
+{% endif -%}
