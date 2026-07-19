@@ -15,6 +15,7 @@ export interface LayoutProps extends PropsWithChildren {
 
 export function Layout({ title, previewText, children }: LayoutProps) {
 {%- else %}
+
 export function Layout({ title, previewText, children }) {
 {%- endif %}
   return (
