@@ -130,6 +130,17 @@ async function handleReactEmailSetup({
     });
   }
 
+  // TODO: [react-email][tailwind] The css-tree module cannot be found when using pnpm or bun.
+  if (
+    !["pnpm", "bun"].includes(context.pkgManager) ||
+    !context.useTailwindInReactEmail
+  ) {
+    updatePackageJson({
+      projectDir: projectRootDir,
+      removeDevDeps: ["css-tree"],
+    });
+  }
+
   return scripts;
 }
 
@@ -225,6 +236,7 @@ async function handleFrontendPipelineAndTools(
   } else {
     filesToRemove.push("emails");
     removeKeys.push("workspaces");
+    removeDevDeps.push("css-tree");
   }
 
   if (context.useEslint) {
