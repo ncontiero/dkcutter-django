@@ -162,5 +162,10 @@
   },
   "_pkgManager": "{{ pkgManagerToUse }}",
   "_pkgRun": "{{ _pkgManager }}{% if not _pkgManager in ['pnpm', 'yarn'] %} run{% endif %}",
-  "_haveNodePackages": "{{ true if frontendPipeline != 'None' or 'reactEmail' in additionalTools }}"
+  "_haveNodePackages": "{{ true if frontendPipeline != 'None' or 'reactEmail' in additionalTools }}",
+  "_dkcutter": {
+    "engines": {
+      "dkcutter": ">=6.1.4 <7"
+    }
+  }
 }
