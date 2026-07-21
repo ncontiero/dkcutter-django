@@ -73,7 +73,7 @@ Answer the prompts with your own desired [options][options-url]. For example:
 ✔ What Mail Service would you like to use? › Mailgun / Amazon SES / Mailjet / Mandrill / Postmark / Sendgrid / Brevo / SparkPost / Other SMTP / None
 ✔ What Frontend Pipeline would you like to use? › None / Rspack / Webpack
 ✔ What Frontend Pipeline Language would you like to use? › TypeScript / JavaScript
-✔ Select additional tools: › Add React Email, Add TailwindCSS, Add ESLint, Add ESLint with Type Information, Add Mailpit, Add Celery, Add Sentry, Add WhiteNoise, Add PGAdmin
+✔ Which Additional Tools would you like to use? › React Email, TailwindCSS, ESLint, ESLint with Type Information, Mailpit, Celery, Sentry, WhiteNoise, PGAdmin
 ✔ Do you want to use TailwindCSS in React Email? … No / Yes
 ✔ What Package Manager would you like to use? › npm / Yarn / pnpm / bun
 ✔ What Automated Dependency Updater do you want to use? › None / Mend Renovate / Github Dependabot

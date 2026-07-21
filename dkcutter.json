@@ -34,24 +34,51 @@
   },
   "usernameType": {
     "value": ["username", "email"],
-    "promptMessage": "What {{ colors.blue('Username Type') }} would you like to use?"
+    "promptMessage": "Which {{ colors.blue('Username Type') }} would you like to use?"
   },
   "postgresqlVersion": {
     "value": ["18", "17", "16", "15", "14"],
-    "promptMessage": "What {{ colors.blue('PostgreSQL') }} version would you like to use?"
+    "promptMessage": "Which {{ colors.blue('PostgreSQL') }} version would you like to use?"
   },
   "cloudProvider": {
-    "value": ["AWS", "GCP", "None"],
-    "promptMessage": "What {{ colors.blue('Cloud Provider') }} would you like to use?"
+    "value": "AWS",
+    "choices": [
+      {
+        "title": "AWS",
+        "value": "AWS",
+        "description": "Amazon Web Services"
+      },
+      {
+        "title": "GCP",
+        "value": "GCP",
+        "description": "Google Cloud Platform"
+      },
+      {
+        "value": "None",
+        "description": "No cloud provider"
+      }
+    ],
+    "promptMessage": "Which {{ colors.blue('Cloud Provider') }} would you like to use?"
   },
   "restFramework": {
     "value": "None",
     "choices": [
-      { "value": "None" },
-      { "title": "Django Rest Framework", "value": "DRF" },
-      { "title": "Django Ninja Rest Framework", "value": "DNRF" }
+      {
+        "value": "None",
+        "description": "No Rest Framework"
+      },
+      {
+        "title": "Django Rest Framework",
+        "value": "DRF",
+        "description": "A powerful and flexible toolkit for building Web APIs."
+      },
+      {
+        "title": "Django Ninja Rest Framework",
+        "value": "DNRF",
+        "description": "Fast and modern web framework, based on Pydantic and type hints."
+      }
     ],
-    "promptMessage": "What {{ colors.blue('Rest Framework') }} would you like to use?"
+    "promptMessage": "Which {{ colors.blue('Rest Framework') }} would you like to use?"
   },
   "mailService": {
     "value": "Mailgun",
@@ -59,7 +86,8 @@
       { "value": "Mailgun" },
       {
         "value": "Amazon SES",
-        "disabled": "{{ cloudProvider != 'AWS' }}"
+        "disabled": "{{ cloudProvider != 'AWS' }}",
+        "helpTextForDisabled": "Disabled because {{ colors.blue('Cloud Provider') }} is not AWS."
       },
       { "value": "Mailjet" },
       { "value": "Mandrill" },
@@ -70,15 +98,28 @@
       { "value": "Other SMTP" },
       { "value": "None" }
     ],
-    "promptMessage": "What {{ colors.blue('Mail Service') }} would you like to use?"
+    "promptMessage": "Which {{ colors.blue('Mail Service') }} would you like to use?"
   },
   "frontendPipeline": {
-    "value": ["None", "Rspack", "Webpack"],
-    "promptMessage": "What {{ colors.blue('Frontend Pipeline') }} would you like to use?"
+    "value": "None",
+    "choices": [
+      {
+        "value": "None"
+      },
+      {
+        "value": "Rspack",
+        "description": "Fast Rust-based bundler for the web"
+      },
+      {
+        "value": "Webpack",
+        "description": "A static asset bundler for JavaScript, HTML, CSS, and more."
+      }
+    ],
+    "promptMessage": "Which {{ colors.blue('Frontend Pipeline') }} would you like to use?"
   },
   "frontendPipelineLang": {
     "value": "js",
-    "promptMessage": "What {{ colors.blue('Frontend Pipeline Language') }} would you like to use?",
+    "promptMessage": "Which {{ colors.blue('Frontend Pipeline Language') }} would you like to use?",
     "choices": [
       { "title": "TypeScript", "value": "ts" },
       { "title": "JavaScript", "value": "js" }
@@ -86,54 +127,72 @@
     "disabled": "{{ frontendPipeline == 'None' }}"
   },
   "additionalTools": {
-    "promptMessage": "Select additional tools: ",
+    "promptMessage": "Which {{ colors.blue('Additional Tools') }} would you like to use?",
     "value": "none",
     "choices": [
-      { "title": "Add {{ colors.blue('React Email') }}", "value": "reactEmail" },
       {
-        "title": "Add {{ colors.blue('TailwindCSS') }}",
+        "title": "React Email",
+        "value": "reactEmail",
+        "description": "A next-generation collection of unstyled components for creating beautiful emails using React"
+      },
+      {
+        "title": "TailwindCSS",
         "value": "tailwindcss",
+        "description": "A utility-first CSS framework",
         "disabled": "{{ frontendPipeline == 'None' }}",
         "helpTextForDisabled": "Disabled because {{ colors.blue('Frontend Pipeline') }} is None"
       },
       {
-        "title": "Add {{ colors.blue('ESLint') }}",
+        "title": "ESLint",
         "value": "eslint",
-        "description": "Only possible with {{ colors.blue('Frontend Pipeline') }} and/or {{ colors.blue('React Email') }}."
+        "description": "Find and fix problems in your JS/TS code. Only possible with Frontend Pipeline and/or React Email"
       },
       {
-        "title": "Add {{ colors.blue('ESLint with Type Information') }}",
+        "title": "ESLint with Type Information",
         "value": "eslint-ts",
-        "description": "This option provides better linting capabilities but requires TypeScript. Only possible with {{ colors.blue('Frontend Pipeline') }} and/or {{ colors.blue('React Email') }}.",
+        "description": "Better linting capabilities but requires TypeScript. Only possible with Frontend Pipeline and/or React Email",
         "disabled": "{{ frontendPipelineLang != 'ts' }}",
         "helpTextForDisabled": "Disabled because {{ colors.blue('Frontend Pipeline Language') }} is not TypeScript."
       },
       {
-        "title": "Add {{ colors.blue('Mailpit') }}",
+        "title": "Mailpit",
         "value": "mailpit",
+        "description": "Email and SMTP testing tool",
         "disabled": "{{ mailService == 'None' }}",
         "helpTextForDisabled": "Disabled because {{ colors.blue('Mail Service') }} is None"
       },
-      { "title": "Add {{ colors.blue('Celery') }}", "value": "celery" },
-      { "title": "Add {{ colors.blue('Sentry') }}", "value": "sentry" },
       {
-        "title": "Add {{ colors.blue('WhiteNoise') }}",
+        "title": "Celery",
+        "value": "celery",
+        "description": "Distributed task queue"
+      },
+      {
+        "title": "Sentry",
+        "value": "sentry",
+        "description": "Error tracking and performance monitoring"
+      },
+      {
+        "title": "WhiteNoise",
         "value": "whitenoise",
-        "description": "This is mandatory if the {{ colors.blue('Cloud Provider') }} is None.",
+        "description": "Simplified static file serving. Mandatory if Cloud Provider is None",
         "selected": "{{ cloudProvider == 'None' }}"
       },
-      { "title": "Add {{ colors.blue('PGAdmin') }}", "value": "pgadmin" }
+      {
+        "title": "PGAdmin",
+        "value": "pgadmin",
+        "description": "PostgreSQL administration and management"
+      }
     ],
     "choicesType": "multiselect"
   },
   "useTailwindInReactEmail": {
     "value": true,
-    "promptMessage": "Do you want to use TailwindCSS in React Email?",
+    "promptMessage": "Do you want to use {{ colors.blue('TailwindCSS') }} in {{ colors.cyan('React Email') }}?",
     "disabled": "{{ 'reactEmail' not in additionalTools }}"
   },
   "pkgManagerToUse": {
     "value": "{{ dkcutter.pkgManager }}",
-    "promptMessage": "What {{ colors.blue('Package Manager') }} would you like to use?",
+    "promptMessage": "Which {{ colors.blue('Package Manager') }} would you like to use?",
     "choices": [
       { "title": "npm", "value": "npm" },
       { "title": "Yarn", "value": "yarn" },
@@ -149,7 +208,7 @@
       { "title": "Mend Renovate", "value": "renovate" },
       { "title": "Github Dependabot", "value": "dependabot" }
     ],
-    "promptMessage": "What {{ colors.blue('Automated Dependency Updater')}} do you want to use?"
+    "promptMessage": "Which {{ colors.blue('Automated Dependency Updater')}} do you want to use?"
   },
   "installFrontendDeps": {
     "value": true,
