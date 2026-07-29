@@ -3,12 +3,7 @@ import type { Context } from "../utils/types";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import {
-  colorize,
-  logger,
-  remove,
-  clackSpinner as spinner,
-} from "dkcutter/utils";
+import { colorize, logger, remove, spinner } from "dkcutter/utils";
 import { x } from "tinyexec";
 import { runCommand } from "./runCommand";
 

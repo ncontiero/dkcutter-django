@@ -1,5 +1,5 @@
 import type { SpawnOptions } from "node:child_process";
-import { colorize, clackSpinner as spinner } from "dkcutter/utils";
+import { colorize, spinner } from "dkcutter/utils";
 import { x } from "tinyexec";
 
 interface RunCommandProps {

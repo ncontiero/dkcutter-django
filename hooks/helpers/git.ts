@@ -1,12 +1,6 @@
 import path from "node:path";
 import * as p from "@clack/prompts";
-import {
-  colorize,
-  logger,
-  pathExists,
-  remove,
-  clackSpinner as spinner,
-} from "dkcutter/utils";
+import { colorize, logger, pathExists, remove, spinner } from "dkcutter/utils";
 import { x } from "tinyexec";
 
 export async function isGitInstalled(dir: string) {

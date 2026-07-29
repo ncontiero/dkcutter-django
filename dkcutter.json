@@ -224,7 +224,7 @@
   "_haveNodePackages": "{{ true if frontendPipeline != 'None' or 'reactEmail' in additionalTools }}",
   "_dkcutter": {
     "engines": {
-      "dkcutter": ">=6.1.4 <7"
+      "dkcutter": ">=7 <8"
     }
   }
 }
