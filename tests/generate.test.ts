@@ -76,7 +76,7 @@ function runProjectCheckTest(combination: Combination) {
         ignore: ["**/node_modules/**"],
       });
       await x("django-upgrade", ["--target-version", "6.0", ...files], {
-        nodeOptions: { cwd: target },
+        nodeOptions: { cwd: target, stdio: "inherit" },
         throwOnError: true,
       });
 
@@ -87,10 +87,10 @@ function runProjectCheckTest(combination: Combination) {
       await x(
         "djlint",
         ["--lint", "--ignore", `${autofixableRules},${ignoredRules}`, "."],
-        { nodeOptions: { cwd: target }, throwOnError: true },
+        { nodeOptions: { cwd: target, stdio: "inherit" }, throwOnError: true },
       );
       await x("djlint", ["--check", "."], {
-        nodeOptions: { cwd: target },
+        nodeOptions: { cwd: target, stdio: "inherit" },
         throwOnError: true,
       });
 
