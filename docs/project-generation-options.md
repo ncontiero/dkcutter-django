@@ -35,23 +35,23 @@ This page describes all the template options that will be prompted by the [dkcut
 - **Rest Framework**: Select a REST API framework. The choices are:
   - None
   - [Django REST framework](https://www.django-rest-framework.org/)
-  - [Django Ninja REST framework](https://django-ninja.rest-framework.com/)
+  - [Django Ninja REST framework](https://django-ninja.dev)
 
 - **Mail Service**: Select an email service that Django-Anymail provides:
   - [Mailgun](https://www.mailgun.com/)
   - [Amazon SES](https://aws.amazon.com/ses/)
   - [Mailjet](https://www.mailjet.com/)
-  - [Mandrill](http://mandrill.com/)
+  - [Mandrill](https://mailchimp.com/features/transactional-email/)
   - [Postmark](https://postmarkapp.com/)
   - [SendGrid](https://sendgrid.com/)
   - [Brevo (formerly SendinBlue)](https://www.brevo.com/)
   - [SparkPost](https://www.sparkpost.com/)
-  - [Other SMTP](https://anymail.readthedocs.io/en/stable/)
+  - [Other SMTP](https://anymail.dev/en/stable/)
   - None
 
 - **Frontend Pipeline**: Select a pipeline to compile and optimize frontend assets (JS, CSS, …):
   - None
-  - [Rspack](https://rspack.dev/)
+  - [Rspack](https://rspack.rs)
   - [Webpack](https://webpack.js.org/)
 
 - **Frontend Pipeline Lang**: Select the language used by the Frontend Pipeline:
@@ -62,7 +62,7 @@ This page describes all the template options that will be prompted by the [dkcut
   - [React Email](https://react.email/)
   - [TailwindCSS](https://tailwindcss.com/)
   - [ESLint](https://eslint.org/)
-  - [ESLint with Type Information](https://typescript-eslint.io/getting-started/typed-linting)
+  - [ESLint with Type Information](https://typescript-eslint.io/getting-started/typed-linting/)
   - [Mailpit](https://github.com/axllent/mailpit)
   - [Celery](https://github.com/celery/celery)
   - [Sentry](https://github.com/getsentry/sentry)
@@ -80,7 +80,7 @@ This page describes all the template options that will be prompted by the [dkcut
 - **Automated Deps Updater**: Indicates whether the project should be configured using the following automated deps updater:
   - None
   - [Mend Renovate](https://docs.renovatebot.com/)
-  - [Github Dependabot](https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file)
+  - [GitHub Dependabot](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference)
 
 - **Install Dependencies**: Install dependencies after generating the project. This requires that you have the selected Node.js package manager and [uv](https://docs.astral.sh/uv/getting-started/installation/), or Docker installed on your machine.
 
