@@ -1,6 +1,13 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 import pytest
 
 from {{ dkcutter.projectSlug }}.users.tests.factories import UserFactory
+
+if TYPE_CHECKING:
+    from {{ dkcutter.projectSlug }}.users.models import User
 
 
 @pytest.fixture(autouse=True)
@@ -9,5 +16,5 @@ def _media_storage(settings, tmpdir) -> None:
 
 
 @pytest.fixture
-def user(db):
-    return UserFactory()
+def user(db) -> User:
+    return UserFactory.create()
