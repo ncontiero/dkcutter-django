@@ -1,5 +1,5 @@
 # Config for Dependabot updates. See Documentation here:
-# https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+# https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference
 
 version: 2
 updates:
@@ -9,6 +9,10 @@ updates:
     # Every weekday
     schedule:
       interval: daily
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
   # Enable version updates for Docker
   - package-ecosystem: docker
@@ -25,6 +29,10 @@ updates:
         update-types:
           - "version-update:semver-major"
           - "version-update:semver-minor"
+    groups:
+      docker-python:
+        patterns:
+          - "*"
 
   - package-ecosystem: docker
     directories:
@@ -43,6 +51,14 @@ updates:
     schedule:
       interval: daily
 
+  # Enable version updates for Docker Compose files
+  - package-ecosystem: docker-compose
+    directories:
+      - /
+    # Every weekday
+    schedule:
+      interval: daily
+
 {%- if dkcutter.frontendPipeline != "None" %}
 
   # Enable version updates for javascript/npm
@@ -55,10 +71,9 @@ updates:
 
 {%- endif %}
 
-  # Enable version updates for Python/Pip - Production
-  - package-ecosystem: pip
-    # Look for a `requirements.txt` in the `root` directory
-    # also `setup.cfg`, `.python-version` and `requirements/*.txt`
+  # Enable version updates for Python/uv
+  - package-ecosystem: uv
+    # Look for a `pyproject.toml` in the `root` directory
     directory: /
     # Every weekday
     schedule:
