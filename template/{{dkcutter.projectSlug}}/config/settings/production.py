@@ -111,7 +111,6 @@ AWS_S3_CUSTOM_DOMAIN = config("DJANGO_AWS_S3_CUSTOM_DOMAIN", default=None)
 aws_s3_domain = AWS_S3_CUSTOM_DOMAIN or f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 {% elif dkcutter.cloudProvider == 'GCP' %}
 GS_BUCKET_NAME = config("DJANGO_GCP_STORAGE_BUCKET_NAME")
-GS_DEFAULT_ACL = "publicRead"
 {% endif -%}
 
 {% if dkcutter.useWhitenoise or dkcutter.cloudProvider != 'None' %}
@@ -142,7 +141,6 @@ STORAGES = {
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
             "location": "static",
-            "default_acl": "public-read",
         },
     },
     {%- endif %}
@@ -163,7 +161,6 @@ STORAGES = {
         "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
         "OPTIONS": {
             "location": "static",
-            "default_acl": "publicRead",
         },
     },
     {%- endif %}
