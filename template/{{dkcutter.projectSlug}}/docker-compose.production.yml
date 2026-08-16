@@ -69,7 +69,7 @@ services:
       {%- endif %}
 
   redis:
-    image: docker.io/redis:8@sha256:c88d347edef6249a6d2293f926f1eeb48bd40c57cbcd02c07f52e7f1fd2cb46b
+    image: docker.io/redis:8@sha256:344e3945a0b431c8ff1eecd58c5573538126bd756f02fc7e218ddf1fc2546366
     {%- if dkcutter.useCelery %}
     volumes:
       - production_redis_data:/data
