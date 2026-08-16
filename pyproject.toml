@@ -9,10 +9,10 @@ classifiers = [
 ]
 dependencies = [
   "django-upgrade==1.31.1",
-  "djlint==1.44.0",
+  "djlint==1.44.2",
   "jinja2==3.1.6",
-  "ruff==0.16.1",
-  "tox==4.58.0",
+  "ruff==0.16.2",
+  "tox==4.59.0",
   "tox-uv==1.36.0",
 ]
 
