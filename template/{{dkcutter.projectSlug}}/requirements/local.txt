@@ -1,5 +1,5 @@
 Werkzeug[watchdog]==3.1.8  # https://github.com/pallets/werkzeug
-psycopg[binary]==3.3.4  # https://github.com/psycopg/psycopg
+psycopg[binary]==3.3.5  # https://github.com/psycopg/psycopg
 {%- if dkcutter.useCelery %}
 watchfiles==1.2.0  # https://github.com/samuelcolvin/watchfiles
 {%- endif %}
@@ -10,13 +10,13 @@ django-stubs[compatible-mypy]==6.1.0  # https://github.com/typeddjango/django-st
 pytest==9.1.1  # https://github.com/pytest-dev/pytest
 pytest-sugar==1.1.1  # https://github.com/Teemu/pytest-sugar
 {%- if dkcutter.restFramework == 'DRF' %}
-djangorestframework-stubs==3.18.0  # https://github.com/typeddjango/djangorestframework-stubs
+djangorestframework-stubs==3.18.1  # https://github.com/typeddjango/djangorestframework-stubs
 {%- endif %}
 
 # Code quality
 # ------------------------------------------------------------------------------
 ruff==0.16.2  # https://github.com/astral-sh/ruff
-coverage==7.15.4  # https://github.com/nedbat/coveragepy
+coverage==7.16.0  # https://github.com/nedbat/coveragepy
 djlint==1.44.2  # https://github.com/djlint/djLint
 pre-commit==4.6.2  # https://github.com/pre-commit/pre-commit
 
@@ -24,7 +24,7 @@ pre-commit==4.6.2  # https://github.com/pre-commit/pre-commit
 # ------------------------------------------------------------------------------
 factory-boy==3.3.3  # https://github.com/FactoryBoy/factory_boy
 
-django-debug-toolbar==7.1.0  # https://github.com/jazzband/django-debug-toolbar
+django-debug-toolbar==7.1.1  # https://github.com/jazzband/django-debug-toolbar
 django-extensions==4.1  # https://github.com/django-extensions/django-extensions
 django-coverage-plugin==3.2.2  # https://github.com/nedbat/django_coverage_plugin
 pytest-django==4.14.0  # https://github.com/pytest-dev/pytest-django
