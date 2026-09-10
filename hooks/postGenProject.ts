@@ -157,9 +157,7 @@ async function handleFrontendPipelineAndTools(
   const removeWebpack = () => {
     removeDevDeps.push(
       "@swc/core",
-      "css-loader",
       "lightningcss",
-      "mini-css-extract-plugin",
       "minimizer-webpack-plugin",
       "swc-loader",
       "webpack",

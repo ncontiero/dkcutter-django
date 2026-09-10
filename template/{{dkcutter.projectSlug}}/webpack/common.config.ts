@@ -5,7 +5,6 @@ import type {
 } from "lightningcss";
 import type { Configuration } from "webpack";
 import path from "node:path";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import MinimizerPlugin from "minimizer-webpack-plugin";
 import BundleTracker from "webpack-bundle-tracker";
 
@@ -28,6 +27,7 @@ export const commonConfig: Configuration = {
     path: path.resolve(PROJECT_PATH, "static/bundles/"),
     publicPath: "/static/bundles/",
     filename: "js/[name].js",
+    cssFilename: "css/[name].[contenthash].css",
     chunkFilename: "js/[name].js",
     assetModuleFilename: "assets/[name][ext]",
     clean: true,
@@ -37,7 +37,6 @@ export const commonConfig: Configuration = {
       path: path.resolve(BASE_PATH),
       filename: "webpack-stats.json",
     }),
-    new MiniCssExtractPlugin({ filename: "css/[name].[contenthash].css" }),
   ],
   module: {
     rules: [
@@ -71,7 +70,8 @@ export const commonConfig: Configuration = {
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
+        use: ["postcss-loader"],
+        type: "css/auto",
       },
     ],
   },
@@ -94,5 +94,8 @@ export const commonConfig: Configuration = {
     alias: {
       "@": path.resolve(PROJECT_PATH, "src"),
     },
+  },
+  experiments: {
+    css: true,
   },
 };
