@@ -17,7 +17,7 @@ djangorestframework-stubs==3.18.1  # https://github.com/typeddjango/djangorestfr
 # ------------------------------------------------------------------------------
 ruff==0.16.8  # https://github.com/astral-sh/ruff
 coverage==7.16.1  # https://github.com/nedbat/coveragepy
-djlint==1.46.1  # https://github.com/djlint/djLint
+djlint==1.46.2  # https://github.com/djlint/djLint
 pre-commit==4.6.2  # https://github.com/pre-commit/pre-commit
 
 # Django
