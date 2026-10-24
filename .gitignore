@@ -175,4 +175,5 @@ dist
 .DS_Store
 
 .test
+.vitest
 .mypy_cache
