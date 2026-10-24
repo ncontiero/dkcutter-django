@@ -54,22 +54,7 @@ RUN --mount=type=cache,id=bun,target=/root/.bun bun install --frozen-lockfile
 
 FROM client-base AS client-builder
 
-{%- if not dkcutter.useWhitenoise and dkcutter.frontendPipeline in ["Rspack", "Webpack"] %}
-{%- if dkcutter.cloudProvider == "AWS" %}
-
-ARG DJANGO_AWS_STORAGE_BUCKET_NAME
-ARG DJANGO_AWS_S3_CUSTOM_DOMAIN
-
-ENV DJANGO_AWS_STORAGE_BUCKET_NAME=${DJANGO_AWS_STORAGE_BUCKET_NAME}
-ENV DJANGO_AWS_S3_CUSTOM_DOMAIN=${DJANGO_AWS_S3_CUSTOM_DOMAIN}
-{%- elif dkcutter.cloudProvider == "GCP" %}
-
-ARG DJANGO_GCP_STORAGE_BUCKET_NAME
-
-ENV DJANGO_GCP_STORAGE_BUCKET_NAME=${DJANGO_GCP_STORAGE_BUCKET_NAME}
-{%- endif %}
-{%- endif %}
-{% if dkcutter.pkgManager == "bun" %}
+{%- if dkcutter.pkgManager == "bun" %}
 COPY --from=client-deps /usr/local/bin/bun /usr/local/bin/bun
 {%- endif %}
 COPY --from=client-deps /app/node_modules /app/node_modules
