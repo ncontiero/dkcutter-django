@@ -3,10 +3,12 @@ import { ncontiero } from "@ncontiero/eslint-config";
 export default ncontiero(
   {
     ignores: ["{{ dkcutter.projectSlug }}/templates/emails/**/*.html"],
-    {%- if dkcutter.useEslintWithTypeInformation %}
+    {%- if dkcutter.useTypescript and dkcutter.useEslintWithTypeInformation %}
     typescript: {
       tsconfigPath: "./tsconfig.json",
     },
+    {%- elif not dkcutter.useTypescript %}
+    typescript: false,
     {%- endif %}
     {%- if dkcutter.useTailwind %}
     tailwindcss: {
