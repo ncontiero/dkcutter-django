@@ -25,7 +25,12 @@ function ignoreFiles(files: string[]) {
 
 export default ncontiero(
   {
-    ignores: [".venv", "venv", ...(ignoreFiles(FILES_TO_IGNORE) || [])],
+    ignores: [
+      ".venv",
+      "venv",
+      ".agents",
+      ...(ignoreFiles(FILES_TO_IGNORE) || []),
+    ],
     javascript: {
       overrides: {
         "node/no-unsupported-features/node-builtins": [
