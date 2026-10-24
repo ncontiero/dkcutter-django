@@ -12,7 +12,7 @@
   ],
   "scripts": {},
   "devDependencies": {
-    "@ncontiero/eslint-config": "8.6.0",
+    "@ncontiero/eslint-config": "8.6.1",
     "@rspack/cli": "2.2.9",
     "@rspack/core": "2.2.9",
     "@rspack/dev-server": "2.2.1",
@@ -25,7 +25,7 @@
     "eslint": "10.13.0",
     "lightningcss": "1.33.0",
     "minimizer-webpack-plugin": "5.13.1",
-    "postcss": "8.5.30",
+    "postcss": "8.5.31",
     "postcss-loader": "8.2.1",
     "postcss-preset-env": "11.6.1",
     "rspack-merge": "1.0.1",
@@ -35,7 +35,7 @@
     "webpack": "5.112.0",
     "webpack-bundle-tracker": "3.2.4",
     "webpack-cli": "7.2.3",
-    "webpack-dev-server": "6.0.0",
+    "webpack-dev-server": "6.1.0",
     "webpack-merge": "6.0.1"
   },
   "engines": {
