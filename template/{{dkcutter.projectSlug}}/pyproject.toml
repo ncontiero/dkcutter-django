@@ -30,7 +30,7 @@ python_files = [
   "test_*.py",
 ]
 {%- if dkcutter.frontendPipeline != "None" or dkcutter.useReactEmail %}
-norecursedirs = [ "node_modules" ]
+norecursedirs = [ {% if dkcutter.pkgManagerToUse == "pnpm" and dkcutter.frontendPipeline == "Webpack" %}".cache", {% endif%}"node_modules" ]
 {%- endif %}
 
 # ==== Coverage ====
