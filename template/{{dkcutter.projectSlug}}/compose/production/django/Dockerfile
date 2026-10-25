@@ -1,5 +1,5 @@
 {% if dkcutter._haveNodePackages -%}
-FROM docker.io/node:24.21.0-bookworm-slim@sha256:d6aa754f16b3197301076f047b5def2f02ea1dbbc2ca920407d46d7ec7f87b20 AS client-base
+FROM docker.io/node:24.22.1-bookworm-slim@sha256:55fb5f5a527ea2c5c4a95f963e48ef90aa38c7b346054fdc8ee9957a2b55d205 AS client-base
 
 WORKDIR /app
 
@@ -40,7 +40,7 @@ RUN --mount=type=cache,target=/root/.yarn/cache yarn install --frozen-lockfile
 {%- elif dkcutter.pkgManager == "bun" -%}
 FROM client-base AS client-deps
 
-COPY --from=docker.io/oven/bun:1.4.3-slim@sha256:14a223fa35747ec728bce300ef85888bc5f7958164d15bbba6a54b22b52a3288 \
+COPY --from=docker.io/oven/bun:1.4.4-slim@sha256:1846adf22496bd711036aae8be147e57bdebbaea2e5264e3e0b5af1db187d9a4 \
   /usr/local/bin/bun \
   /usr/local/bin/bun
 

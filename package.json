@@ -1,7 +1,7 @@
 {
   "name": "dkcutter-django",
   "type": "module",
-  "packageManager": "bun@1.4.3",
+  "packageManager": "bun@1.4.4",
   "description": "DKCutter Django is a robust template for jumpstarting production-ready Django projects quickly with modern tooling.",
   "author": "Nicolas Contiero <https://github.com/ncontiero>",
   "license": "MIT",
