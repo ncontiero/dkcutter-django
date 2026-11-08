@@ -1,7 +1,7 @@
 {% if dkcutter.pkgManager == "bun" -%}
 FROM docker.io/oven/bun:1.4.4-slim@sha256:1846adf22496bd711036aae8be147e57bdebbaea2e5264e3e0b5af1db187d9a4
 {% else -%}
-FROM docker.io/node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
+FROM docker.io/node:26.13.0-bookworm-slim@sha256:add5c17c14752c54d2f3d519ec46a3815684d41c33f198bcb09fb998f7dcbf68
 {% endif %}
 ARG APP_HOME=/app
 ENV HOME=${APP_HOME}
