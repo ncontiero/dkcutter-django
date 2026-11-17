@@ -1,4 +1,4 @@
-FROM docker.io/node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
+FROM docker.io/node:26.13.1-bookworm-slim@sha256:5df79989ed685e09f0a98019db4cebfb22fb9df1a53c0161664a011f7ff6b0f1
 
 ARG APP_HOME=/app
 WORKDIR ${APP_HOME}
