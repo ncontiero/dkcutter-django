@@ -1,2 +1,2 @@
-FROM docker.io/nginx:1.31.8-alpine@sha256:fed7e14be83cbd2661a75cdc5b872d936cf155d46c327084d30b8df19ae88d72
+FROM docker.io/nginx:1.31.10-alpine@sha256:7fc0fb4af7bf006aeb31aea88069976060f8f0a0a86b667126742cc17f4e31ae
 COPY ./compose/production/nginx/default.conf /etc/nginx/conf.d/default.conf
